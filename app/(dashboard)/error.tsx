@@ -44,11 +44,16 @@ export default function DashboardError({
           <h1 className="text-4xl font-bold text-brand-white mb-4">
             {isDatabaseError ? 'Database Error' : 'Admin Dashboard Error'}
           </h1>
-          <p className="text-brand-white/70 text-lg mb-8">
+          <p className="text-brand-white/70 text-lg mb-4">
             {isDatabaseError
               ? 'Unable to connect to the database. Please check your configuration.'
               : 'An error occurred in the admin dashboard.'}
           </p>
+          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-8 max-w-2xl mx-auto">
+            <p className="text-red-400 text-sm font-mono break-all">
+              {error.message}
+            </p>
+          </div>
 
           <div className="flex items-center justify-center gap-4 mb-8">
             <button
