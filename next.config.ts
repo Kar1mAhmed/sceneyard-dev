@@ -1,11 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Disable cacheComponents for Cloudflare Workers compatibility
-  // Next.js 16 features may not be fully supported by @opennextjs/cloudflare yet
-  cacheComponents: false,
+  // Enable Next.js 16 features
+  cacheComponents: true,
   
-  // Optimize for edge runtime
+  // Optimize for Cloudflare Workers edge runtime
   experimental: {
     serverActions: {
       bodySizeLimit: '2mb',
