@@ -15,7 +15,7 @@ export function GoogleSignInButton() {
     const handleSignIn = async () => {
         try {
             setIsLoading(true);
-            await signIn('google', { callbackUrl: '/dashboard' });
+            await signIn('google', { callbackUrl: '/home' });
         } catch (error) {
             console.error('Sign-in error:', error);
             setIsLoading(false);
