@@ -11,51 +11,38 @@ async function UsersContent() {
     redirect('/');
   }
 
-  // Try to get database from Cloudflare context
+  // Get database from Cloudflare context - REQUIRED
   let users: any[] = [];
   let total = 0;
-  let isAdmin = false;
 
   try {
     const { env } = await getCloudflareContext();
     const db = env.SCENEYARD_DB;
 
-    if (db) {
-      // Initialize auth service
-      const authService = new AuthService(db);
-
-      // Check if user is admin
-      isAdmin = await authService.isAdmin(session.user.id);
-
-      if (!isAdmin) {
-        return (
-          <div className="text-center py-20">
-            <h1 className="text-3xl font-bold text-brand-white mb-4">Access Denied</h1>
-            <p className="text-brand-white/70">You don't have permission to view this page.</p>
-          </div>
-        );
-      }
-
-      // Get all users
-      const result = await authService.getAllUsers(100, 0);
-      users = result.users;
-      total = result.total;
+    if (!db) {
+      throw new Error('Database not available');
     }
-  } catch (error) {
-    console.warn('Database not available (local dev mode):', error);
-    // In local dev without database, show mock data
-    users = [{
-      id: session.user.id,
-      email: session.user.email,
-      name: session.user.name,
-      image: session.user.image,
-      role: 'admin',
-      creditsBalance: 0,
-      planName: 'Free',
-      subscriptionStatus: null,
-      createdAt: new Date().toISOString(),
-    }];
-    total = 1;
+
+    // Initialize auth service
+    const authService = new AuthService(db);
+
+    // Check if user is admin - REQUIRED
+    const isAdmin = await authService.isAdmin(session.user.id);
+
+    if (!isAdmin) {
+      console.warn('⚠️  Non-admin user attempted to access users page:', session.user.email);
+      redirect('/home');
+    }
+
+    // Get all users
+    const result = await authService.getAllUsers(100, 0);
+    users = result.users;
+    total = result.total;
+
+    console.log('✅ Users page loaded for admin:', session.user.email);
+  } catch (error: any) {
+    console.error('❌ Failed to load users page:', error.message);
+    throw new Error(`Failed to load users: ${error.message}`);
   }
 
   return (

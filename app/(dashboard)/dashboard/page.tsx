@@ -1,9 +1,39 @@
 import { auth } from '@/lib/auth';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { redirect } from 'next/navigation';
+import { getCloudflareContext } from '@opennextjs/cloudflare';
+import { AuthService } from '@/lib/services/auth.service';
 
 async function AdminDashboardContent() {
   const session = await auth();
+
+  if (!session) {
+    redirect('/');
+  }
+
+  // Verify admin access
+  try {
+    const { env } = await getCloudflareContext();
+    const db = env.SCENEYARD_DB;
+
+    if (!db) {
+      throw new Error('Database not available');
+    }
+
+    const authService = new AuthService(db);
+    const isAdmin = await authService.isAdmin(session.user.id);
+
+    if (!isAdmin) {
+      console.warn('⚠️  Non-admin user attempted to access dashboard:', session.user.email);
+      redirect('/home');
+    }
+
+    console.log('✅ Dashboard loaded for admin:', session.user.email);
+  } catch (error: any) {
+    console.error('❌ Failed to load dashboard:', error.message);
+    throw new Error(`Failed to load dashboard: ${error.message}`);
+  }
 
   return (
     <div className="space-y-8">

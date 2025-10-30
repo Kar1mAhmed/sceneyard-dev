@@ -11,22 +11,31 @@ async function AdminHeader() {
         redirect('/');
     }
 
-    // Check if user is admin
+    // Check if user is admin - REQUIRED
+    let isAdmin = false;
+    
     try {
         const { env } = await getCloudflareContext();
         const db = env.SCENEYARD_DB;
 
-        if (db) {
-            const authService = new AuthService(db);
-            const isAdmin = await authService.isAdmin(session.user.id);
-
-            if (!isAdmin) {
-                redirect('/home');
-            }
+        if (!db) {
+            console.error('❌ Database not available - Admin access denied');
+            redirect('/home');
         }
-    } catch (error) {
-        // In local dev, allow access for testing
-        console.warn('Admin check skipped (local dev mode)');
+
+        const authService = new AuthService(db);
+        isAdmin = await authService.isAdmin(session.user.id);
+
+        if (!isAdmin) {
+            console.warn('⚠️  Non-admin user attempted to access dashboard:', session.user.email);
+            redirect('/home');
+        }
+
+        console.log('✅ Admin access granted:', session.user.email);
+    } catch (error: any) {
+        console.error('❌ Admin check failed:', error.message);
+        // If admin check fails, deny access
+        redirect('/home');
     }
 
     return (

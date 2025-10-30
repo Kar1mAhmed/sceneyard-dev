@@ -154,7 +154,7 @@ export class UserRepository {
         SELECT 
           u.*,
           s.status as subscription_status,
-          s.credits_balance,
+          s.balance as credits_balance,
           p.name as plan_name
         FROM users u
         LEFT JOIN subscriptions s ON u.id = s.user_id
@@ -193,7 +193,7 @@ export class UserRepository {
         SELECT 
           u.*,
           s.status as subscription_status,
-          s.credits_balance,
+          s.balance as credits_balance,
           p.name as plan_name
         FROM users u
         LEFT JOIN subscriptions s ON u.id = s.user_id

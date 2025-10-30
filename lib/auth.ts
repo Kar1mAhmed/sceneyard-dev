@@ -86,56 +86,59 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async signIn({ user, account, profile }) {
             try {
                 if (!user.email) {
-                    console.error("No email provided by OAuth provider");
+                    console.error("❌ No email provided by OAuth provider");
                     return false;
                 }
 
-                // Try to get Cloudflare D1 database
-                try {
-                    const { env } = await getCloudflareContext();
-                    const db = env.SCENEYARD_DB;
+                // Get Cloudflare D1 database - REQUIRED
+                const { env } = await getCloudflareContext();
+                const db = env.SCENEYARD_DB;
 
-                    if (db) {
-                        // Initialize auth service
-                        const authService = new AuthService(db);
-
-                        // Handle Google sign-in (creates user if doesn't exist)
-                        const dbUser = await authService.handleGoogleSignIn({
-                            email: user.email,
-                            name: user.name || null,
-                            image: user.image || null,
-                            sub: account?.providerAccountId || '',
-                        });
-
-                        // Store user ID for JWT callback
-                        user.id = dbUser.id;
-
-                        console.log("User signed in:", {
-                            id: dbUser.id,
-                            email: dbUser.email,
-                            name: dbUser.name,
-                            isNewUser: !profile?.email_verified,
-                        });
-
-                        return true;
-                    }
-                } catch (dbError) {
-                    console.warn("Database not available (local dev mode):", dbError);
+                if (!db) {
+                    console.error("❌ CRITICAL: Database not available");
+                    return false;
                 }
 
-                // Fallback for local development without database
-                console.log("Sign-in without database (local dev):", {
+                // Initialize auth service
+                const authService = new AuthService(db);
+
+                // Handle Google sign-in (creates user if doesn't exist)
+                const dbUser = await authService.handleGoogleSignIn({
                     email: user.email,
-                    name: user.name,
-                    provider: account?.provider,
+                    name: user.name || null,
+                    image: user.image || null,
+                    sub: account?.providerAccountId || '',
                 });
 
-                // Generate a temporary ID for local dev
-                user.id = account?.providerAccountId || crypto.randomUUID();
-                
+                // Store user ID for JWT callback
+                user.id = dbUser.id;
+
+                console.log("✅ User signed in successfully:", {
+                    id: dbUser.id,
+                    email: dbUser.email,
+                    name: dbUser.name,
+                    role: dbUser.role,
+                });
+
                 return true;
-            } catch (error) {
-                console.error("Error in signIn callback:", error);
+            } catch (error: any) {
+                console.error("❌ CRITICAL ERROR in signIn callback:", {
+                    message: error.message,
+                    stack: error.stack,
+                    email: user.email,
+                });
+                
+                // Check for specific error types
+                if (error.message?.includes('no such column') || 
+                    error.message?.includes('no such table')) {
+                    console.error("⚠️  DATABASE SCHEMA ERROR - Run migrations:");
+                    console.error("   npm run migrations-local");
+                } else if (error.message?.includes('D1_ERROR')) {
+                    console.error("⚠️  DATABASE ERROR - Check database connection");
+                } else if (error.message?.includes('getCloudflareContext')) {
+                    console.error("⚠️  CLOUDFLARE CONTEXT ERROR - Check environment setup");
+                }
+                
                 return false;
             }
         },
