@@ -39,7 +39,7 @@ export function HeroSection() {
 
         {/* Subheading */}
         <p className="text-xl md:text-2xl text-brand-white/70 mb-12 max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
-          Access professional video templates for your projects. Download, customize, and create amazing content in minutes.
+          Access professional video templates for your project. Download, customize, and create amazing content in minutes.
         </p>
 
         {/* CTA Button */}
