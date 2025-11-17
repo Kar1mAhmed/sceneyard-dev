@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { Suspense } from 'react';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 import { AuthService } from '@/lib/services/auth.service';
+import { logDatabaseInfo } from '@/lib/utils/db-health';
 
 async function AdminHeader() {
     const session = await auth();
@@ -13,9 +14,9 @@ async function AdminHeader() {
 
     // Check if user is admin - REQUIRED
     let isAdmin = false;
-    
+
     try {
-        const { env } = await getCloudflareContext();
+        const { env } = await getCloudflareContext({ async: true });
         const db = env.SCENEYARD_DB;
 
         if (!db) {
@@ -23,8 +24,18 @@ async function AdminHeader() {
             redirect('/home');
         }
 
+        // Test database connection first
+        const dbHealth = await logDatabaseInfo(db, 'AdminHeader');
+        if (!dbHealth.healthy) {
+            throw new Error(`Database health check failed: ${dbHealth.error}`);
+        }
+
+        console.log('🔍 Checking admin status for:', session.user.id);
+
         const authService = new AuthService(db);
         isAdmin = await authService.isAdmin(session.user.id);
+
+        console.log('🔍 Admin check result:', { isAdmin, userId: session.user.id });
 
         if (!isAdmin) {
             console.warn('⚠️  Non-admin user attempted to access dashboard:', session.user.email);
@@ -33,8 +44,22 @@ async function AdminHeader() {
 
         console.log('✅ Admin access granted:', session.user.email);
     } catch (error: any) {
-        console.error('❌ Admin check failed:', error.message);
-        // If admin check fails, deny access
+        console.error('❌ Admin check failed - FULL ERROR:', {
+            message: error.message,
+            stack: error.stack,
+            name: error.name,
+            cause: error.cause,
+            userId: session.user.id,
+            userEmail: session.user.email,
+        });
+
+        // Don't redirect on connection errors - throw to show error page
+        if (error.message?.includes('Connection closed') ||
+            error.message?.includes('D1_ERROR')) {
+            throw new Error(`Database connection error: ${error.message}`);
+        }
+
+        // For other errors, redirect
         redirect('/home');
     }
 

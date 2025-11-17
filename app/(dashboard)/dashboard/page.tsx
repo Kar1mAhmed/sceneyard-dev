@@ -1,56 +1,11 @@
 import { auth } from '@/lib/auth';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { redirect } from 'next/navigation';
-import { getCloudflareContext } from '@opennextjs/cloudflare';
-import { AuthService } from '@/lib/services/auth.service';
 
 async function AdminDashboardContent() {
-  const session = await auth();
-
-  if (!session) {
-    redirect('/');
-  }
-
-  // Verify admin access
-  try {
-    const { env } = await getCloudflareContext();
-    const db = env.SCENEYARD_DB;
-
-    if (!db) {
-      console.error('❌ Database binding not found in Cloudflare context');
-      throw new Error('Database not available - Check wrangler.jsonc configuration');
-    }
-
-    const authService = new AuthService(db);
-    const isAdmin = await authService.isAdmin(session.user.id);
-
-    if (!isAdmin) {
-      console.warn('⚠️  Non-admin user attempted to access dashboard:', session.user.email);
-      redirect('/home');
-    }
-
-    console.log('✅ Dashboard loaded for admin:', session.user.email);
-  } catch (error: any) {
-    console.error('❌ Failed to load dashboard:', {
-      message: error.message,
-      stack: error.stack,
-      cause: error.cause,
-      name: error.name,
-    });
-    
-    // Provide specific error messages
-    if (error.message?.includes('Connection closed')) {
-      throw new Error('Database connection closed unexpectedly. This may be due to: 1) Database not running, 2) Connection timeout, 3) Database file locked. Try restarting the dev server.');
-    } else if (error.message?.includes('no such column') || error.message?.includes('no such table')) {
-      throw new Error(`Database schema error: ${error.message}. Run: npm run migrations-local`);
-    } else if (error.message?.includes('D1_ERROR')) {
-      throw new Error(`Database error: ${error.message}. Check your database configuration.`);
-    } else {
-      throw new Error(`Failed to load dashboard: ${error.message}`);
-    }
-  }
-
+  // Admin check is handled by layout - no need to check again here
+  // Just render the dashboard content
+  
   return (
     <div className="space-y-8">
       {/* Welcome Section */}

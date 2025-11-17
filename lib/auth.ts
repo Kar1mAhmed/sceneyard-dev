@@ -91,7 +91,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 }
 
                 // Get Cloudflare D1 database - REQUIRED
-                const { env } = await getCloudflareContext();
+                const { env } = await getCloudflareContext({ async: true });
                 const db = env.SCENEYARD_DB;
 
                 if (!db) {

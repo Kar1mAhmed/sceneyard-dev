@@ -3,20 +3,18 @@ import { AuthService } from '@/lib/services/auth.service';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
+import { headers } from 'next/headers';
 
 async function UsersContent() {
-  const session = await auth();
+  // Access headers to make this dynamic
+  await headers();
 
-  if (!session) {
-    redirect('/');
-  }
-
-  // Get database from Cloudflare context - REQUIRED
+  // Admin check is handled by layout - just fetch the data
   let users: any[] = [];
   let total = 0;
 
   try {
-    const { env } = await getCloudflareContext();
+    const { env } = await getCloudflareContext({ async: true });
     const db = env.SCENEYARD_DB;
 
     if (!db) {
@@ -27,20 +25,12 @@ async function UsersContent() {
     // Initialize auth service
     const authService = new AuthService(db);
 
-    // Check if user is admin - REQUIRED
-    const isAdmin = await authService.isAdmin(session.user.id);
-
-    if (!isAdmin) {
-      console.warn('⚠️  Non-admin user attempted to access users page:', session.user.email);
-      redirect('/home');
-    }
-
-    // Get all users
+    // Get all users (admin check already done in layout)
     const result = await authService.getAllUsers(100, 0);
     users = result.users;
     total = result.total;
 
-    console.log('✅ Users page loaded for admin:', session.user.email);
+    console.log('✅ Users page loaded, found', total, 'users');
   } catch (error: any) {
     console.error('❌ Failed to load users page:', {
       message: error.message,
@@ -48,7 +38,7 @@ async function UsersContent() {
       cause: error.cause,
       name: error.name,
     });
-    
+
     // Provide specific error messages
     if (error.message?.includes('Connection closed')) {
       throw new Error('Database connection closed unexpectedly. This may be due to: 1) Database not running, 2) Connection timeout, 3) Database file locked. Try restarting the dev server.');
@@ -115,11 +105,10 @@ async function UsersContent() {
                     </td>
                     <td className="px-6 py-4 text-brand-white/70">{user.email}</td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
-                        user.role === 'admin'
-                          ? 'bg-primary/20 text-primary'
-                          : 'bg-brand-white/10 text-brand-white/70'
-                      }`}>
+                      <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${user.role === 'admin'
+                        ? 'bg-primary/20 text-primary'
+                        : 'bg-brand-white/10 text-brand-white/70'
+                        }`}>
                         {user.role}
                       </span>
                     </td>
@@ -132,11 +121,10 @@ async function UsersContent() {
                       {user.planName || 'Free'}
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
-                        user.subscriptionStatus === 'active'
-                          ? 'bg-secondary-cyan/20 text-secondary-cyan'
-                          : 'bg-brand-white/10 text-brand-white/50'
-                      }`}>
+                      <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${user.subscriptionStatus === 'active'
+                        ? 'bg-secondary-cyan/20 text-secondary-cyan'
+                        : 'bg-brand-white/10 text-brand-white/50'
+                        }`}>
                         {user.subscriptionStatus || 'inactive'}
                       </span>
                     </td>

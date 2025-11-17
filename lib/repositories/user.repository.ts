@@ -9,6 +9,7 @@
 import type { D1Database } from '@cloudflare/workers-types';
 import type { User, CreateUserInput, UpdateUserInput, UserWithSubscription } from '@/lib/models/user.model';
 import { UserRole } from '@/lib/models/user.model';
+import { retryDatabaseOperation } from '@/lib/utils/db-retry';
 
 export class UserRepository {
     constructor(private db: D1Database) { }
@@ -17,12 +18,14 @@ export class UserRepository {
      * Find user by ID
      */
     async findById(id: string): Promise<User | null> {
-        const result = await this.db
-            .prepare('SELECT * FROM users WHERE id = ?')
-            .bind(id)
-            .first<User>();
+        return retryDatabaseOperation(async () => {
+            const result = await this.db
+                .prepare('SELECT * FROM users WHERE id = ?')
+                .bind(id)
+                .first<User>();
 
-        return result || null;
+            return result || null;
+        }, { operationName: `findById(${id})` });
     }
 
     /**
