@@ -3,7 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Enable Next.js 16 features
   cacheComponents: true,
-  
+
+
   // Optimize for Cloudflare Workers edge runtime
   experimental: {
     serverActions: {

@@ -33,7 +33,7 @@
 			"database_name": "sceneyard",
 			"binding": "SCENEYARD_DB",
 			"database_id": "00423ce0-ed4b-4df3-83a1-1d7087e8aa37",
-			"migrations_dir": "lib/db/migrations"
+			"migrations_dir": "db/migrations"
 		}
 	],
 }
