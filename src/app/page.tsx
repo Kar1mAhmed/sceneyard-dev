@@ -22,7 +22,7 @@ export default function LandingPage() {
 
           {/* Subheadline */}
           <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Access professional video templates for your projects. Download, customize, and create amazing content in minutes.
+            Access professional video Templates for your projects. Download, customize, and create amazing content in minutes.
           </p>
 
           {/* CTA Button */}
