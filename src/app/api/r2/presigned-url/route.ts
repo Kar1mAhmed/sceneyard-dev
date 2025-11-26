@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/features/auth/auth';
 import { v4 as uuidv4 } from 'uuid';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { getCloudflareEnv } from '@/lib/env';
+import { generatePresignedPutUrl } from '@/lib/r2';
 
 export async function POST(request: NextRequest) {
     try {
@@ -24,32 +22,18 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Invalid kind' }, { status: 400 });
         }
 
-        const env = getCloudflareEnv();
-
-        // Initialize S3 Client for R2
-        const S3 = new S3Client({
-            region: 'us-east-1',
-            endpoint: `https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-            credentials: {
-                accessKeyId: env.R2_ACCESS_KEY_ID,
-                secretAccessKey: env.R2_SECRET_ACCESS_KEY,
-            },
-        });
-
         const assetId = uuidv4();
 
         // Generate R2 key with proper structure
         const extension = filename.split('.').pop();
         const r2Key = `${kind}s/${assetId}.${extension}`;
 
-        // Generate Presigned URL
-        const command = new PutObjectCommand({
-            Bucket: env.R2_BUCKET_NAME,
-            Key: r2Key,
-            ContentType: contentType,
-        });
+        console.log('[R2 Presigned] Generating signed URL for:', r2Key);
 
-        const signedUrl = await getSignedUrl(S3, command, { expiresIn: 3600 });
+        // Generate Presigned URL using helper
+        const signedUrl = await generatePresignedPutUrl(r2Key, contentType);
+
+        console.log('[R2 Presigned] Signed URL generated successfully');
 
         // Return credentials for client-side upload
         return NextResponse.json({
