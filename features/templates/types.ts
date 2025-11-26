@@ -31,5 +31,6 @@ export interface TemplateWithAssets extends Template {
     preview_asset?: Asset;
     preview_thumbnail?: Asset;
     file_asset?: Asset;
+    categories?: { id: string; name: string; slug: string; }[];
 }
 

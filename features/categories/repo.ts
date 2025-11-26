@@ -17,6 +17,8 @@ export async function getCategories(): Promise<Category[]> {
     return results;
 }
 
+export const getAllCategories = getCategories;
+
 export async function getCategoryById(id: string): Promise<Category | null> {
     const db = getDb();
     return await db.prepare('SELECT * FROM styles WHERE id = ?').bind(id).first<Category>();

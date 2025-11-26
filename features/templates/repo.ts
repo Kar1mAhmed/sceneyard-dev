@@ -39,6 +39,8 @@ export async function getTemplatesWithThumbnails(limit = 50, offset = 0): Promis
 }
 
 
+import { getTemplateCategories, setTemplateCategories } from '../categories/repo';
+
 export async function getTemplateById(id: string): Promise<TemplateWithAssets | null> {
     const db = getDb();
     const template = await db.prepare('SELECT * FROM templates WHERE id = ?').bind(id).first<Template>();
@@ -50,15 +52,16 @@ export async function getTemplateById(id: string): Promise<TemplateWithAssets | 
         ? await db.prepare('SELECT * FROM assets WHERE id = ?').bind(template.preview_thumbnail_id).first<Asset>()
         : null;
     const fileAsset = await db.prepare('SELECT * FROM assets WHERE id = ?').bind(template.file_asset_id).first<Asset>();
+    const categories = await getTemplateCategories(id);
 
     return {
         ...template,
         preview_asset: previewAsset || undefined,
         preview_thumbnail: thumbnailAsset || undefined,
-        file_asset: fileAsset || undefined
+        file_asset: fileAsset || undefined,
+        categories
     };
 }
-
 
 export async function createAsset(data: {
     id: string;
@@ -132,7 +135,7 @@ export async function createTemplate(data: {
     };
 }
 
-export async function updateTemplate(id: string, data: Partial<Template>): Promise<void> {
+export async function updateTemplate(id: string, data: Partial<Template> & { categories?: string[] }): Promise<void> {
     const db = getDb();
     const sets: string[] = [];
     const values: any[] = [];
@@ -144,13 +147,16 @@ export async function updateTemplate(id: string, data: Partial<Template>): Promi
     if (data.tags_text !== undefined) { sets.push('tags_text = ?'); values.push(data.tags_text); }
     if (data.published_at !== undefined) { sets.push('published_at = ?'); values.push(data.published_at); }
 
-    if (sets.length === 0) return;
+    if (sets.length > 0) {
+        sets.push('updated_at = ?');
+        values.push(Math.floor(Date.now() / 1000));
+        values.push(id);
+        await db.prepare(`UPDATE templates SET ${sets.join(', ')} WHERE id = ?`).bind(...values).run();
+    }
 
-    sets.push('updated_at = ?');
-    values.push(Math.floor(Date.now() / 1000));
-    values.push(id);
-
-    await db.prepare(`UPDATE templates SET ${sets.join(', ')} WHERE id = ?`).bind(...values).run();
+    if (data.categories) {
+        await setTemplateCategories(id, data.categories);
+    }
 }
 
 export async function deleteTemplate(id: string): Promise<void> {
