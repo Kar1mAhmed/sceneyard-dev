@@ -90,7 +90,9 @@ export function EditTemplateForm({ template, categories }: EditTemplateFormProps
 
             {/* Media Viewer */}
             <TemplateMediaViewer
+                templateId={template.id}
                 previewR2Key={template.preview_asset?.r2_key}
+                thumbnailR2Key={template.preview_thumbnail?.r2_key}
                 downloadR2Key={template.file_asset?.r2_key}
                 title={template.title}
             />

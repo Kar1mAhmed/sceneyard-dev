@@ -17,11 +17,16 @@ export interface UploadCredentials {
 /**
  * Request upload credentials from the server
  */
-export async function requestUploadCredentials(filename: string, contentType: string, kind: 'preview' | 'thumbnail' | 'download'): Promise<UploadCredentials> {
+export async function requestUploadCredentials(
+    filename: string,
+    contentType: string,
+    kind: 'preview' | 'thumbnail' | 'download',
+    existingR2Key?: string
+): Promise<UploadCredentials> {
     const response = await fetch('/api/r2/presigned-url', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filename, contentType, kind })
+        body: JSON.stringify({ filename, contentType, kind, existingR2Key })
     });
 
     if (!response.ok) {
@@ -231,3 +236,92 @@ export async function uploadTemplateAssets(
         throw error;
     }
 }
+
+/**
+ * Replace a single template file (preview, thumbnail, or download)
+ * Overwrites the existing R2 key instead of creating a new one
+ */
+export async function replaceTemplateFile(
+    file: File,
+    kind: 'preview' | 'download',
+    existingR2Key: string,
+    existingThumbnailR2Key?: string, // Required if kind is 'preview'
+    onProgress?: (stage: string, progress: number) => void
+) {
+    try {
+        if (kind === 'preview') {
+            // 1. Request credentials for preview (reusing existing key)
+            onProgress?.('Preparing preview upload...', 0);
+            const previewCreds = await requestUploadCredentials(
+                file.name,
+                file.type,
+                'preview',
+                existingR2Key
+            );
+
+            // 2. Upload preview video
+            onProgress?.('Uploading preview...', 10);
+            await uploadToR2(file, previewCreds.r2Key, (p) => {
+                onProgress?.('Uploading preview...', 10 + (p.percentage * 0.4));
+            }, previewCreds.uploadEndpoint);
+
+            // 3. Generate new thumbnail
+            onProgress?.('Generating thumbnail...', 50);
+            const thumbnailBlob = await generateLowQualityVideo(file, 480);
+            const thumbnailFile = new File([thumbnailBlob], `thumbnail_${file.name}`, {
+                type: 'video/webm'
+            });
+
+            // 4. Request credentials for thumbnail (reusing existing key if provided)
+            const thumbnailCreds = await requestUploadCredentials(
+                thumbnailFile.name,
+                thumbnailFile.type,
+                'thumbnail',
+                existingThumbnailR2Key
+            );
+
+            // 5. Upload thumbnail
+            onProgress?.('Uploading thumbnail...', 60);
+            await uploadToR2(thumbnailFile, thumbnailCreds.r2Key, (p) => {
+                onProgress?.('Uploading thumbnail...', 60 + (p.percentage * 0.4));
+            }, thumbnailCreds.uploadEndpoint);
+
+            onProgress?.('Complete!', 100);
+
+            return {
+                previewAssetId: previewCreds.assetId,
+                previewR2Key: previewCreds.r2Key,
+                thumbnailAssetId: thumbnailCreds.assetId,
+                thumbnailR2Key: thumbnailCreds.r2Key,
+                previewSize: file.size,
+                thumbnailSize: thumbnailBlob.size
+            };
+        } else {
+            // Replace download file
+            onProgress?.('Preparing download file...', 0);
+            const downloadCreds = await requestUploadCredentials(
+                file.name,
+                file.type,
+                'download',
+                existingR2Key
+            );
+
+            onProgress?.('Uploading download file...', 10);
+            await uploadToR2(file, downloadCreds.r2Key, (p) => {
+                onProgress?.('Uploading download file...', 10 + (p.percentage * 0.9));
+            }, downloadCreds.uploadEndpoint);
+
+            onProgress?.('Complete!', 100);
+
+            return {
+                downloadAssetId: downloadCreds.assetId,
+                downloadR2Key: downloadCreds.r2Key,
+                downloadSize: file.size
+            };
+        }
+    } catch (error) {
+        console.error('Replace file error:', error);
+        throw error;
+    }
+}
+

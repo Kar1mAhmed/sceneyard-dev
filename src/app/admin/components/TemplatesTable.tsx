@@ -18,6 +18,7 @@ interface Template {
     downloads_count: number;
     likes_count: number;
     thumbnail_r2_key?: string;
+    orientation: 'horizontal' | 'vertical';
     categories?: Category[];
 }
 
@@ -28,11 +29,13 @@ interface TemplatesTableProps {
 
 type SortOption = 'recent' | 'likes' | 'downloads' | 'title';
 type StatusFilter = 'all' | 'published' | 'drafts';
+type OrientationFilter = 'all' | 'horizontal' | 'vertical';
 
 export function TemplatesTable({ initialTemplates, categories }: TemplatesTableProps) {
     const [sortBy, setSortBy] = useState<SortOption>('recent');
     const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
     const [categoryFilter, setCategoryFilter] = useState<string>('all');
+    const [orientationFilter, setOrientationFilter] = useState<OrientationFilter>('all');
     const [searchQuery, setSearchQuery] = useState('');
 
     // Filter and sort templates
@@ -51,6 +54,11 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
             filtered = filtered.filter(t =>
                 t.categories?.some(c => c.id === categoryFilter)
             );
+        }
+
+        // Apply orientation filter
+        if (orientationFilter !== 'all') {
+            filtered = filtered.filter(t => t.orientation === orientationFilter);
         }
 
         // Apply search filter
@@ -78,7 +86,7 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
         });
 
         return filtered;
-    }, [initialTemplates, statusFilter, categoryFilter, searchQuery, sortBy]);
+    }, [initialTemplates, statusFilter, categoryFilter, orientationFilter, searchQuery, sortBy]);
 
     return (
         <>
@@ -148,6 +156,38 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
                             </select>
                         </div>
                     )}
+
+                    {/* Orientation Filter */}
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-400">Orientation:</span>
+                        <button
+                            onClick={() => setOrientationFilter('all')}
+                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${orientationFilter === 'all'
+                                ? 'bg-purple-500 text-white'
+                                : 'bg-black text-gray-400 hover:text-white border border-white/10'
+                                }`}
+                        >
+                            All
+                        </button>
+                        <button
+                            onClick={() => setOrientationFilter('horizontal')}
+                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${orientationFilter === 'horizontal'
+                                ? 'bg-purple-500 text-white'
+                                : 'bg-black text-gray-400 hover:text-white border border-white/10'
+                                }`}
+                        >
+                            Horizontal
+                        </button>
+                        <button
+                            onClick={() => setOrientationFilter('vertical')}
+                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${orientationFilter === 'vertical'
+                                ? 'bg-purple-500 text-white'
+                                : 'bg-black text-gray-400 hover:text-white border border-white/10'
+                                }`}
+                        >
+                            Vertical
+                        </button>
+                    </div>
 
                     {/* Sort Controls */}
                     <div className="flex items-center gap-2">

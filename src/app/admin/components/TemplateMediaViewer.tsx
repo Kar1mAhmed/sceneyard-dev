@@ -1,19 +1,33 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { FileReplacement } from './FileReplacement';
+import { useRouter } from 'next/navigation';
 
 interface TemplateMediaViewerProps {
+    templateId: string;
     previewR2Key?: string;
+    thumbnailR2Key?: string;
     downloadR2Key?: string;
     title: string;
 }
 
-export function TemplateMediaViewer({ previewR2Key, downloadR2Key, title }: TemplateMediaViewerProps) {
+export function TemplateMediaViewer({ templateId, previewR2Key, thumbnailR2Key, downloadR2Key, title }: TemplateMediaViewerProps) {
+    const router = useRouter();
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
     const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
     const [isLoadingVideo, setIsLoadingVideo] = useState(true);
     const [isLoadingDownload, setIsLoadingDownload] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    const handleRefresh = () => {
+        router.refresh();
+        // Reload video URL
+        if (previewR2Key) {
+            setIsLoadingVideo(true);
+            setVideoUrl(null);
+        }
+    };
 
     useEffect(() => {
         if (!previewR2Key) {
@@ -102,6 +116,19 @@ export function TemplateMediaViewer({ previewR2Key, downloadR2Key, title }: Temp
                         </svg>
                     </div>
                 )}
+
+                {/* Replace Video Button */}
+                {previewR2Key && thumbnailR2Key && (
+                    <div className="mt-4">
+                        <FileReplacement
+                            templateId={templateId}
+                            fileType="preview"
+                            existingR2Key={previewR2Key}
+                            existingThumbnailR2Key={thumbnailR2Key}
+                            onSuccess={handleRefresh}
+                        />
+                    </div>
+                )}
             </div>
 
             {/* Download Section */}
@@ -134,6 +161,16 @@ export function TemplateMediaViewer({ previewR2Key, downloadR2Key, title }: Temp
                                 </>
                             )}
                         </button>
+                    </div>
+
+                    {/* Replace Download File Button */}
+                    <div className="mt-4">
+                        <FileReplacement
+                            templateId={templateId}
+                            fileType="download"
+                            existingR2Key={downloadR2Key}
+                            onSuccess={handleRefresh}
+                        />
                     </div>
                 </div>
             )}
