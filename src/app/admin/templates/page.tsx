@@ -1,5 +1,6 @@
 import { auth } from "@/features/auth/auth";
 import { getTemplatesWithThumbnails, getTemplateStats } from "@/features/templates/repo";
+import { getAllCategories } from "@/features/categories/repo";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
@@ -14,6 +15,7 @@ async function TemplatesList() {
 
     const templates = await getTemplatesWithThumbnails();
     const stats = await getTemplateStats();
+    const categories = await getAllCategories();
 
     return (
         <div className="min-h-screen bg-black admin-bg-pattern text-white p-8 font-sans selection:bg-purple-500/30">
@@ -63,8 +65,8 @@ async function TemplatesList() {
                     </div>
                 </div>
 
-                {/* Templates Table with Sorting */}
-                <TemplatesTable initialTemplates={templates} />
+                {/* Templates Table with Sorting and Filtering */}
+                <TemplatesTable initialTemplates={templates} categories={categories} />
             </div>
         </div>
     );

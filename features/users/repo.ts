@@ -87,3 +87,14 @@ export async function getAllUsers(limit = 50, offset = 0): Promise<User[]> {
         .all<User>();
     return results;
 }
+
+export async function deleteUser(id: string): Promise<void> {
+    const db = getDb();
+    await db.prepare('DELETE FROM users WHERE id = ?').bind(id).run();
+}
+
+export async function getUserById(id: string): Promise<User | null> {
+    const db = getDb();
+    const result = await db.prepare('SELECT * FROM users WHERE id = ?').bind(id).first<User>();
+    return result;
+}
