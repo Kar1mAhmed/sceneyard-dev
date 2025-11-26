@@ -25,7 +25,12 @@
 		"AUTH_URL": "https://sceneyard-dev.karim77645.workers.dev",
 		"AUTH_GOOGLE_ID": "55276151234-v02574cpr27jtptn77ikdg0dgg8jkond.apps.googleusercontent.com",
 		"AUTH_GOOGLE_SECRET": "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",
-		"AUTH_SECRET": "EAD7KI8uvnprD0my6neQydC25YkuFecoDqUsZ3yHAoA="
+		"AUTH_SECRET": "EAD7KI8uvnprD0my6neQydC25YkuFecoDqUsZ3yHAoA=",
+		"R2_ACCOUNT_ID": "64527ffa7fe8ba4c2423472e53228cad",
+		"R2_ACCESS_KEY_ID": "57de103df3068da79cbce51c6d393233",
+		"R2_SECRET_ACCESS_KEY": "e28458f8be0645e80026639cb1376aecffae1765f79f082758f4eab8421b15a5",
+		"R2_BUCKET_NAME": "sceneyard-r2",
+		"R2_PUBLIC_DOMAIN": "https://media.sceneyard.com"
 	},
 	
 	"d1_databases": [

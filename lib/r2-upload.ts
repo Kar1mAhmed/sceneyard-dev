@@ -36,12 +36,13 @@ export async function requestUploadCredentials(filename: string, contentType: st
  */
 export async function uploadToR2(
     file: File,
-    r2Key: string,
-    onProgress?: (progress: UploadProgress) => void
+    r2Key: string, // Kept for interface compatibility, but not used in PUT request
+    onProgress?: (progress: UploadProgress) => void,
+    uploadEndpoint?: string // Now required, but optional in signature to avoid breaking changes immediately
 ): Promise<void> {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('r2Key', r2Key);
+    if (!uploadEndpoint) {
+        throw new Error('Upload endpoint (presigned URL) is required');
+    }
 
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -67,8 +68,9 @@ export async function uploadToR2(
         xhr.addEventListener('error', () => reject(new Error('Upload failed')));
         xhr.addEventListener('abort', () => reject(new Error('Upload aborted')));
 
-        xhr.open('POST', '/api/r2/upload');
-        xhr.send(formData);
+        xhr.open('PUT', uploadEndpoint);
+        xhr.setRequestHeader('Content-Type', file.type);
+        xhr.send(file);
     });
 }
 
@@ -174,7 +176,7 @@ export async function uploadTemplateAssets(
         onProgress?.('Uploading preview...', 10);
         await uploadToR2(previewVideo, previewCreds.r2Key, (p) => {
             onProgress?.('Uploading preview...', 10 + (p.percentage * 0.3));
-        });
+        }, previewCreds.uploadEndpoint);
 
         // 3. Generate thumbnail
         onProgress?.('Generating thumbnail...', 40);
@@ -194,7 +196,7 @@ export async function uploadTemplateAssets(
         onProgress?.('Uploading thumbnail...', 50);
         await uploadToR2(thumbnailFile, thumbnailCreds.r2Key, (p) => {
             onProgress?.('Uploading thumbnail...', 50 + (p.percentage * 0.2));
-        });
+        }, thumbnailCreds.uploadEndpoint);
 
         // 6. Request credentials for download file
         onProgress?.('Preparing download file...', 70);
@@ -208,7 +210,7 @@ export async function uploadTemplateAssets(
         onProgress?.('Uploading download file...', 75);
         await uploadToR2(downloadFile, downloadCreds.r2Key, (p) => {
             onProgress?.('Uploading download file...', 75 + (p.percentage * 0.25));
-        });
+        }, downloadCreds.uploadEndpoint);
 
         onProgress?.('Complete!', 100);
 
