@@ -23,8 +23,30 @@ export async function getTemplates(limit = 50, offset = 0): Promise<Template[]> 
     return results;
 }
 
-export async function getTemplatesWithThumbnails(limit = 50, offset = 0): Promise<(Template & { thumbnail_r2_key?: string })[]> {
+export async function getTemplatesWithThumbnails(
+    limit = 50,
+    offset = 0,
+    sortBy: 'recent' | 'likes' | 'downloads' | 'title' = 'recent'
+): Promise<(Template & { thumbnail_r2_key?: string })[]> {
     const db = getDb();
+
+    let orderByClause = 't.created_at DESC';
+    switch (sortBy) {
+        case 'likes':
+            orderByClause = 't.likes_count DESC, t.created_at DESC';
+            break;
+        case 'downloads':
+            orderByClause = 't.downloads_count DESC, t.created_at DESC';
+            break;
+        case 'title':
+            orderByClause = 't.title ASC';
+            break;
+        case 'recent':
+        default:
+            orderByClause = 't.created_at DESC';
+            break;
+    }
+
     const { results } = await db.prepare(`
         SELECT 
             t.*,
@@ -32,7 +54,7 @@ export async function getTemplatesWithThumbnails(limit = 50, offset = 0): Promis
         FROM templates t
         LEFT JOIN assets a ON t.preview_thumbnail_id = a.id
         WHERE t.deleted_at IS NULL 
-        ORDER BY t.created_at DESC 
+        ORDER BY ${orderByClause}
         LIMIT ? OFFSET ?
     `).bind(limit, offset).all<Template & { thumbnail_r2_key?: string }>();
     return results;

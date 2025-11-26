@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { Suspense } from "react";
-import { VideoThumbnail } from "../components/VideoThumbnail";
+import { TemplatesTable } from "../components/TemplatesTable";
 
 async function TemplatesList() {
     await headers();
@@ -63,86 +63,8 @@ async function TemplatesList() {
                     </div>
                 </div>
 
-                {/* Templates Grid */}
-                <div className="bg-zinc-900 rounded-3xl border border-white/5 overflow-hidden">
-                    {templates.length === 0 ? (
-                        <div className="p-12 text-center">
-                            <p className="text-gray-400 text-lg">No templates yet. Create your first one!</p>
-                        </div>
-                    ) : (
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="border-b border-white/5 bg-white/5">
-                                        <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Preview</th>
-                                        <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Template</th>
-                                        <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Cost</th>
-                                        <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Status</th>
-                                        <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Downloads</th>
-                                        <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Likes</th>
-                                        <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Published</th>
-                                        <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-white/5">
-                                    {templates.map((template) => (
-                                        <tr key={template.id} className="group hover:bg-white/5 transition-colors">
-                                            <td className="p-6">
-                                                {template.thumbnail_r2_key ? (
-                                                    <VideoThumbnail
-                                                        r2Key={template.thumbnail_r2_key}
-                                                        title={template.title}
-                                                    />
-                                                ) : (
-                                                    <div className="w-32 h-20 bg-zinc-800 rounded-lg flex items-center justify-center">
-                                                        <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                                                        </svg>
-                                                    </div>
-                                                )}
-                                            </td>
-                                            <td className="p-6">
-                                                <div>
-                                                    <div className="font-medium text-white">{template.title}</div>
-                                                    <div className="text-sm text-gray-400 line-clamp-1">{template.description || 'No description'}</div>
-                                                </div>
-                                            </td>
-                                            <td className="p-6">
-                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                                                    {template.credits_cost} Credits
-                                                </span>
-                                            </td>
-                                            <td className="p-6">
-                                                {template.published_at ? (
-                                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20">
-                                                        Published
-                                                    </span>
-                                                ) : (
-                                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20">
-                                                        Draft
-                                                    </span>
-                                                )}
-                                            </td>
-                                            <td className="p-6 text-gray-300">{template.downloads_count}</td>
-                                            <td className="p-6 text-gray-300">{template.likes_count}</td>
-                                            <td className="p-6 text-gray-400 text-sm">
-                                                {template.published_at
-                                                    ? new Date(template.published_at * 1000).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
-                                                    : '-'
-                                                }
-                                            </td>
-                                            <td className="p-6 text-right">
-                                                <Link href={`/admin/templates/${template.id}`} className="text-purple-400 hover:text-purple-300 transition-colors font-medium">
-                                                    View/Edit
-                                                </Link>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
-                </div>
+                {/* Templates Table with Sorting */}
+                <TemplatesTable initialTemplates={templates} />
             </div>
         </div>
     );
