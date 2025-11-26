@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FileReplacement } from './FileReplacement';
 import { useRouter } from 'next/navigation';
+import { getPublicR2Url } from '@/lib/r2';
 
 interface TemplateMediaViewerProps {
     templateId: string;
@@ -14,46 +15,15 @@ interface TemplateMediaViewerProps {
 
 export function TemplateMediaViewer({ templateId, previewR2Key, thumbnailR2Key, downloadR2Key, title }: TemplateMediaViewerProps) {
     const router = useRouter();
-    const [videoUrl, setVideoUrl] = useState<string | null>(null);
-    const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
-    const [isLoadingVideo, setIsLoadingVideo] = useState(true);
     const [isLoadingDownload, setIsLoadingDownload] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    // Generate direct R2 URL for preview video (no API call needed)
+    const videoUrl = previewR2Key ? getPublicR2Url(previewR2Key) : null;
+
     const handleRefresh = () => {
         router.refresh();
-        // Reload video URL
-        if (previewR2Key) {
-            setIsLoadingVideo(true);
-            setVideoUrl(null);
-        }
     };
-
-    useEffect(() => {
-        if (!previewR2Key) {
-            setIsLoadingVideo(false);
-            return;
-        }
-
-        // Fetch the public URL for the high-quality preview video
-        const fetchVideoUrl = async () => {
-            try {
-                const response = await fetch(`/api/r2/public-url?r2_key=${encodeURIComponent(previewR2Key)}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch video URL');
-                }
-                const data = await response.json() as { url: string };
-                setVideoUrl(data.url);
-                setIsLoadingVideo(false);
-            } catch (err) {
-                console.error('Error fetching video URL:', err);
-                setError('Failed to load video');
-                setIsLoadingVideo(false);
-            }
-        };
-
-        fetchVideoUrl();
-    }, [previewR2Key]);
 
     const handleDownload = async () => {
         if (!downloadR2Key) return;
@@ -92,15 +62,7 @@ export function TemplateMediaViewer({ templateId, previewR2Key, thumbnailR2Key, 
                 <label className="block text-sm font-medium text-gray-300 mb-3">
                     High-Quality Preview Video
                 </label>
-                {isLoadingVideo ? (
-                    <div className="w-full aspect-video bg-zinc-800 rounded-xl flex items-center justify-center">
-                        <div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-                    </div>
-                ) : error ? (
-                    <div className="w-full aspect-video bg-zinc-800 rounded-xl flex items-center justify-center">
-                        <p className="text-red-400">{error}</p>
-                    </div>
-                ) : videoUrl ? (
+                {videoUrl ? (
                     <video
                         src={videoUrl}
                         controls

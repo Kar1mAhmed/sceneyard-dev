@@ -45,3 +45,18 @@ export async function deleteFileFromR2(key: string): Promise<void> {
     }
     await env.ASSET_BUCKET.delete(key);
 }
+
+/**
+ * Generate a public R2 URL for a given key.
+ * Uses the R2_PUBLIC_DOMAIN for direct CDN delivery (faster, no Worker costs).
+ * Use this for public assets like preview videos and thumbnails.
+ * Works in both SSR and client-side contexts.
+ */
+export function getPublicR2Url(r2Key: string): string {
+    const publicDomain = process.env.NEXT_PUBLIC_R2_DOMAIN || process.env.R2_PUBLIC_DOMAIN;
+    if (!publicDomain) {
+        throw new Error('R2_PUBLIC_DOMAIN not configured');
+    }
+    return `${publicDomain}/${r2Key}`;
+}
+

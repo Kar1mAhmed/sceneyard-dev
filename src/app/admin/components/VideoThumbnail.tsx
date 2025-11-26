@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
+import { getPublicR2Url } from '@/lib/r2';
 
 interface VideoThumbnailProps {
     r2Key: string;
@@ -9,33 +10,10 @@ interface VideoThumbnailProps {
 
 export function VideoThumbnail({ r2Key, title }: VideoThumbnailProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
-    const [videoUrl, setVideoUrl] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(false);
-
-    useEffect(() => {
-        // Fetch the public URL for the video thumbnail
-        const fetchVideoUrl = async () => {
-            try {
-                const response = await fetch(`/api/r2/public-url?r2_key=${encodeURIComponent(r2Key)}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch video URL');
-                }
-                const data = await response.json() as { url: string };
-                setVideoUrl(data.url);
-                setIsLoading(false);
-            } catch (err) {
-                console.error('Error fetching video URL:', err);
-                setError(true);
-                setIsLoading(false);
-            }
-        };
-
-        fetchVideoUrl();
-    }, [r2Key]);
+    const videoUrl = getPublicR2Url(r2Key);
 
     const handleMouseEnter = () => {
-        if (videoRef.current && videoUrl) {
+        if (videoRef.current) {
             videoRef.current.play().catch(err => {
                 console.error('Error playing video:', err);
             });
@@ -48,24 +26,6 @@ export function VideoThumbnail({ r2Key, title }: VideoThumbnailProps) {
             videoRef.current.currentTime = 0;
         }
     };
-
-    if (isLoading) {
-        return (
-            <div className="w-32 h-20 bg-zinc-800 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-        );
-    }
-
-    if (error || !videoUrl) {
-        return (
-            <div className="w-32 h-20 bg-zinc-800 rounded-lg flex items-center justify-center">
-                <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-            </div>
-        );
-    }
 
     return (
         <div
