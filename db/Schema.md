@@ -180,6 +180,7 @@ templates
 ├── file_asset_id (FK → assets) [downloadable .zip]
 ├── ae_version_min
 ├── credits_cost (1-4)
+├── orientation (horizontal|vertical)
 ├── likes_count (denormalized)
 ├── downloads_count (denormalized)
 ├── tags_text (denormalized for FTS)
@@ -191,6 +192,7 @@ templates
 **Design Notes:**
 
 - Two preview assets: high-quality for detail pages, low-quality thumbnails for grid listings
+- **Orientation field**: Tracks whether template is horizontal or vertical format
 - Denormalized counts for performance (updated via triggers)
 - `published_at` controls visibility
 - `early_access_until` for premium member early access

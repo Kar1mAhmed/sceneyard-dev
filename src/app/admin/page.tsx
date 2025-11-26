@@ -1,5 +1,6 @@
 import { auth } from "@/features/auth/auth";
 import { getUserCount } from "@/features/users/repo";
+import { getTemplateStats } from "@/features/templates/repo";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -12,9 +13,10 @@ async function AdminDashboardContent() {
     if (session?.user?.role !== "admin") redirect("/home");
 
     const userCount = await getUserCount();
+    const templateStats = await getTemplateStats();
 
     return (
-        <div className="min-h-screen bg-black text-white p-8 font-sans selection:bg-purple-500/30">
+        <div className="min-h-screen bg-black admin-bg-pattern text-white p-8 font-sans selection:bg-purple-500/30">
             <div className="max-w-7xl mx-auto space-y-12">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-white/10 pb-8">
@@ -50,6 +52,31 @@ async function AdminDashboardContent() {
                             <div className="mt-6">
                                 <Link href="/admin/users" className="inline-flex items-center gap-2 text-sm font-medium text-purple-400 hover:text-purple-300 transition-colors">
                                     Manage Users
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Total Templates Card with Action */}
+                    <div className="group relative overflow-hidden bg-zinc-900 rounded-3xl border border-white/5 hover:border-purple-500/50 transition-all duration-300 p-8">
+                        <div className="relative z-10 flex flex-col h-full justify-between">
+                            <div>
+                                <div className="flex justify-between items-start">
+                                    <p className="text-sm font-medium text-gray-400 uppercase tracking-wider">Total Templates</p>
+                                    <span className="text-xs px-2 py-1 rounded-full font-medium bg-purple-500/10 text-purple-400">
+                                        {templateStats.published} Published
+                                    </span>
+                                </div>
+                                <p className="text-4xl font-bold mt-4 text-white">
+                                    {templateStats.total.toLocaleString()}
+                                </p>
+                            </div>
+                            <div className="mt-6">
+                                <Link href="/admin/templates" className="inline-flex items-center gap-2 text-sm font-medium text-purple-400 hover:text-purple-300 transition-colors">
+                                    Manage Templates
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>

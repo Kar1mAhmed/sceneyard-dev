@@ -36,4 +36,11 @@
 			"migrations_dir": "db/migrations"
 		}
 	],
+	
+	"r2_buckets": [
+		{
+			"bucket_name": "sceneyard-r2",
+			"binding": "ASSET_BUCKET"
+		}
+	]
 }

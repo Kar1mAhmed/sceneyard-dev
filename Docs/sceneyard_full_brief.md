@@ -103,9 +103,11 @@ SceneYard operates on a **credit-based subscription model**:
 - **Likes** — User favorites.
 
 ### File Storage
-- Each video links to two assets: a **preview video** and a **project file (.zip)**.
-- All files are stored privately in R2.
-- Downloads happen via short-lived **signed URLs** (10–15 minutes validity).
+- Each template links to three assets: a **high-quality preview video**, a **low-quality thumbnail video (480p webm)**, and a **project file (.zip)**.
+- Preview videos (both HQ and thumbnail) are **publicly accessible** for easy browsing and previews.
+- Project files (.zip) are **private** and require authentication.
+- Zip downloads happen via short-lived **signed URLs** (10–15 minutes validity).
+- Videos use direct public R2 URLs (no signed URLs needed).
 
 ### Database Highlights
 - Every credit change goes through the **credits_ledger** table with a unique idempotency key.
@@ -117,8 +119,9 @@ SceneYard operates on a **credit-based subscription model**:
 
 8. SECURITY MODEL
 ------------------
-- All project files are private; no public R2 links.
-- Downloads require a valid session and credit deduction.
+- **Preview videos are public** - accessible without authentication for browsing and previews.
+- **Project files (.zip) are private** - require valid session and credit deduction.
+- Zip downloads use short-lived signed URLs (10-15 minutes validity).
 - Each download and payment action is idempotent (preventing double charges).
 - Webhooks from Lemon Squeezy verified via HMAC signature.
 - Roles: `user`, `admin`.

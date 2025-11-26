@@ -7,6 +7,7 @@ export interface CloudflareEnv {
     AUTH_SECRET: string;
     SCENEYARD_DB: D1Database;
     ASSETS: Fetcher;
+    ASSET_BUCKET: R2Bucket;
 }
 
 export function getCloudflareEnv(): CloudflareEnv {
@@ -33,4 +34,12 @@ export function getDb() {
         throw new Error('SCENEYARD_DB binding not found');
     }
     return env.SCENEYARD_DB;
+}
+
+export function getR2() {
+    const env = getCloudflareEnv();
+    if (!env.ASSET_BUCKET) {
+        throw new Error('ASSET_BUCKET binding not found');
+    }
+    return env.ASSET_BUCKET;
 }

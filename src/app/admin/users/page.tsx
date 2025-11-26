@@ -5,7 +5,10 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { Suspense } from "react";
 
+import { connection } from 'next/server';
+
 async function UsersList() {
+    await connection();
     await headers();
     const session = await auth();
     // @ts-ignore
@@ -14,7 +17,7 @@ async function UsersList() {
     const users = await getAllUsers();
 
     return (
-        <div className="min-h-screen bg-black text-white p-8 font-sans selection:bg-purple-500/30">
+        <div className="min-h-screen bg-black admin-bg-pattern text-white p-8 font-sans selection:bg-purple-500/30">
             <div className="max-w-7xl mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-white/10 pb-8">
@@ -80,11 +83,14 @@ async function UsersList() {
                                             <span className="text-gray-300">Free Plan</span>
                                         </td>
                                         <td className="p-6 text-gray-400">
-                                            {new Date(user.created_at * 1000).toLocaleDateString(undefined, {
-                                                year: 'numeric',
-                                                month: 'short',
-                                                day: 'numeric'
-                                            })}
+                                            {user.created_at
+                                                ? new Date(user.created_at * 1000).toLocaleDateString(undefined, {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric'
+                                                })
+                                                : 'N/A'
+                                            }
                                         </td>
                                         <td className="p-6 text-right">
                                             <div className="flex items-center justify-end gap-2">
