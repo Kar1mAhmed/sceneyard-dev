@@ -22,7 +22,7 @@
 	
 	"vars": {
 
-		"AUTH_URL": "https://sceneyard-dev.karim77645.workers.dev",
+		"AUTH_URL": "https://admin.sceneyard.com",
 		"AUTH_GOOGLE_ID": "55276151234-v02574cpr27jtptn77ikdg0dgg8jkond.apps.googleusercontent.com",
 		"AUTH_GOOGLE_SECRET": "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",
 		"AUTH_SECRET": "EAD7KI8uvnprD0my6neQydC25YkuFecoDqUsZ3yHAoA=",
