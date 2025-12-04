@@ -10,11 +10,16 @@ import { connection } from 'next/server';
  */
 export async function GET(request: NextRequest) {
     await connection();
+    const startTime = Date.now();
+
     try {
         const searchParams = request.nextUrl.searchParams;
         const r2Key = searchParams.get('r2_key');
 
+        console.log(`[/api/r2/public-url] [GET] Request started - R2 Key: ${r2Key}`);
+
         if (!r2Key) {
+            console.log(`[/api/r2/public-url] [GET] [400] Missing r2_key parameter`);
             return NextResponse.json(
                 { error: 'Missing r2_key parameter' },
                 { status: 400 }
@@ -27,7 +32,7 @@ export async function GET(request: NextRequest) {
         const object = await bucket.get(r2Key);
 
         if (!object) {
-            console.error(`Object not found in R2: ${r2Key}`);
+            console.error(`[/api/r2/public-url] [GET] [404] Object not found in R2: ${r2Key}`);
             return NextResponse.json(
                 { error: 'Asset not found' },
                 { status: 404 }
@@ -48,6 +53,10 @@ export async function GET(request: NextRequest) {
         // Actually, let's just return a URL to this same endpoint with a different parameter
         // that will stream the video
         const streamUrl = `/api/r2/stream?r2_key=${encodeURIComponent(r2Key)}`;
+        const fileSizeMB = (object.size / (1024 * 1024)).toFixed(2);
+        const duration = Date.now() - startTime;
+
+        console.log(`[/api/r2/public-url] [GET] [200] Public URL generated successfully - File: ${r2Key} (${fileSizeMB}MB), Type: ${object.httpMetadata?.contentType}, Duration: ${duration}ms`);
 
         return NextResponse.json({
             url: streamUrl,
@@ -57,7 +66,8 @@ export async function GET(request: NextRequest) {
         });
 
     } catch (error) {
-        console.error('Error generating public URL:', error);
+        const duration = Date.now() - startTime;
+        console.error(`[/api/r2/public-url] [GET] [500] Error generating public URL - Duration: ${duration}ms`, error);
         return NextResponse.json(
             { error: 'Failed to generate public URL', details: error instanceof Error ? error.message : 'Unknown error' },
             { status: 500 }
