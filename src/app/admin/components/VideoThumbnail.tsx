@@ -1,16 +1,14 @@
 'use client';
 
 import { useRef } from 'react';
-import { getPublicR2Url } from '@/lib/r2';
 
 interface VideoThumbnailProps {
-    r2Key: string;
+    videoUrl: string;
     title: string;
 }
 
-export function VideoThumbnail({ r2Key, title }: VideoThumbnailProps) {
+export function VideoThumbnail({ videoUrl, title }: VideoThumbnailProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
-    const videoUrl = getPublicR2Url(r2Key);
 
     const handleMouseEnter = () => {
         if (videoRef.current) {

@@ -282,7 +282,7 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
                                         <td className="p-6">
                                             {template.thumbnail_r2_key ? (
                                                 <VideoThumbnail
-                                                    r2Key={template.thumbnail_r2_key}
+                                                    videoUrl={`https://media.sceneyard.com/${template.thumbnail_r2_key}`}
                                                     title={template.title}
                                                 />
                                             ) : (

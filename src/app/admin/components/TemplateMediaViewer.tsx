@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { FileReplacement } from './FileReplacement';
 import { useRouter } from 'next/navigation';
-import { getPublicR2Url } from '@/lib/r2';
 
 interface TemplateMediaViewerProps {
     templateId: string;
@@ -19,7 +18,7 @@ export function TemplateMediaViewer({ templateId, previewR2Key, thumbnailR2Key, 
     const [error, setError] = useState<string | null>(null);
 
     // Generate direct R2 URL for preview video (no API call needed)
-    const videoUrl = previewR2Key ? getPublicR2Url(previewR2Key) : null;
+    const videoUrl = previewR2Key ? `https://media.sceneyard.com/${previewR2Key}` : null;
 
     const handleRefresh = () => {
         router.refresh();
