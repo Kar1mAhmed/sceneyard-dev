@@ -181,8 +181,59 @@ export async function updateTemplate(id: string, data: Partial<Template> & { cat
     }
 }
 
+
 export async function deleteTemplate(id: string): Promise<void> {
     const db = getDb();
     const now = Math.floor(Date.now() / 1000);
-    await db.prepare('UPDATE templates SET deleted_at = ? WHERE id = ?').bind(now, id).run();
+
+    // 1. Get template with all assets
+    const template = await getTemplateById(id);
+    if (!template) {
+        throw new Error('Template not found');
+    }
+
+    // 2. Collect all R2 keys to delete
+    const r2KeysToDelete: string[] = [];
+
+    if (template.preview_asset?.r2_key) {
+        r2KeysToDelete.push(template.preview_asset.r2_key);
+    }
+    if (template.preview_thumbnail?.r2_key) {
+        r2KeysToDelete.push(template.preview_thumbnail.r2_key);
+    }
+    if (template.file_asset?.r2_key) {
+        r2KeysToDelete.push(template.file_asset.r2_key);
+    }
+
+    // 3. Delete files from R2
+    const { deleteFileFromR2 } = await import('@/lib/r2');
+    for (const r2Key of r2KeysToDelete) {
+        try {
+            await deleteFileFromR2(r2Key);
+            console.log(`[Template Deletion] Deleted R2 file: ${r2Key}`);
+        } catch (error) {
+            console.error(`[Template Deletion] Failed to delete R2 file: ${r2Key}`, error);
+            // Continue with other deletions even if one fails
+        }
+    }
+
+    // 4. Soft-delete asset records
+    const assetIds = [
+        template.preview_asset_id,
+        template.preview_thumbnail_id,
+        template.file_asset_id
+    ].filter(Boolean);
+
+    for (const assetId of assetIds) {
+        await db.prepare('UPDATE assets SET deleted_at = ? WHERE id = ?')
+            .bind(now, assetId)
+            .run();
+    }
+
+    // 5. Soft-delete template
+    await db.prepare('UPDATE templates SET deleted_at = ? WHERE id = ?')
+        .bind(now, id)
+        .run();
+
+    console.log(`[Template Deletion] Template ${id} deleted successfully with ${r2KeysToDelete.length} R2 files`);
 }
