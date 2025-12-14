@@ -14,7 +14,7 @@ function RealityCard({ text, subText, icon, className = "", iconStyle = {} }: Re
         <div className={`group relative flex flex-row items-center justify-between gap-2 hover:bg-[#7558F8] transition-colors duration-300 ${className} min-h-[280px] 2xl:min-h-[353px]`}
             style={{
                 // User requested specific settings - making responsive
-                // padding: '64px', // Moving to className for responsivenesss
+                // padding: '64px', // Moving to className for responsiveness
             }}
         >
             {/* Text Content - Reduced space as requested */}
