@@ -1,33 +1,151 @@
 @import "tailwindcss";
 
-:root {
-  /* SceneYard Brand Colors */
-  --primary: #7558f8;
-  --secondary-cyan: #00fff0;
-  --secondary-yellow: #ffd53e;
-  --secondary-purple: #d77bff;
-  --brand-white: #e8eaf6;
-  --brand-black: #0f111a;
-  
-  /* Default theme */
-  --background: var(--brand-white);
-  --foreground: var(--brand-black);
+/* ============================================
+   SCENEYARD DESIGN SYSTEM
+   ============================================ */
+
+/* ============================================
+   FONT DECLARATIONS - BR Sonoma
+   ============================================ */
+
+@font-face {
+  font-family: 'BR Sonoma';
+  src: url('/fonts/BRSonoma-Light-BF654c452608e0f.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
 }
 
+@font-face {
+  font-family: 'BR Sonoma';
+  src: url('/fonts/BRSonoma-Regular-BF654c45266c042.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Sonoma';
+  src: url('/fonts/BRSonoma-Medium-BF654c45266edd1.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Sonoma';
+  src: url('/fonts/BRSonoma-SemiBold-BF654c45268c340.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BR Sonoma';
+  src: url('/fonts/BRSonoma-Bold-BF654c4526823f5.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
+   COLOR SYSTEM
+   ============================================ */
+
+:root {
+  /* Absolute Colors */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  
+  /* Primary Colors - Purple Scale */
+  --color-primary-55: #6725F6;
+  --color-primary-60: #7558F8;
+  --color-primary-70: #947CFF;
+  --color-primary-80: #BEAFFF;
+  
+  /* Primary Colors - Accent Colors */
+  --color-primary-90: #00FFF0;  /* Cyan */
+  --color-primary-95: #D77BFF;  /* Purple Light */
+  --color-primary-97: #FFD53E;  /* Yellow */
+  --color-primary-99: #E8EAF6;  /* Purple Lightest */
+  
+  /* Dark Shades */
+  --color-dark-03: #070908;
+  --color-dark-08: #0E0E10;
+  --color-dark-12: #1C1C21;
+  --color-dark-15: #232329;
+  --color-dark-20: #252E37;
+  --color-dark-25: #383B45;
+  --color-dark-30: #474752;
+  
+  /* Grey Shades */
+  --color-grey-40: #626A6C;
+  --color-grey-50: #7F7C83;
+  --color-grey-70: #A1A0B5;
+  --color-grey-90: #E4E4E6;
+  --color-grey-95: #F4F4F3;
+  --color-grey-97: #F7F7F8;
+  --color-grey-99: #FCFCFD;
+  
+  /* Semantic Colors - Default to dark theme */
+  --background: var(--color-dark-03);
+  --foreground: var(--color-white);
+  --primary: var(--color-primary-60);
+  --primary-hover: var(--color-primary-70);
+  --accent-cyan: var(--color-primary-90);
+  --accent-yellow: var(--color-primary-97);
+  --accent-purple: var(--color-primary-95);
+}
+
+/* ============================================
+   TAILWIND THEME INTEGRATION
+   ============================================ */
+
 @theme inline {
-  /* Brand Colors */
-  --color-primary: var(--primary);
-  --color-secondary-cyan: var(--secondary-cyan);
-  --color-secondary-yellow: var(--secondary-yellow);
-  --color-secondary-purple: var(--secondary-purple);
-  --color-brand-white: var(--brand-white);
-  --color-brand-black: var(--brand-black);
+  /* Absolute Colors */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  
+  /* Primary Purple Scale */
+  --color-primary-55: #6725F6;
+  --color-primary-60: #7558F8;
+  --color-primary-70: #947CFF;
+  --color-primary-80: #BEAFFF;
+  
+  /* Primary Accents */
+  --color-primary-90: #00FFF0;
+  --color-primary-95: #D77BFF;
+  --color-primary-97: #FFD53E;
+  --color-primary-99: #E8EAF6;
+  
+  /* Dark Shades */
+  --color-dark-03: #070908;
+  --color-dark-08: #0E0E10;
+  --color-dark-12: #1C1C21;
+  --color-dark-15: #232329;
+  --color-dark-20: #252E37;
+  --color-dark-25: #383B45;
+  --color-dark-30: #474752;
+  
+  /* Grey Shades */
+  --color-grey-40: #626A6C;
+  --color-grey-50: #7F7C83;
+  --color-grey-70: #A1A0B5;
+  --color-grey-90: #E4E4E6;
+  --color-grey-95: #F4F4F3;
+  --color-grey-97: #F7F7F8;
+  --color-grey-99: #FCFCFD;
   
   /* Semantic Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-purple: var(--accent-purple);
   
-  /* Font Families */
+  /* Typography */
   --font-sans: 'BR Sonoma', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   
   /* Font Weights */
@@ -36,23 +154,50 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  
+  /* Spacing Scale */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+  
+  /* Border Radius */
+  --radius-sm: 0.5rem;     /* 8px */
+  --radius-md: 0.75rem;    /* 12px */
+  --radius-lg: 1rem;       /* 16px */
+  --radius-xl: 1.5rem;     /* 24px */
+  --radius-2xl: 2rem;      /* 32px */
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-glow-primary: 0 0 40px -10px rgba(117, 88, 248, 0.4);
+  --shadow-glow-cyan: 0 0 40px -10px rgba(0, 255, 240, 0.4);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: var(--brand-black);
-    --foreground: var(--brand-white);
-  }
-}
+/* ============================================
+   BASE STYLES
+   ============================================ */
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   font-weight: var(--font-weight-regular);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Animations */
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -66,6 +211,17 @@ body {
   from {
     opacity: 0;
     transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
@@ -100,24 +256,15 @@ body {
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.6s ease-out;
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 15s ease infinite;
-}
-
-/* Toast Animations */
 @keyframes slide-in-right {
   from {
     transform: translateX(100%);
@@ -129,8 +276,26 @@ body {
   }
 }
 
-.animate-slide-in-right {
-  animation: slide-in-right 0.3s ease-out;
+/* Animation Utility Classes */
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out;
+}
+
+.animate-slide-in-down {
+  animation: slide-in-down 0.6s ease-out;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
 }
 
 .animate-gradient-text {
@@ -142,6 +307,15 @@ body {
   animation: shine 1.5s ease-in-out;
 }
 
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+/* Animation Delays */
 .animation-delay-200 {
   animation-delay: 0.2s;
 }
@@ -162,8 +336,80 @@ body {
   animation-delay: 2s;
 }
 
+/* ============================================
+   UTILITY PATTERNS
+   ============================================ */
+
+/* Glassmorphism Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary-60), var(--color-primary-90));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Admin Panel Dotted Background Pattern */
 .admin-bg-pattern {
   background-image: radial-gradient(circle, rgba(117, 88, 248, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
+}
+
+/* Navbar Link Styling */
+.navbar-link {
+  position: relative;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+.navbar-link::after {
+  content: '';
+  position: absolute;
+  bottom: 20px;
+  left: 40px;
+  right: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary-60), var(--color-primary-90));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.navbar-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(var(--rotation));
+  }
+  50% {
+    transform: translateY(-20px) rotate(var(--rotation));
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed-1 {
+  animation: float 7s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-float-delayed-2 {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Icon Glow */
+.icon-glow {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
 }

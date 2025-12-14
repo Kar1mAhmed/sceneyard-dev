@@ -8,6 +8,7 @@ description: Whenever you work in `src/` (pages, components, hooks).
   - `src/components/`  shared UI components (buttons, layout, inputs, modals).
   - `src/features/<domain>/`  domain-specific UI (cards, forms, hooks).
   - `src/styles/`  global/theme styles.
+  - All admin UI should stay in app/admin folder, UI for admin is different from the main ui
 
 - Data flow:
   - Frontend never talks directly to the DB.

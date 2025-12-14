@@ -1,7 +1,7 @@
 # SceneYard - Project Legend
 
-**Last Updated**: November 26, 2025  
-**Current Phase**: Admin Dashboard & Templates System Development  
+**Last Updated**: December 11, 2025  
+**Current Phase**: Public Website UI Development - Landing Page Components  
 **Tech Stack**: Next.js 16 + Cloudflare Workers + D1 + R2
 
 ---
@@ -319,23 +319,124 @@ npm run build        # Production build
 
 ## 🎨 Design System
 
-### **Colors**
-- **Primary**: Purple (`#7558f8`)
-- **Secondary**: Cyan (`#00fff0`), Yellow (`#ffd53e`)
-- **Background**: Black (`#0f111a`)
-- **Text**: White (`#e8eaf6`)
+### **Color Palette**
+
+#### Absolute Colors
+- **White**: `#FFFFFF`
+- **Black**: `#000000`
+
+#### Primary Colors - Purple Scale
+- **Primary 55**: `#6725F6` (Deep purple)
+- **Primary 60**: `#7558F8` (Main brand purple)
+- **Primary 70**: `#947CFF` (Light purple)
+- **Primary 80**: `#BEAFFF` (Lighter purple)
+
+#### Primary Colors - Accents
+- **Primary 90**: `#00FFF0` (Cyan)
+- **Primary 95**: `#D77BFF` (Purple light)
+- **Primary 97**: `#FFD53E` (Yellow)
+- **Primary 99**: `#E8EAF6` (Purple lightest)
+
+#### Dark Shades (Backgrounds)
+- **Dark 03**: `#070908` (Main background)
+- **Dark 08**: `#0E0E10` (Card backgrounds)
+- **Dark 12-30**: Various dark shades for depth
+
+#### Grey Shades (Text & UI)
+- **Grey 40**: `#626A6C`
+- **Grey 50**: `#7F7C83`
+- **Grey 70**: `#A1A0B5` (Body text)
+- **Grey 90-99**: Light greys for subtle elements
 
 ### **Typography**
-- **Font**: BR Sonoma (custom), fallback to system-ui
+- **Font Family**: BR Sonoma (all weights: Light, Regular, Medium, SemiBold, Bold)
+- **Fallback**: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
+- **Font Loading**: Preloaded OTF files with `font-display: swap`
 
-### **Patterns**
-- **Dotted background**: Subtle purple dots on admin pages
-- **Glassmorphism**: Transparent overlays with blur
-- **Rounded corners**: 2xl (16px) for cards, xl (12px) for inputs
+### **Design Tokens**
+- **Spacing**: xs (4px) to 3xl (64px)
+- **Border Radius**: sm (8px) to full (9999px)
+- **Shadows**: Standard shadows + glow effects (primary, cyan)
+
+### **Utility Patterns**
+- **Glassmorphism**: `.glass` - Frosted glass effect with backdrop blur
+- **Gradient Text**: `.gradient-text` - Purple to cyan gradient
+- **Animations**: fade-in, float, pulse-glow, slide-in, etc.
+- **Admin Pattern**: Dotted background for admin pages only
 
 ---
 
-## � Recent Changes (Last Session)
+## 📝 Recent Changes (Last Session)
+
+### **December 11, 2025 - Landing Page Navbar Component**
+1. ✅ **Navbar Component Creation**:
+   - Created reusable `Navbar.tsx` component in `src/components/`
+   - Implemented glassmorphism effect using `.glass` utility class
+   - Added SceneYard logo with gradient SVG (purple to cyan)
+   - Included navigation links for Library and Pricing
+
+2. ✅ **Styling & Interactions**:
+   - Added `.navbar-link` utility class with animated gradient underline
+   - Implemented hover effects with smooth transitions
+   - Used BR Sonoma font and design system color tokens
+   - Fixed positioning at top of page with proper z-index
+
+3. ✅ **Integration**:
+   - Integrated navbar into landing page (`page.tsx`)
+   - Adjusted hero section padding to account for fixed navbar
+   - Fixed import path for module resolution
+   - Verified appearance in browser with screenshots
+
+### **December 9, 2025 - Design System Implementation**
+1. ✅ **Complete Color Palette**:
+   - Implemented all color palettes: Absolute (White/Black), Primary purples (55-80), Accents (90, 95, 97, 99)
+   - Added Dark shades (03-30) for backgrounds and depth
+   - Added Grey shades (40-99) for text and UI elements
+   - Organized as CSS custom properties in `globals.css`
+
+2. ✅ **BR Sonoma Font Integration**:
+   - Added font-face declarations for all 5 weights (Light, Regular, Medium, SemiBold, Bold)
+   - Implemented font preloading in `layout.tsx` for better performance
+   - Used `font-display: swap` to prevent FOUT
+   - Font files in OTF format (can be optimized to WOFF2 later)
+
+3. ✅ **Design Tokens & Utilities**:
+   - Created comprehensive CSS custom properties for Tailwind v4
+   - Added spacing scale (xs to 3xl), border radius, shadows
+   - Implemented utility classes: `.glass`, `.gradient-text`, animation classes
+   - Organized design system with clear sections and comments
+
+4. ✅ **Landing Page Updates**:
+   - Updated `page.tsx` to use new color tokens (dark-03 bg, primary-60 purple)
+   - Applied gradient text effect to headline
+   - Enhanced animations (fade-in-up, pulse-glow)
+   - Improved visual hierarchy and spacing
+   - Added second background glow (cyan accent)
+
+5. ✅ **SEO & Performance**:
+   - Updated metadata with better descriptions and keywords
+   - Added Open Graph tags for social sharing
+   - Preloaded critical font files
+   - Optimized font loading strategy
+
+### **December 8, 2025 - R2 & Template Deletion Enhancements**
+1. ✅ **R2 Storage Fixes**:
+   - Fixed `R2_PUBLIC_DOMAIN` environment variable issue (exposed to client-side).
+   - Configured CORS for R2 bucket to allow uploads from admin panel.
+   - Refactored `VideoThumbnail` and `TemplateMediaViewer` to use hardcoded public URLs for better stability.
+
+2. ✅ **Template Management**:
+   - Implemented **Cascade Deletion**: Deleting a template now automatically removes associated stored files (preview, thumbnail, download) from R2.
+   - Prevents storage leaks and reduces costs.
+   - Soft-deletes database records for audit trail.
+
+### **December 4, 2025 - API Logging Implementation**
+1. ✅ **Comprehensive API Endpoint Logging**:
+   - Added structured logging to all 11 API endpoints.
+   - **Categories**: GET, POST, PUT, DELETE with user tracking.
+   - **R2 Storage**: Download, upload, stream, presigned-url logs with file metadata.
+   - **Templates**: Create & Assets logs with credit costs and asset IDs.
+   - All logs include: timestamp, user email, method, status, duration, and sanitized parameters.
 
 ### **November 26, 2025 - Session 2**
 1. ✅ **Edit Template Form Enhancements**:
@@ -397,27 +498,37 @@ npm run build        # Production build
 
 ## 📈 Next Steps
 
-1. **Debug R2 Upload Issues**
-   - Investigate 503 errors during template upload
-   - Check R2 bucket configuration
-   - Test with smaller files
-   - Review console logs for detailed error messages
+1. **Landing Page Development**
+   - Build hero section with dynamic background effects
+   - Create demo section with video template previews
+   - Add pricing section with subscription tiers
+   - Implement FAQ section
+   - Design footer with links and branding
 
-2. **User Management Actions**
+2. **Component Library**
+   - Create reusable button components (primary, secondary, outline)
+   - Build input field components with validation
+   - Design card components for templates
+   - Implement navigation bar
+   - Create modal/dialog components
+
+3. **Templates Marketplace (Public)**
+   - Build templates browse page
+   - Implement search and filtering
+   - Create template detail page
+   - Add preview video player
+   - Design download flow
+
+4. **User Management Actions (Admin)**
    - Implement role editing (user ↔ admin)
    - Add user deletion with confirmation
    - Add user search and filtering
 
-3. **Template Features**
-   - Implement template search and filtering
-   - Add bulk actions (publish/unpublish multiple)
-   - Improve template preview experience
-
-4. **Subscription System**
+5. **Subscription System**
    - Implement plans management
    - Add subscription creation/update
    - Integrate Lemon Squeezy webhooks
 
 ---
 
-**Status**: Active development, admin dashboard phase complete with enhanced template management. Edit form now matches Create form UI/UX. Toast notifications and modern sorting implemented. Ready to debug upload issues and move to subscription system.
+**Status**: Design system foundation complete. Admin dashboard fully functional. Now focusing on public-facing website UI with comprehensive color palette, BR Sonoma typography, and organized design tokens. Ready to build out landing page sections and component library.
