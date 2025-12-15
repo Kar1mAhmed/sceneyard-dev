@@ -31,16 +31,17 @@ export default async function FeaturedTemplates() {
             <FeaturedSection videos={featuredVideos} />
 
             {/* Bottom Ribbon */}
-            <div className="mt-[-2px] z-10 relative">
+           <div className="mb-[-2px] z-10 relative">
                 <Ribbon
                     items={[
-                        { text: "DISCOVER MORE", icon: "fx" },
-                        { text: "UNLIMITED DOWNLOADS", icon: "timer" },
-                        { text: "CREATIVE FREEDOM", icon: "home" },
+                        { text: "FEATURED TEMPLATES", icon: "box" },
+                        { text: "HIGH QUALITY", icon: "T" },
+                        { text: "SCENEYARD EXCLUSIVE", icon: "camera" },
                     ]}
                     backgroundColor="var(--color-primary-95)"
                     textColor="#FFFFFF"
-                // borderColor="rgba(255,255,255,0.2)"
+                    // borderColor="rgba(255,255,255,0.2)"
+                    className="border-t border-b border-white/10"
                 />
             </div>
         </section>

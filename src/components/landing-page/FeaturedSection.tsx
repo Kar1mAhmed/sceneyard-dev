@@ -20,7 +20,7 @@ export default function FeaturedSection({ videos }: FeaturedSectionProps) {
     const repeatedVideos = Array(10).fill(videos).flat();
 
     return (
-        <div className="relative w-full overflow-hidden bg-primary-95 py-10" >
+        <div className="relative w-full overflow-hidden bg-primary-95" >
             <div className="flex animate-marquee hover:[animation-play-state:paused]" style={{ width: "max-content" }}>
                 {repeatedVideos.map((video, index) => (
                     <div
@@ -34,7 +34,7 @@ export default function FeaturedSection({ videos }: FeaturedSectionProps) {
                 */}
                         <video
                             src={video.thumbnailUrl}
-                            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                            className="w-full h-full object-cover transition-opacity duration-300"
                             autoPlay
                             muted
                             loop
