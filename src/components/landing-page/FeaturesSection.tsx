@@ -102,12 +102,12 @@ export default function FeaturesSection() {
 
                         {/* Divider 2 Top Segment */}
                         <div
-                            className="absolute left-2/3 top-12 bottom-[calc(55%+1rem)] w-[2px] hidden md:block z-0"
+                            className="absolute left-2/3 top-12 bottom-[calc(55%+1rem)] w-[1px] hidden md:block z-0"
                             style={{ background: 'var(--color-grid-line)' }}
                         />
                         {/* Divider 2 Bottom Segment */}
                         <div
-                            className="absolute left-2/3 top-[calc(55%+1rem)] bottom-12 w-[2px] hidden md:block z-0"
+                            className="absolute left-2/3 top-[calc(55%+1rem)] bottom-12 w-[1px] hidden md:block z-0"
                             style={{ background: 'var(--color-grid-line)' }}
                         />
 
