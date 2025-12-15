@@ -85,7 +85,7 @@ export async function uploadToR2(
  */
 export async function generateLowQualityVideo(
     videoFile: File,
-    targetHeight: number = 480
+    targetHeight: number = 720
 ): Promise<Blob> {
     return new Promise((resolve, reject) => {
         const video = document.createElement('video');
@@ -101,10 +101,19 @@ export async function generateLowQualityVideo(
         video.muted = true;
 
         video.onloadedmetadata = () => {
-            // Calculate dimensions maintaining aspect ratio
+            // Calculate dimensions maintaining aspect ratio, ensuring SHORT edge is at least targetHeight (720px)
             const aspectRatio = video.videoWidth / video.videoHeight;
-            canvas.height = targetHeight;
-            canvas.width = Math.round(targetHeight * aspectRatio);
+
+            if (video.videoWidth > video.videoHeight) {
+                // Horizontal video: Scale height to targetHeight, width scales proportionally
+                canvas.height = targetHeight;
+                canvas.width = Math.round(targetHeight * aspectRatio);
+            } else {
+                // Vertical or Square video: Scale WIDTH to targetHeight, height scales proportionally
+                // This ensures for 9:16 vertical video, we get 720x1280 instead of 405x720
+                canvas.width = targetHeight;
+                canvas.height = Math.round(targetHeight / aspectRatio);
+            }
 
             // Set up MediaRecorder to capture the canvas
             const stream = canvas.captureStream(30); // 30 FPS
@@ -115,7 +124,7 @@ export async function generateLowQualityVideo(
             const chunks: Blob[] = [];
             const mediaRecorder = new MediaRecorder(stream, {
                 mimeType: 'video/webm;codecs=vp9',
-                videoBitsPerSecond: 500000 // 500 kbps for low quality
+                videoBitsPerSecond: 2500000 // 2.5 Mbps for better quality
             });
 
             mediaRecorder.ondataavailable = (e) => {
@@ -136,12 +145,17 @@ export async function generateLowQualityVideo(
             };
 
             // Start recording
-            mediaRecorder.start();
+            mediaRecorder.start(100); // Request chunks every 100ms
 
             // Draw frames to canvas
             const drawFrame = () => {
                 if (video.paused || video.ended) {
-                    mediaRecorder.stop();
+                    // Small buffer to ensure last frames are processed
+                    setTimeout(() => {
+                        if (mediaRecorder.state === 'recording') {
+                            mediaRecorder.stop();
+                        }
+                    }, 100);
                     return;
                 }
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -185,7 +199,7 @@ export async function uploadTemplateAssets(
 
         // 3. Generate thumbnail
         onProgress?.('Generating thumbnail...', 40);
-        const thumbnailBlob = await generateLowQualityVideo(previewVideo, 480);
+        const thumbnailBlob = await generateLowQualityVideo(previewVideo, 720);
         const thumbnailFile = new File([thumbnailBlob], `thumbnail_${previewVideo.name}`, {
             type: 'video/webm'
         });
@@ -267,7 +281,7 @@ export async function replaceTemplateFile(
 
             // 3. Generate new thumbnail
             onProgress?.('Generating thumbnail...', 50);
-            const thumbnailBlob = await generateLowQualityVideo(file, 480);
+            const thumbnailBlob = await generateLowQualityVideo(file, 720);
             const thumbnailFile = new File([thumbnailBlob], `thumbnail_${file.name}`, {
                 type: 'video/webm'
             });
