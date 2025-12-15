@@ -5,7 +5,7 @@ export default function MidCTA() {
     return (
         <div className="mb-32 flex flex-col items-center gap-24">
             {/* CTA Buttons - Copied from HeroSection style */}
-            <div className="flex flex-col md:flex-row items-center gap-6 z-10 mb-16">
+            <div className="flex flex-col md:flex-row items-center gap-6 z-10">
                 {/* Start 7-Day Free Trial */}
                 <Link
                     href="/pricing"
@@ -39,7 +39,7 @@ export default function MidCTA() {
                 </Link>
             </div>
 
-            <Ribbon
+            <Ribbon 
                 items={[
                     { text: "CREATIVE FREEDOM", icon: "sun" },
                     { text: "FAST WORKFLOW", icon: "timer" },
@@ -52,7 +52,7 @@ export default function MidCTA() {
                 textColor="var(--color-grid-line)"
                 borderColor="var(--color-grid-line)"
                 iconColor="var(--color-grid-line)"
-                className="opacity-80"
+                className="opacity-80 my-32"
             />
         </div>
     );

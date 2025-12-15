@@ -5,6 +5,7 @@ import RealitySection from "@/src/components/landing-page/RealitySection";
 import GridBackground from "@/src/components/layout/GridBackground";
 import FeaturedTemplates from "@/src/components/landing-page/FeaturedTemplates";
 import SkillValueSection from "@/src/components/landing-page/SkillValueSection";
+import FeaturesSection from "@/src/components/landing-page/FeaturesSection";
 import MidCTA from "@/src/components/landing-page/MidCTA";
 
 export default function Home() {
@@ -27,6 +28,8 @@ export default function Home() {
         <SkillValueSection />
 
         <MidCTA />
+
+        <FeaturesSection />
       </GridBackground>
     </main>
   );
