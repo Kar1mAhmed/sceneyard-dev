@@ -156,7 +156,6 @@ export async function createTemplate(data: {
         data.ae_version_min || null,
         data.credits_cost,
         data.orientation,
-        data.orientation,
         data.tags || '',
         data.is_featured ? 1 : 0,
         now,
