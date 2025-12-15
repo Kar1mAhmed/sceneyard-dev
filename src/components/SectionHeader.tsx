@@ -9,7 +9,7 @@ interface SectionHeaderProps {
 
 export default function SectionHeader({ title, subtitle, description, className = "" }: SectionHeaderProps) {
     return (
-        <div className={`relative w-full py-20 flex flex-col items-center justify-center text-center ${className}`}>
+        <div className={`relative w-full py-20 flex flex-col items-center justify-center text-center  ${className}`}>
             {/* Top Horizontal Line */}
             <div
                 className="absolute top-0 left-0 right-0 h-[1px]"
@@ -25,7 +25,7 @@ export default function SectionHeader({ title, subtitle, description, className 
                     className="text-white font-light leading-none text-center"
                     style={{
                         fontFamily: 'var(--font-poppins), sans-serif',
-                        fontSize: 'clamp(48px, 6vw, 84px)', // Scaling up to 96px
+                        fontSize: 'clamp(48px, 6vw, 84px)', 
                         letterSpacing: '-1.12px',
                         fontWeight: 300,
                     }}
