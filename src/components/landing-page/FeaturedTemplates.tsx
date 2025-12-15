@@ -12,7 +12,7 @@ export default async function FeaturedTemplates() {
     })).filter(v => v.thumbnailUrl); // Only show ones with thumbnails/videos
 
     return (
-        <section className="relative w-full overflow-hidden bg-black py-24">
+        <section className="relative w-full overflow-hidden bg-primary-95 py-24">
             {/* Top Ribbon */}
             <div className="mb-[-2px] z-10 relative">
                 <Ribbon

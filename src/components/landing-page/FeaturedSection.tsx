@@ -25,7 +25,7 @@ export default function FeaturedSection({ videos }: FeaturedSectionProps) {
                 {repeatedVideos.map((video, index) => (
                     <div
                         key={`${video.id}-${index}`}
-                        className="relative w-[400px] h-[225px] flex-shrink-0 mx-4 rounded-xl overflow-hidden border border-white/10 group"
+                        className="relative w-[400px] h-[225px] flex-shrink-0 mx-4 overflow-hidden border border-white/10 group"
                     >
                         {/* 
                    Video Element 
