@@ -3,6 +3,8 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { VideoThumbnail } from './VideoThumbnail';
+import { toggleFeaturedTemplate } from '../actions';
+import { useRouter } from 'next/navigation';
 
 interface Category {
     id: string;
@@ -20,6 +22,7 @@ interface Template {
     thumbnail_r2_key?: string;
     orientation: 'horizontal' | 'vertical';
     categories?: Category[];
+    is_featured?: boolean;
 }
 
 interface TemplatesTableProps {
@@ -37,6 +40,18 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
     const [categoryFilter, setCategoryFilter] = useState<string>('all');
     const [orientationFilter, setOrientationFilter] = useState<OrientationFilter>('all');
     const [searchQuery, setSearchQuery] = useState('');
+    const router = useRouter();
+
+    const handleToggleFeatured = async (id: string) => {
+        try {
+            await toggleFeaturedTemplate(id);
+            // Optimistic update could happen here, but revalidatePath in action handles refresh
+            router.refresh();
+        } catch (error) {
+            console.error("Failed to toggle featured status", error);
+            alert("Failed to update featured status");
+        }
+    };
 
     // Filter and sort templates
     const filteredAndSortedTemplates = useMemo(() => {
@@ -272,6 +287,7 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
                                     <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Status</th>
                                     <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Downloads</th>
                                     <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Likes</th>
+                                    <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Featured</th>
                                     <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Published</th>
                                     <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider text-right">Actions</th>
                                 </tr>
@@ -317,6 +333,20 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
                                         </td>
                                         <td className="p-6 text-gray-300">{template.downloads_count}</td>
                                         <td className="p-6 text-gray-300">{template.likes_count}</td>
+                                        <td className="p-6">
+                                            <button
+                                                onClick={() => handleToggleFeatured(template.id)}
+                                                className={`p-2 rounded-full transition-colors ${template.is_featured
+                                                    ? 'bg-yellow-500/10 text-yellow-400 hover:bg-yellow-500/20'
+                                                    : 'bg-white/5 text-gray-600 hover:text-gray-400 hover:bg-white/10'
+                                                    }`}
+                                                title={template.is_featured ? "Unfeature" : "Feature"}
+                                            >
+                                                <svg className="w-5 h-5" fill={template.is_featured ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                                </svg>
+                                            </button>
+                                        </td>
                                         <td className="p-6 text-gray-400 text-sm">
                                             {template.published_at
                                                 ? new Date(template.published_at * 1000).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })

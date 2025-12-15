@@ -186,6 +186,7 @@ templates
 ├── tags_text (denormalized for FTS)
 ├── published_at (null = draft)
 ├── early_access_until
+├── is_featured (boolean) [default: false]
 └── deleted_at (soft delete)
 ```
 

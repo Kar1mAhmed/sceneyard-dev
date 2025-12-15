@@ -9,7 +9,7 @@ const geistMono = Geist_Mono({
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["300", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-poppins",
 });
 
@@ -33,35 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Preload BR Sonoma Fonts for better performance */}
-        <link
-          rel="preload"
-          href="/fonts/BRSonoma-Regular-BF654c45266c042.otf"
-          as="font"
-          type="font/otf"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/BRSonoma-Medium-BF654c45266edd1.otf"
-          as="font"
-          type="font/otf"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/BRSonoma-SemiBold-BF654c45268c340.otf"
-          as="font"
-          type="font/otf"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/BRSonoma-Bold-BF654c4526823f5.otf"
-          as="font"
-          type="font/otf"
-          crossOrigin="anonymous"
-        />
+
       </head>
       <body className={`antialiased ${geistMono.variable} ${poppins.variable}`}>
         {children}

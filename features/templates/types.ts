@@ -22,6 +22,7 @@ export interface Template {
     tags_text: string;
     published_at: number | null;
     early_access_until: number | null;
+    is_featured?: boolean;
     deleted_at: number | null;
     created_at: number;
     updated_at: number;

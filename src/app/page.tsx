@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import Navbar from "@/src/components/Navbar";
 import HeroSection from "@/src/components/landing-page/HeroSection";
 import RealitySection from "@/src/components/landing-page/RealitySection";
 import GridBackground from "@/src/components/layout/GridBackground";
+import FeaturedTemplates from "@/src/components/landing-page/FeaturedTemplates";
 
 export default function Home() {
   return (
@@ -15,6 +17,10 @@ export default function Home() {
       {/* Rest of the page content starts here */}
       <GridBackground>
         <RealitySection />
+
+        <Suspense fallback={<div className="h-[400px] w-full bg-black" />}>
+          <FeaturedTemplates />
+        </Suspense>
       </GridBackground>
     </main>
   );

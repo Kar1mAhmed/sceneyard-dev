@@ -60,6 +60,30 @@ export async function getTemplatesWithThumbnails(
     return results;
 }
 
+import { unstable_cache } from 'next/cache';
+
+export const getFeaturedTemplates = unstable_cache(
+    async (limit = 10): Promise<(Template & { thumbnail_r2_key?: string })[]> => {
+        const db = getDb();
+        const { results } = await db.prepare(`
+            SELECT 
+                t.*,
+                a.r2_key as thumbnail_r2_key
+            FROM templates t
+            LEFT JOIN assets a ON t.preview_thumbnail_id = a.id
+            WHERE t.is_featured = 1 AND t.deleted_at IS NULL
+            ORDER BY t.created_at DESC
+            LIMIT ?
+        `).bind(limit).all<Template & { thumbnail_r2_key?: string }>();
+        return results;
+    },
+    ['featured-templates'], // Cache key
+    {
+        revalidate: 86400, // 1 day in seconds
+        tags: ['featured-templates']
+    }
+);
+
 
 import { getTemplateCategories, setTemplateCategories } from '../categories/repo';
 
@@ -111,6 +135,7 @@ export async function createTemplate(data: {
     orientation: 'horizontal' | 'vertical';
     ae_version_min?: string;
     tags?: string;
+    is_featured?: boolean;
 }): Promise<Template> {
     const db = getDb();
     const now = Math.floor(Date.now() / 1000);
@@ -119,8 +144,8 @@ export async function createTemplate(data: {
     await db.prepare(`
         INSERT INTO templates (
             id, title, description, preview_asset_id, preview_thumbnail_id, file_asset_id, 
-            ae_version_min, credits_cost, orientation, tags_text, created_at, updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ae_version_min, credits_cost, orientation, tags_text, is_featured, created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).bind(
         templateId,
         data.title,
@@ -131,7 +156,9 @@ export async function createTemplate(data: {
         data.ae_version_min || null,
         data.credits_cost,
         data.orientation,
+        data.orientation,
         data.tags || '',
+        data.is_featured ? 1 : 0,
         now,
         now
     ).run();
@@ -149,6 +176,7 @@ export async function createTemplate(data: {
         likes_count: 0,
         downloads_count: 0,
         tags_text: data.tags || '',
+        is_featured: data.is_featured || false,
         published_at: null,
         early_access_until: null,
         deleted_at: null,
@@ -168,6 +196,7 @@ export async function updateTemplate(id: string, data: Partial<Template> & { cat
     if (data.ae_version_min !== undefined) { sets.push('ae_version_min = ?'); values.push(data.ae_version_min); }
     if (data.tags_text !== undefined) { sets.push('tags_text = ?'); values.push(data.tags_text); }
     if (data.published_at !== undefined) { sets.push('published_at = ?'); values.push(data.published_at); }
+    if (data.is_featured !== undefined) { sets.push('is_featured = ?'); values.push(data.is_featured ? 1 : 0); }
 
     if (sets.length > 0) {
         sets.push('updated_at = ?');
