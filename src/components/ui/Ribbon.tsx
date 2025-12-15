@@ -25,6 +25,7 @@ interface RibbonProps {
     borderWidth?: number;
     height?: string | number;
     gap?: number;
+    iconColor?: string;
     className?: string;
 }
 
@@ -38,6 +39,7 @@ export function Ribbon({
     borderWidth = 1,
     height = 64,
     gap = 32,
+    iconColor, // Optional: defaults to textColor if not provided
     className,
 }: RibbonProps) {
 
@@ -45,6 +47,8 @@ export function Ribbon({
     // In a real marquee we'd double this, but for a potentially static strip we just repeat enough times.
     // We'll repeat the items 10 times to be safe for a very wide strip.
     const repeatedItems = Array(20).fill(items).flat();
+
+    const actualIconColor = iconColor || textColor;
 
     return (
         <div
@@ -74,14 +78,20 @@ export function Ribbon({
                             {item.text}
                         </span>
                         {item.icon && (
-                            <div className="relative w-12 h-12 shrink-0">
-                                <Image
-                                    src={`/icons/white/${item.icon}.svg`}
-                                    alt=""
-                                    fill
-                                    className="object-contain"
-                                />
-                            </div>
+                            <div
+                                className="relative w-12 h-12 shrink-0"
+                                style={{
+                                    backgroundColor: actualIconColor,
+                                    maskImage: `url('/icons/white/${item.icon}.svg')`,
+                                    WebkitMaskImage: `url('/icons/white/${item.icon}.svg')`,
+                                    maskSize: 'contain',
+                                    WebkitMaskSize: 'contain',
+                                    maskRepeat: 'no-repeat',
+                                    WebkitMaskRepeat: 'no-repeat',
+                                    maskPosition: 'center',
+                                    WebkitMaskPosition: 'center'
+                                }}
+                            />
                         )}
                     </div>
                 ))}

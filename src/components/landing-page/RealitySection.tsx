@@ -59,7 +59,7 @@ function RealityCard({ text, subText, icon, className = "", iconStyle = {} }: Re
 }
 
 export default function RealitySection() {
-    const borderColor = 'rgba(148, 124, 255, 0.3)';
+    const borderColor = 'var(--color-grid-line)';
 
     return (
         <div className="flex flex-col w-full relative">

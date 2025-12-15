@@ -18,7 +18,7 @@ export default function GridBackground({ children }: { children?: React.ReactNod
                 style={{
                     left: 'var(--grid-margin)',
                     width: '1px',
-                    background: 'rgba(148, 124, 255, 0.3)'
+                    background: 'var(--color-grid-line)'
                 }}
             />
             {/* Right Line */}
@@ -27,7 +27,7 @@ export default function GridBackground({ children }: { children?: React.ReactNod
                 style={{
                     right: 'var(--grid-margin)',
                     width: '1px',
-                    background: 'rgba(148, 124, 255, 0.3)'
+                    background: 'var(--color-grid-line)'
                 }}
             />
 

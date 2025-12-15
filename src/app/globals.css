@@ -47,6 +47,7 @@
   
   /* Layout Variables */
   --grid-margin: 7%;
+  --color-grid-line: rgba(148, 124, 255, 0.3);
 
   /* Semantic Colors - Default to dark theme */
   --background: var(--color-dark-03);
