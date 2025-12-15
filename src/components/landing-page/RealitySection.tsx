@@ -71,7 +71,7 @@ export default function RealitySection() {
                         <div className="flex flex-col items-center gap-2">
                             <div className="flex flex-row items-center justify-center gap-[0.2em] whitespace-nowrap w-full z-10">
                                 <SelectionBox text="YOU KNOW HOW" color="var(--color-primary-95)" />
-                                <span>TO BUILD IT-</span>
+                                <span>TO BUILD IT</span>
                             </div>
                             <div className="flex flex-row items-center justify-center gap-[0.2em] whitespace-nowrap w-full z-10">
                                 <span>BUT DO YOU</span>

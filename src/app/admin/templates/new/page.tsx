@@ -23,6 +23,7 @@ export default function NewTemplatePage() {
     const [uploadProgress, setUploadProgress] = useState({ stage: '', progress: 0 });
     const [categories, setCategories] = useState<Category[]>([]);
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [tags, setTags] = useState<string[]>([]);
 
     // Fetch categories on mount
     useEffect(() => {
@@ -81,13 +82,6 @@ export default function NewTemplatePage() {
                     </Link>
                     <h1 className="text-4xl font-bold text-white">Add New Template</h1>
                 </div>
-
-                {/* Error Message */}
-                {error && (
-                    <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-400">
-                        {error}
-                    </div>
-                )}
 
                 {/* Upload Progress */}
                 {uploading && (
