@@ -106,8 +106,13 @@ export default function RealitySection() {
                 <div className="absolute bottom-0 left-0 right-0 h-[1px]" style={{ background: borderColor }} />
 
 
-                {/* CONTENT CONTAINER (90% Width) */}
-                <div className="w-[90%] mx-auto grid grid-cols-1 md:grid-cols-2 relative">
+                {/* CONTENT CONTAINER (Dynamic Width based on Grid Lines) */}
+                <div
+                    className="mx-auto grid grid-cols-1 md:grid-cols-2 relative"
+                    style={{
+                        width: 'calc(100% - (var(--grid-margin) * 2))'
+                    }}
+                >
 
                     {/* Vertical Center Divider (Restricted to Grid Height) */}
                     <div className="hidden md:block absolute top-0 bottom-0 left-1/2 w-[1px] -translate-x-1/2 z-0" style={{ background: borderColor }} />

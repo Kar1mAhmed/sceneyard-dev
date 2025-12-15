@@ -12,10 +12,11 @@ export default function GridBackground({ children }: { children?: React.ReactNod
 
             {/* Vertical Lines */}
             {/* Left Line */}
+            {/* Left Line */}
             <div
                 className="absolute top-0 bottom-0 z-0 pointer-events-none"
                 style={{
-                    left: '5%',
+                    left: 'var(--grid-margin)',
                     width: '1px',
                     background: 'rgba(148, 124, 255, 0.3)'
                 }}
@@ -24,7 +25,7 @@ export default function GridBackground({ children }: { children?: React.ReactNod
             <div
                 className="absolute top-0 bottom-0 z-0 pointer-events-none"
                 style={{
-                    right: '5%',
+                    right: 'var(--grid-margin)',
                     width: '1px',
                     background: 'rgba(148, 124, 255, 0.3)'
                 }}

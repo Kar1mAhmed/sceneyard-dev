@@ -34,7 +34,7 @@ export default function FeaturedSection({ videos }: FeaturedSectionProps) {
                 */}
                         <video
                             src={video.thumbnailUrl}
-                            className="w-full h-full object-cover transition-opacity duration-300"
+                            className="w-full h-full object-cover transition-opacity duration-500"
                             autoPlay
                             muted
                             loop

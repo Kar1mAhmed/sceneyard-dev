@@ -45,6 +45,9 @@
   --color-grey-97: #F7F7F8;
   --color-grey-99: #FCFCFD;
   
+  /* Layout Variables */
+  --grid-margin: 7%;
+
   /* Semantic Colors - Default to dark theme */
   --background: var(--color-dark-03);
   --foreground: var(--color-white);

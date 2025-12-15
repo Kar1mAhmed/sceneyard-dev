@@ -21,8 +21,8 @@ export default function SelectionBox({ text, color, className = '' }: SelectionB
         <div className={`relative inline-block ${className}`}>
             {/* Background Overlay - Using opacity instead of calculated RGBA to support CSS vars */}
             <div
-                className="absolute inset-0 pointer-events-none opacity-15"
-                style={{ backgroundColor: color }}
+                className="absolute inset-0 pointer-events-none"
+                style={{ backgroundColor: color, opacity: 0.15 }}
             />
 
             {/* Main Text */}
