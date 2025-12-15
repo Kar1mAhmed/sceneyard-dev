@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { VideoThumbnail } from './VideoThumbnail';
 import { toggleFeaturedTemplate } from '../actions';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/src/components/ToastProvider';
 
 interface Category {
     id: string;
@@ -35,6 +36,7 @@ type StatusFilter = 'all' | 'published' | 'drafts';
 type OrientationFilter = 'all' | 'horizontal' | 'vertical';
 
 export function TemplatesTable({ initialTemplates, categories }: TemplatesTableProps) {
+    const { showToast } = useToast();
     const [sortBy, setSortBy] = useState<SortOption>('recent');
     const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
     const [categoryFilter, setCategoryFilter] = useState<string>('all');
@@ -42,14 +44,15 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
     const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
 
-    const handleToggleFeatured = async (id: string) => {
+    const handleToggleFeatured = async (id: string, currentStatus: boolean | undefined) => {
         try {
             await toggleFeaturedTemplate(id);
+            showToast(currentStatus ? "Template removed from featured" : "Template marked as featured", "success");
             // Optimistic update could happen here, but revalidatePath in action handles refresh
             router.refresh();
         } catch (error) {
             console.error("Failed to toggle featured status", error);
-            alert("Failed to update featured status");
+            showToast("Failed to update featured status", "error");
         }
     };
 
@@ -335,7 +338,7 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
                                         <td className="p-6 text-gray-300">{template.likes_count}</td>
                                         <td className="p-6">
                                             <button
-                                                onClick={() => handleToggleFeatured(template.id)}
+                                                onClick={() => handleToggleFeatured(template.id, template.is_featured)}
                                                 className={`p-2 rounded-full transition-colors ${template.is_featured
                                                     ? 'bg-yellow-500/10 text-yellow-400 hover:bg-yellow-500/20'
                                                     : 'bg-white/5 text-gray-600 hover:text-gray-400 hover:bg-white/10'

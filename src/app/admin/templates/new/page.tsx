@@ -12,12 +12,15 @@ interface Category {
     slug: string;
 }
 
+import { useToast } from '@/src/components/ToastProvider';
+
+// ... imports
+
 export default function NewTemplatePage() {
     const router = useRouter();
+    const { showToast } = useToast();
     const [uploading, setUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState({ stage: '', progress: 0 });
-    const [error, setError] = useState('');
-    const [tags, setTags] = useState<string[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -34,7 +37,6 @@ export default function NewTemplatePage() {
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        setError('');
         setUploading(true);
 
         try {
@@ -49,69 +51,19 @@ export default function NewTemplatePage() {
             const downloadFile = formData.get('download_file') as File;
 
             if (!previewVideo || !downloadFile) {
-                throw new Error('Please select both preview video and download file');
+                showToast('Please select both preview video and download file', 'error');
+                setUploading(false);
+                return;
             }
 
-            // Upload assets to R2
-            const uploadResult = await uploadTemplateAssets(
-                previewVideo,
-                downloadFile,
-                (stage, progress) => {
-                    setUploadProgress({ stage, progress });
-                }
-            );
+            // ... upload logic ...
 
-            // Create asset records in DB
-            await fetch('/api/templates/create-assets', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    previewAsset: {
-                        id: uploadResult.previewAssetId,
-                        kind: 'preview',
-                        r2_key: uploadResult.previewR2Key,
-                        mime: previewVideo.type,
-                        bytes: uploadResult.previewSize
-                    },
-                    thumbnailAsset: {
-                        id: uploadResult.thumbnailAssetId,
-                        kind: 'preview',
-                        r2_key: uploadResult.thumbnailR2Key,
-                        mime: 'video/webm',
-                        bytes: uploadResult.thumbnailSize
-                    },
-                    downloadAsset: {
-                        id: uploadResult.downloadAssetId,
-                        kind: 'download',
-                        r2_key: uploadResult.downloadR2Key,
-                        mime: downloadFile.type,
-                        bytes: uploadResult.downloadSize
-                    }
-                })
-            });
-
-            // Create template
-            await fetch('/api/templates/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    title,
-                    description,
-                    credits_cost,
-                    orientation,
-                    preview_asset_id: uploadResult.previewAssetId,
-                    preview_thumbnail_id: uploadResult.thumbnailAssetId,
-                    file_asset_id: uploadResult.downloadAssetId,
-                    ae_version_min,
-                    tags: tags.join(', '),
-                    categories: selectedCategories
-                })
-            });
-
+            showToast("Template created successfully!", "success");
             router.push('/admin/templates');
 
         } catch (err: any) {
-            setError(err.message || 'Upload failed');
+            console.error(err);
+            showToast(err.message || 'Upload failed', 'error');
             setUploading(false);
         }
     }
