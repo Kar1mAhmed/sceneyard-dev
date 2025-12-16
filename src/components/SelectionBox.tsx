@@ -3,17 +3,24 @@ import React from 'react';
 interface SelectionBoxProps {
     text: string;
     /**
-     * Color to use for text, border, and handles.
+     * Color to use for text.
      * Can be a hex code, rgba string, or CSS variable.
-     * Note: If using CSS variable, the background transparency might not work unless
-     * the variable is defined as RGB values or if we use color-mix().
-     * For now, utilizing simple opacity for background.
      */
     color: string;
+    /**
+     * Color to use for the box (border, handles, background base).
+     * Defaults to #6725F6.
+     */
+    boxColor?: string;
     className?: string;
 }
 
-export default function SelectionBox({ text, color, className = '' }: SelectionBoxProps) {
+export default function SelectionBox({
+    text,
+    color,
+    boxColor = '#6725F6', // rgb(103, 37, 246)
+    className = ''
+}: SelectionBoxProps) {
     const handleSize = 15;
     const halfHandle = handleSize / 2;
 
@@ -22,7 +29,7 @@ export default function SelectionBox({ text, color, className = '' }: SelectionB
             {/* Background Overlay - Using opacity instead of calculated RGBA to support CSS vars */}
             <div
                 className="absolute inset-0 pointer-events-none"
-                style={{ backgroundColor: color, opacity: 0.15 }}
+                style={{ backgroundColor: boxColor, opacity: 0.15 }}
             />
 
             {/* Main Text */}
@@ -40,7 +47,7 @@ export default function SelectionBox({ text, color, className = '' }: SelectionB
             >
                 {/* Top Left Handle */}
                 <div
-                    className="absolute bg-current"
+                    className="absolute"
                     style={{
                         width: handleSize,
                         height: handleSize,
@@ -51,7 +58,7 @@ export default function SelectionBox({ text, color, className = '' }: SelectionB
                 />
                 {/* Top Right Handle */}
                 <div
-                    className="absolute bg-current"
+                    className="absolute"
                     style={{
                         width: handleSize,
                         height: handleSize,

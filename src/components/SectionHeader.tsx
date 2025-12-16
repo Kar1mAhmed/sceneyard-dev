@@ -2,8 +2,8 @@ import SelectionBox from "./SelectionBox";
 
 interface SectionHeaderProps {
     title: React.ReactNode;
-    subtitle?: string;
-    description?: string;
+    subtitle?: React.ReactNode;
+    description?: React.ReactNode;
     className?: string;
 }
 
@@ -39,7 +39,7 @@ export default function SectionHeader({ title, subtitle, description, className 
                     style={{
                         // Color moved to className
                         fontFamily: 'var(--font-geist-mono), monospace',
-                        fontSize: '14px',
+                        fontSize: '18px',
                         fontWeight: 500
                     }}
                 >

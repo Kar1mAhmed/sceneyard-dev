@@ -69,7 +69,7 @@ export default function ForWhoSection() {
             </div>
 
             {/* Scrolling Cards Container */}
-            <div className="w-full relative mt-20">
+            <div className="w-full relative mt-24">
                 {/* Top Line */}
                 <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: 'var(--color-grid-line)' }} />
 

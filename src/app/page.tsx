@@ -6,7 +6,8 @@ import GridBackground from "@/src/components/layout/GridBackground";
 import FeaturedTemplates from "@/src/components/landing-page/FeaturedTemplates";
 import SkillValueSection from "@/src/components/landing-page/SkillValueSection";
 import FeaturesSection from "@/src/components/landing-page/FeaturesSection";
-import ForWhoSection from "@/src/components/landing-page/ForWhoSection";
+import ForWhoSection from '@/src/components/landing-page/ForWhoSection';
+import PricingSection from '@/src/components/landing-page/PricingSection';
 import { Ribbon } from "@/src/components/ui/Ribbon";
 
 export default function Home() {
@@ -64,7 +65,7 @@ export default function Home() {
 
         <ForWhoSection />
 
-         <Ribbon
+        <Ribbon
           items={[
             { text: "CREATIVE FREEDOM", icon: "sun" },
             { text: "FAST WORKFLOW", icon: "timer" },
@@ -79,6 +80,8 @@ export default function Home() {
           iconColor="var(--color-grid-line)"
           className="opacity-80 my-64"
         />
+
+        <PricingSection />
       </GridBackground>
     </main>
   );
