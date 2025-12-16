@@ -1,7 +1,7 @@
 "use client";
 
 import SectionHeader from "../SectionHeader";
-import SelectionBox from "../SelectionBox";
+import SelectionBox from "../ui/SelectionBox";
 import Image from "next/image";
 
 interface Persona {

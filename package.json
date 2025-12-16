@@ -21,6 +21,7 @@
 		"@types/uuid": "^10.0.0",
 		"aws-sdk": "^2.1692.0",
 		"aws4fetch": "^1.0.20",
+		"lucide-react": "^0.561.0",
 		"next": "^16.0.10",
 		"next-auth": "^5.0.0-beta.30",
 		"next-devtools-mcp": "^0.2.2",

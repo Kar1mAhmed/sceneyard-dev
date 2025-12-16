@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import SectionHeader from "../SectionHeader";
-import SelectionBox from "../SelectionBox";
+import SelectionBox from "../ui/SelectionBox";
 
 export default function GoldenMemberSection() {
     return (

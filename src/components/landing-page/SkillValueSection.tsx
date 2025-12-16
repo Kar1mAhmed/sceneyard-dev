@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import SelectionBox from "../SelectionBox";
+import SelectionBox from "../ui/SelectionBox";
 
 export default function SkillValueSection() {
     const borderColorClass = 'bg-primary-70/30'; // Replacing inline style with class

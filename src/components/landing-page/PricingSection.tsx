@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
 import PricingCard from "./PricingCard";
 
-import SelectionBox from "../SelectionBox";
+import SelectionBox from "../ui/SelectionBox";
 
 // Mock functionality for the toggle
 export default function PricingSection() {

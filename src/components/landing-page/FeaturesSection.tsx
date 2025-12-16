@@ -1,5 +1,5 @@
 import SectionHeader from "../SectionHeader";
-import SelectionBox from "../SelectionBox";
+import SelectionBox from "../ui/SelectionBox";
 
 interface FeatureItem {
     icon: string;

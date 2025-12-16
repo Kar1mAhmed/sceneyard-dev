@@ -1,4 +1,4 @@
-import SelectionBox from "./SelectionBox";
+import SelectionBox from "./ui/SelectionBox";
 
 interface SectionHeaderProps {
     title: React.ReactNode;
