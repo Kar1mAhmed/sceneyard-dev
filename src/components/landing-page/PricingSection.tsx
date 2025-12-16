@@ -71,7 +71,7 @@ export default function PricingSection() {
             </div>
 
             {/* Unused Credits Roll Over Header */}
-            <div className="mb-12 text-center">
+            <div className="text-center">
                 <h2
                     className="text-white text-4xl md:text-5xl font-semibold mb-3"
                     style={{ fontFamily: 'var(--font-poppins)' }}
@@ -87,10 +87,7 @@ export default function PricingSection() {
             </div>
 
             {/* Pricing Cards Section with Full Width Lines */}
-            <div className="w-full relative mt-12 pb-24">
-                {/* Top Line */}
-                <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: 'var(--color-grid-line)' }} />
-
+            <div className="w-full relative pb-24">
                 {/* Cards Container with Grid Margin */}
                 <div className="w-full px-4 md:px-[var(--grid-margin)] flex justify-center pt-12 xl:pt-24">
                     <div

@@ -8,6 +8,7 @@ import SkillValueSection from "@/src/components/landing-page/SkillValueSection";
 import FeaturesSection from "@/src/components/landing-page/FeaturesSection";
 import ForWhoSection from '@/src/components/landing-page/ForWhoSection';
 import PricingSection from '@/src/components/landing-page/PricingSection';
+import GoldenMemberSection from "@/src/components/landing-page/GoldenMemberSection";
 import { Ribbon } from "@/src/components/ui/Ribbon";
 
 export default function Home() {
@@ -82,6 +83,7 @@ export default function Home() {
         />
 
         <PricingSection />
+        <GoldenMemberSection />
       </GridBackground>
     </main>
   );

@@ -12,6 +12,11 @@ interface SelectionBoxProps {
      * Defaults to #6725F6.
      */
     boxColor?: string;
+    /**
+     * Opacity of the background overlay.
+     * Defaults to 0.15.
+     */
+    bgOpacity?: number;
     className?: string;
 }
 
@@ -19,6 +24,7 @@ export default function SelectionBox({
     text,
     color,
     boxColor = '#6725F6', // rgb(103, 37, 246)
+    bgOpacity = 0.15,
     className = ''
 }: SelectionBoxProps) {
     const handleSize = 15;
@@ -29,7 +35,7 @@ export default function SelectionBox({
             {/* Background Overlay - Using opacity instead of calculated RGBA to support CSS vars */}
             <div
                 className="absolute inset-0 pointer-events-none"
-                style={{ backgroundColor: boxColor, opacity: 0.15 }}
+                style={{ backgroundColor: boxColor, opacity: bgOpacity }}
             />
 
             {/* Main Text */}
