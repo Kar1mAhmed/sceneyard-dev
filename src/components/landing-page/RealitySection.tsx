@@ -64,7 +64,7 @@ export default function RealitySection() {
     return (
         <div className="flex flex-col w-full relative">
             {/* Section Header */}
-            <div className="mt-32 relative z-20">
+            <div className="mt-24 relative z-20">
                 <SectionHeader
                     subtitle="here's the reality"
                     title={

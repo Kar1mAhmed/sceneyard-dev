@@ -6,7 +6,8 @@ import GridBackground from "@/src/components/layout/GridBackground";
 import FeaturedTemplates from "@/src/components/landing-page/FeaturedTemplates";
 import SkillValueSection from "@/src/components/landing-page/SkillValueSection";
 import FeaturesSection from "@/src/components/landing-page/FeaturesSection";
-import MidCTA from "@/src/components/landing-page/MidCTA";
+import ForWhoSection from "@/src/components/landing-page/ForWhoSection";
+import { Ribbon } from "@/src/components/ui/Ribbon";
 
 export default function Home() {
   return (
@@ -27,9 +28,57 @@ export default function Home() {
 
         <SkillValueSection />
 
-        <MidCTA />
+        <Ribbon
+          items={[
+            { text: "CREATIVE FREEDOM", icon: "sun" },
+            { text: "FAST WORKFLOW", icon: "timer" },
+            { text: "NO PLUGINS", icon: "cpu" },
+            { text: "DRAG & DROP", icon: "cursor" },
+            { text: "SAVE TIME", icon: "hour-glass" },
+            { text: "HANDLE MORE PROJECTS", icon: "box" }
+          ]}
+          backgroundColor="transparent"
+          textColor="var(--color-grid-line)"
+          borderColor="var(--color-grid-line)"
+          iconColor="var(--color-grid-line)"
+          className="opacity-80 my-64"
+        />
 
         <FeaturesSection />
+
+        <Ribbon
+          items={[
+            { text: "CREATIVE FREEDOM", icon: "sun" },
+            { text: "FAST WORKFLOW", icon: "timer" },
+            { text: "NO PLUGINS", icon: "cpu" },
+            { text: "DRAG & DROP", icon: "cursor" },
+            { text: "SAVE TIME", icon: "hour-glass" },
+            { text: "HANDLE MORE PROJECTS", icon: "box" }
+          ]}
+          backgroundColor="transparent"
+          textColor="var(--color-grid-line)"
+          borderColor="var(--color-grid-line)"
+          iconColor="var(--color-grid-line)"
+          className="opacity-80 my-64"
+        />
+
+        <ForWhoSection />
+
+         <Ribbon
+          items={[
+            { text: "CREATIVE FREEDOM", icon: "sun" },
+            { text: "FAST WORKFLOW", icon: "timer" },
+            { text: "NO PLUGINS", icon: "cpu" },
+            { text: "DRAG & DROP", icon: "cursor" },
+            { text: "SAVE TIME", icon: "hour-glass" },
+            { text: "HANDLE MORE PROJECTS", icon: "box" }
+          ]}
+          backgroundColor="transparent"
+          textColor="var(--color-grid-line)"
+          borderColor="var(--color-grid-line)"
+          iconColor="var(--color-grid-line)"
+          className="opacity-80 my-64"
+        />
       </GridBackground>
     </main>
   );

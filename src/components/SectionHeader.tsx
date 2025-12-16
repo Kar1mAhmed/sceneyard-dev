@@ -25,7 +25,7 @@ export default function SectionHeader({ title, subtitle, description, className 
                     className="text-white font-light leading-none text-center"
                     style={{
                         fontFamily: 'var(--font-poppins), sans-serif',
-                        fontSize: 'clamp(48px, 6vw, 84px)', 
+                        fontSize: 'clamp(48px, 6vw, 80px)',
                         letterSpacing: '-1.12px',
                         fontWeight: 300,
                     }}

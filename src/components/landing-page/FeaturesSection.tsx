@@ -46,10 +46,9 @@ export default function FeaturesSection() {
 
         <div className="w-full relative flex flex-col">
             {/* 1. Header Portion with "Motion Scenes" content */}
-            {/* 1. Header Portion with "Motion Scenes" content */}
             {/* Wrapped to match RealitySection structure */}
             {/* Section Header */}
-            <div className="mt-32 relative z-20">
+            <div className="relative z-20">
                 <SectionHeader
                     subtitle="We don't do logo reveals,lower thirds, or slideshow intros, We build motion scenes the actual shots you need"
                     title={
@@ -64,7 +63,7 @@ export default function FeaturesSection() {
             </div>
 
             {/* 2. Grid Portion */}
-            <div className="w-full relative my-24">
+            <div className="w-full relative mt-24">
 
                 {/* Content Container - Constrained by Grid Margin */}
                 {/* Top Line for the grid section */}

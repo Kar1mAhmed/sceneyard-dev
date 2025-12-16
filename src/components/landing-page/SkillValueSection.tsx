@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import SelectionBox from "../SelectionBox";
 
 export default function SkillValueSection() {
@@ -6,7 +7,7 @@ export default function SkillValueSection() {
     const borderClass = 'border-primary-70/30';
 
     return (
-        <div className="w-full relative my-32 flex flex-col gap-16">
+        <div className="w-full relative mt-24 flex flex-col">
             {/* 
                Shared Typography Styles 
                These are applied inline to match specific user request perfectly 
@@ -68,7 +69,7 @@ export default function SkillValueSection() {
             </div>
 
             {/* BLOCK 2: Transparent, Image Left, Text Right */}
-            <div className="w-full relative">
+            <div className="w-full relative mt-24">
                 {/* Full Width Lines */}
                 <div className={`absolute top-0 left-0 right-0 h-[1px] ${borderColorClass}`} />
                 <div className={`absolute bottom-0 left-0 right-0 h-[1px] ${borderColorClass}`} />
@@ -113,6 +114,41 @@ export default function SkillValueSection() {
                         </p>
                     </div>
                 </div>
+            </div>
+
+            {/* CTA Buttons Section */}
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-16">
+                {/* Start 7-Day Free Trial */}
+                <Link
+                    href="/pricing"
+                    className="bg-white text-black rounded-full hover:scale-105 transition-transform duration-200 flex items-center justify-center"
+                    style={{
+                        padding: '16px 32px',
+                        fontFamily: 'var(--font-geist-mono), monospace',
+                        fontSize: '18px',
+                        fontWeight: 600,
+                        boxShadow: '0 0 30px rgba(255, 255, 255, 0.4)'
+                    }}
+                >
+                    Start 7-Day Free Trial
+                </Link>
+
+                {/* Browse Library */}
+                <Link
+                    href="/library"
+                    className="rounded-full hover:bg-white/10 transition-colors duration-200 flex items-center justify-center"
+                    style={{
+                        padding: '16px 32px',
+                        fontFamily: 'var(--font-geist-mono), monospace',
+                        fontSize: '18px',
+                        fontWeight: 500,
+                        border: '1px solid rgba(255, 255, 255, 0.5)',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        backdropFilter: 'blur(10px)'
+                    }}
+                >
+                    Browse Library
+                </Link>
             </div>
         </div>
     );
