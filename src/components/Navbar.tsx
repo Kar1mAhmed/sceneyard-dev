@@ -4,7 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+interface NavbarProps {
+    isHidden?: boolean;
+}
+
+export default function Navbar({ isHidden = false }: NavbarProps) {
     const pathname = usePathname();
 
     const navLinks = [
@@ -16,12 +20,12 @@ export default function Navbar() {
 
     return (
         <header
-            className="fixed top-0 left-0 right-0 z-50"
+            className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out ${isHidden ? '-translate-y-full' : 'translate-y-0'}`}
             style={{
                 height: '100px',
                 paddingLeft: '125px',
                 paddingRight: '125px',
-                background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%)',
+                background: isHidden ? 'transparent' : 'linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%)',
             }}
         >
             {/* Gradient Blur Layer */}

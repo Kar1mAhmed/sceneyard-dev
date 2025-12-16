@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Navbar from "@/src/components/Navbar";
+import LandingPageWrapper from "@/src/components/layout/LandingPageWrapper";
 import HeroSection from "@/src/components/landing-page/HeroSection";
 import RealitySection from "@/src/components/landing-page/RealitySection";
 import GridBackground from "@/src/components/layout/GridBackground";
@@ -14,10 +14,7 @@ import { Ribbon } from "@/src/components/ui/Ribbon";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      {/* Navbar */}
-      <Navbar />
-
+    <LandingPageWrapper>
       {/* Hero Section */}
       <HeroSection />
 
@@ -87,6 +84,6 @@ export default function Home() {
         <GoldenMemberSection />
         <FAQSection />
       </GridBackground>
-    </main>
+    </LandingPageWrapper>
   );
 }
