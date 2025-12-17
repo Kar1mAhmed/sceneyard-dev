@@ -1,6 +1,6 @@
 'use server';
 
-import { updateUser, deleteUser as deleteUserRepo, getUserById, getAllUsers } from "@/features/users/repo";
+import { updateUser, deleteUser as deleteUserRepo, getUserById, getAllUsers } from "@/features/users/service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/features/auth/auth";
@@ -8,7 +8,6 @@ import { UserRole } from "@/features/users/types";
 
 export async function updateUserRoleAction(userId: string, newRole: UserRole) {
     const session = await auth();
-    // @ts-ignore
     if (session?.user?.role !== "admin") {
         throw new Error("Unauthorized");
     }
@@ -35,7 +34,6 @@ export async function updateUserRoleAction(userId: string, newRole: UserRole) {
 
 export async function deleteUserAction(userId: string) {
     const session = await auth();
-    // @ts-ignore
     if (session?.user?.role !== "admin") {
         throw new Error("Unauthorized");
     }

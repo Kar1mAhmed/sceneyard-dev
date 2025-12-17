@@ -1,6 +1,6 @@
 'use server';
 
-import { updateTemplate, getTemplateById } from "@/features/templates/repo";
+import { updateTemplate, getTemplateById } from "@/features/templates/service";
 import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function toggleFeaturedTemplate(id: string) {
@@ -15,8 +15,7 @@ export async function toggleFeaturedTemplate(id: string) {
 
     revalidatePath('/admin/templates');
     revalidatePath('/');
-    // @ts-ignore
-    revalidateTag('featured-templates');
+    revalidateTag('featured-templates', 'max');
 
     return { success: true, is_featured: newFeaturedStatus };
 }

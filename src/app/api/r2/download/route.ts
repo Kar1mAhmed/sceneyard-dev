@@ -22,7 +22,6 @@ export async function GET(request: NextRequest) {
 
         console.log(`[/api/r2/download] [GET] Request started - User: ${userEmail}, R2 Key: ${r2Key}`);
 
-        // @ts-ignore
         if (!session?.user || session.user.role !== 'admin') {
             console.log(`[/api/r2/download] [GET] [401] Unauthorized access attempt - User: ${userEmail}`);
             return new Response('Unauthorized', { status: 401 });

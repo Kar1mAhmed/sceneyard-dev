@@ -286,7 +286,7 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
                                 <tr className="border-b border-white/5 bg-white/5">
                                     <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Preview</th>
                                     <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Template</th>
-                                    <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Cost</th>
+                                    <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider min-w-28">Cost</th>
                                     <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Status</th>
                                     <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Downloads</th>
                                     <th className="p-6 text-sm font-medium text-gray-400 uppercase tracking-wider">Likes</th>

@@ -1,5 +1,5 @@
 import { auth } from "@/features/auth/auth";
-import { getCategories, getCategoryStats, createCategory, deleteCategory, updateCategory } from "@/features/categories/repo";
+import { getCategories, getCategoryStats, createCategory, deleteCategory, updateCategory } from "@/features/categories/service";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
@@ -10,7 +10,6 @@ import { CategoryItem } from "../components/CategoryItem";
 async function CategoriesList() {
     await headers();
     const session = await auth();
-    // @ts-ignore
     if (session?.user?.role !== "admin") redirect("/home");
 
     const categories = await getCategories();

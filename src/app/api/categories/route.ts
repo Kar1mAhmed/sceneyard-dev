@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/features/auth/auth';
-import { getCategories, createCategory } from '@/features/categories/repo';
+import { getCategories, createCategory } from '@/features/categories/service';
 
 export async function GET() {
     const startTime = Date.now();
@@ -26,7 +26,6 @@ export async function POST(request: NextRequest) {
         const userEmail = session?.user?.email || 'unknown';
         console.log(`[/api/categories] [POST] Request started - User: ${userEmail}`);
 
-        // @ts-ignore
         if (session?.user?.role !== 'admin') {
             console.log(`[/api/categories] [POST] [401] Unauthorized access attempt - User: ${userEmail}`);
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

@@ -1,18 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/features/auth/auth';
-import { createTemplate } from '@/features/templates/repo';
-
-interface CreateTemplateBody {
-    title: string;
-    description: string;
-    credits_cost: number;
-    preview_asset_id: string;
-    preview_thumbnail_id: string | null;
-    file_asset_id: string;
-    orientation: 'horizontal' | 'vertical';
-    ae_version_min?: string;
-    tags?: string;
-}
+import { createTemplate } from '@/features/templates/service';
+import { CreateTemplateData } from '@/features/templates/types';
 
 export async function POST(request: NextRequest) {
     const startTime = Date.now();
@@ -22,13 +11,12 @@ export async function POST(request: NextRequest) {
         const userEmail = session?.user?.email || 'unknown';
         console.log(`[/api/templates/create] [POST] Request started - User: ${userEmail}`);
 
-        // @ts-ignore
         if (session?.user?.role !== 'admin') {
             console.log(`[/api/templates/create] [POST] [401] Unauthorized access attempt - User: ${userEmail}`);
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const body = await request.json() as CreateTemplateBody;
+        const body = await request.json() as CreateTemplateData;
         console.log(`[/api/templates/create] [POST] Creating template: "${body.title}" (${body.credits_cost} credits) - User: ${userEmail}`);
 
         const template = await createTemplate(body);

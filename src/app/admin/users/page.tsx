@@ -1,5 +1,5 @@
 import { auth } from "@/features/auth/auth";
-import { getAllUsers } from "@/features/users/repo";
+import { getAllUsers } from "@/features/users/service";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
@@ -12,7 +12,6 @@ async function UsersList() {
     await connection();
     await headers();
     const session = await auth();
-    // @ts-ignore
     if (session?.user?.role !== "admin") redirect("/home");
 
     const users = await getAllUsers();

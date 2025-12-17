@@ -35,3 +35,16 @@ export interface TemplateWithAssets extends Template {
     categories?: { id: string; name: string; slug: string; }[];
 }
 
+export interface CreateTemplateData {
+    title: string;
+    description: string;
+    credits_cost: number;
+    preview_asset_id: string;
+    preview_thumbnail_id: string | null;
+    file_asset_id: string;
+    orientation: 'horizontal' | 'vertical';
+    ae_version_min?: string;
+    tags?: string;
+    is_featured?: boolean;
+}
+

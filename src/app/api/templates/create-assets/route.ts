@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/features/auth/auth';
-import { createAsset } from '@/features/templates/repo';
+import { createAsset } from '@/features/templates/service';
 
 interface AssetData {
     id: string;
@@ -24,7 +24,6 @@ export async function POST(request: NextRequest) {
         const userEmail = session?.user?.email || 'unknown';
         console.log(`[/api/templates/create-assets] [POST] Request started - User: ${userEmail}`);
 
-        // @ts-ignore
         if (session?.user?.role !== 'admin') {
             console.log(`[/api/templates/create-assets] [POST] [401] Unauthorized access attempt - User: ${userEmail}`);
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

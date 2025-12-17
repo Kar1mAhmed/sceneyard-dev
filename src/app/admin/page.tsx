@@ -1,6 +1,6 @@
 import { auth } from "@/features/auth/auth";
-import { getUserCount } from "@/features/users/repo";
-import { getTemplateStats } from "@/features/templates/repo";
+import { getUserCount } from "@/features/users/service";
+import { getTemplateStats } from "@/features/templates/service";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -9,7 +9,6 @@ import { headers } from "next/headers";
 async function AdminDashboardContent() {
     await headers();
     const session = await auth();
-    // @ts-ignore
     if (session?.user?.role !== "admin") redirect("/home");
 
     const userCount = await getUserCount();

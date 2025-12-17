@@ -1,5 +1,5 @@
 import { auth } from "@/features/auth/auth";
-import { getUserById } from "@/features/users/repo";
+import { getUserById } from "@/features/users/service";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { Suspense } from "react";
@@ -12,7 +12,6 @@ async function UserEdit({ params }: { params: Promise<{ id: string }> }) {
     await headers();
     const { id } = await params;
     const session = await auth();
-    // @ts-ignore
     if (session?.user?.role !== "admin") redirect("/home");
 
     const user = await getUserById(id);

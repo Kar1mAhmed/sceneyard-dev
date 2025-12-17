@@ -1,6 +1,6 @@
 import { auth } from "@/features/auth/auth";
-import { getTemplatesWithThumbnails, getTemplateStats } from "@/features/templates/repo";
-import { getAllCategories } from "@/features/categories/repo";
+import { getTemplatesWithThumbnails, getTemplateStats } from "@/features/templates/service";
+import { getAllCategories } from "@/features/categories/service";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
@@ -10,7 +10,6 @@ import { TemplatesTable } from "../components/TemplatesTable";
 async function TemplatesList() {
     await headers();
     const session = await auth();
-    // @ts-ignore
     if (session?.user?.role !== "admin") redirect("/home");
 
     const templates = await getTemplatesWithThumbnails();
@@ -19,7 +18,7 @@ async function TemplatesList() {
 
     return (
         <div className="min-h-screen bg-black admin-bg-pattern text-white p-8 font-sans selection:bg-purple-500/30">
-            <div className="max-w-7xl mx-auto space-y-8">
+            <div className="max-w-[1600px] mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-white/10 pb-8">
                     <div>

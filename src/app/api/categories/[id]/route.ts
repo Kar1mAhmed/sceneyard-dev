@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/features/auth/auth';
-import { updateCategory, deleteCategory } from '@/features/categories/repo';
+import { updateCategory, deleteCategory } from '@/features/categories/service';
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const startTime = Date.now();
@@ -11,7 +11,6 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         const { id } = await params;
         console.log(`[/api/categories/${id}] [PUT] Request started - User: ${userEmail}`);
 
-        // @ts-ignore
         if (session?.user?.role !== 'admin') {
             console.log(`[/api/categories/${id}] [PUT] [401] Unauthorized access attempt - User: ${userEmail}`);
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -47,7 +46,6 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
         const { id } = await params;
         console.log(`[/api/categories/${id}] [DELETE] Request started - User: ${userEmail}`);
 
-        // @ts-ignore
         if (session?.user?.role !== 'admin') {
             console.log(`[/api/categories/${id}] [DELETE] [401] Unauthorized access attempt - User: ${userEmail}`);
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

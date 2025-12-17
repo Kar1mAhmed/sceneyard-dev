@@ -1,13 +1,12 @@
 'use server';
 
-import { updateTemplate, deleteTemplate as deleteTemplateRepo } from "@/features/templates/repo";
+import { updateTemplate, deleteTemplate as deleteTemplateRepo } from "@/features/templates/service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/features/auth/auth";
 
 export async function updateTemplateAction(id: string, formData: FormData) {
     const session = await auth();
-    // @ts-ignore
     if (session?.user?.role !== "admin") {
         throw new Error("Unauthorized");
     }
@@ -39,7 +38,6 @@ export async function updateTemplateAction(id: string, formData: FormData) {
 
 export async function deleteTemplateAction(id: string) {
     const session = await auth();
-    // @ts-ignore
     if (session?.user?.role !== "admin") {
         throw new Error("Unauthorized");
     }

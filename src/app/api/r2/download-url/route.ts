@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
         const userEmail = session?.user?.email || 'unknown';
         console.log(`[/api/r2/download-url] [POST] Request started - User: ${userEmail}`);
 
-        // @ts-ignore
         if (!session?.user || session.user.role !== 'admin') {
             console.log(`[/api/r2/download-url] [POST] [401] Unauthorized access attempt - User: ${userEmail}`);
             return NextResponse.json(

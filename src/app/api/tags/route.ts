@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllTags } from '@/features/tags/repo';
+import { getAllTags } from '@/features/tags/service';
 
 import { connection } from 'next/server';
 

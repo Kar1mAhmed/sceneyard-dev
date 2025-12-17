@@ -1,6 +1,6 @@
 import { auth } from "@/features/auth/auth";
-import { getTemplateById } from "@/features/templates/repo";
-import { getAllCategories } from "@/features/categories/repo";
+import { getTemplateById } from "@/features/templates/service";
+import { getAllCategories } from "@/features/categories/service";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { Suspense } from "react";
@@ -9,7 +9,6 @@ import { EditTemplateForm } from "../../components/EditTemplateForm";
 async function EditTemplateContent({ params }: { params: Promise<{ id: string }> }) {
     await headers();
     const session = await auth();
-    // @ts-ignore
     if (session?.user?.role !== "admin") redirect("/home");
 
     const { id } = await params;

@@ -59,9 +59,17 @@ export function EditTemplateForm({ template, categories }: EditTemplateFormProps
         setDeleting(true);
         try {
             await deleteTemplateAction(template.id);
+            // deleteTemplateAction calls redirect(), which throws a NEXT_REDIRECT error
+            // This is expected Next.js behavior - don't catch it, let it propagate
         } catch (error) {
+            // Check if this is a Next.js redirect (expected behavior)
+            if (error && typeof error === 'object' && 'digest' in error) {
+                // This is a Next.js redirect, let it propagate
+                throw error;
+            }
+            // Only handle actual errors
             console.error('Failed to delete template:', error);
-            alert('Failed to delete template');
+            showToast(error instanceof Error ? error.message : 'Failed to delete template', 'error');
             setDeleting(false);
             setShowDeleteModal(false);
         }
@@ -242,8 +250,8 @@ export function EditTemplateForm({ template, categories }: EditTemplateFormProps
 
             {/* Delete Confirmation Modal */}
             {showDeleteModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                    <div className="bg-zinc-900 border border-white/10 rounded-3xl p-8 max-w-md w-full shadow-2xl transform transition-all">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" style={{ left: 0, right: 0, margin: 'auto' }}>
+                    <div className="bg-zinc-900 border border-white/10 rounded-3xl p-8 shadow-2xl" style={{ minWidth: '400px', maxWidth: '500px' }}>
                         <h3 className="text-2xl font-bold text-white mb-4">Delete Template?</h3>
                         <p className="text-gray-400 mb-8">
                             Are you sure you want to delete <span className="text-white font-medium">"{template.title}"</span>? This action cannot be undone.
