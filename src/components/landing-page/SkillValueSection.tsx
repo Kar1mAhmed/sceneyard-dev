@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import SelectionBox from "../ui/SelectionBox";
+import { Button } from "../ui/Button";
 
 export default function SkillValueSection() {
     const borderColorClass = 'bg-primary-70/30'; // Replacing inline style with class
@@ -117,38 +118,22 @@ export default function SkillValueSection() {
             </div>
 
             {/* CTA Buttons Section */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-16">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-16 w-full">
                 {/* Start 7-Day Free Trial */}
-                <Link
+                <Button
                     href="/pricing"
-                    className="bg-white text-black rounded-full hover:scale-105 transition-transform duration-200 flex items-center justify-center"
-                    style={{
-                        padding: '16px 32px',
-                        fontFamily: 'var(--font-geist-mono), monospace',
-                        fontSize: '18px',
-                        fontWeight: 600,
-                        boxShadow: '0 0 30px rgba(255, 255, 255, 0.4)'
-                    }}
+                    variant="primary"
                 >
                     Start 7-Day Free Trial
-                </Link>
+                </Button>
 
                 {/* Browse Library */}
-                <Link
+                <Button
                     href="/library"
-                    className="rounded-full hover:bg-white/10 transition-colors duration-200 flex items-center justify-center"
-                    style={{
-                        padding: '16px 32px',
-                        fontFamily: 'var(--font-geist-mono), monospace',
-                        fontSize: '18px',
-                        fontWeight: 500,
-                        border: '1px solid rgba(255, 255, 255, 0.5)',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        backdropFilter: 'blur(10px)'
-                    }}
+                    variant="secondary"
                 >
                     Browse Library
-                </Link>
+                </Button>
             </div>
         </div>
     );

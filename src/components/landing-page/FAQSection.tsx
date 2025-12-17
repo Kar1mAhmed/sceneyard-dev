@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import SectionHeader from "../SectionHeader";
 import { ChevronDown, ChevronUp, ArrowUp } from "lucide-react"; // Or custom icon
+import { Button } from "../ui/Button";
 
 interface FAQItemProps {
     question: string;
@@ -113,19 +114,12 @@ export default function FAQSection() {
             </div>
 
             {/* CTA */}
-            <Link
+            <Button
                 href="/faq"
-                className="flex items-center justify-center w-[230px] h-[60px] bg-transparent border-[1.35px] border-white/20 text-white text-sm font-bold uppercase tracking-wider hover:bg-white/10 transition-colors rounded-[141px]"
-                style={{
-                    fontFamily: 'var(--font-geist-mono)',
-                    paddingTop: '6px',
-                    paddingBottom: '6px',
-                    paddingLeft: '22px',
-                    paddingRight: '22px',
-                }}
+                variant="secondary"
             >
                 See All FAQ's
-            </Link>
+            </Button>
         </section>
     );
 }

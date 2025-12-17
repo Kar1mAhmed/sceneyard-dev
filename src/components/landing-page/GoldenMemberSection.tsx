@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import SectionHeader from "../SectionHeader";
 import SelectionBox from "../ui/SelectionBox";
+import { Button } from "../ui/Button";
 
 export default function GoldenMemberSection() {
     return (
@@ -75,32 +76,26 @@ export default function GoldenMemberSection() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-[13.46px] items-center justify-center w-full z-10">
-                <Link
+                <Button
                     href="/login"
-                    className="flex items-center justify-center w-[230px] h-[60px] bg-white text-black text-sm font-bold uppercase tracking-wider hover:bg-white/90 transition-colors rounded-[141px] border-[1.35px] border-white"
-                    style={{
-                        fontFamily: 'var(--font-geist-mono)',
-                        paddingTop: '8.08px',
-                        paddingBottom: '8.08px',
-                        paddingLeft: '42px',
-                        paddingRight: '42px',
-                    }}
+                    variant="primary"
+                    className="w-[230px]" // User might want to keep the width from original? Or use new default? The new button is max-width 358. I will let it be natural or max width.
+                // Actually, let's remove the width override unless essential. The new buttons are nice and big.
+                // But wait, the original was w-[230px]. The new button is max-w-[358px] w-full.
+                // If flex column, full width. If row, auto? No, w-full.
+                // If I don't constrain it, they might be huge.
+                // But user asked for "Primary Active: width: 358". So I should probably remove w-[230px] constraint and let it be 358px max.
+                // But in flex row, w-full might shrink or grow.
+                // I will stick to component defaults as requested ("use the 4 settings").
                 >
                     Join now
-                </Link>
-                <Link
+                </Button>
+                <Button
                     href="/pricing"
-                    className="flex items-center justify-center w-[230px] h-[60px] bg-transparent border-[1.35px] border-white/20 text-white text-sm font-bold uppercase tracking-wider hover:bg-white/10 transition-colors rounded-[141px]"
-                    style={{
-                        fontFamily: 'var(--font-geist-mono)',
-                        paddingTop: '6px',
-                        paddingBottom: '6px',
-                        paddingLeft: '22px',
-                        paddingRight: '22px',
-                    }}
+                    variant="secondary"
                 >
                     See All Plans
-                </Link>
+                </Button>
             </div>
         </section>
     );

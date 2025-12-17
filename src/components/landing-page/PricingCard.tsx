@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { Button } from "../ui/Button";
 
 interface PricingCardProps {
     title: string;
@@ -119,16 +120,15 @@ export default function PricingCard({
             </ul>
 
             {/* CTA Button */}
-            <Link
-                href={buttonLink}
-                className={`w-full py-4 px-6 text-center rounded-full font-semibold transition-transform hover:scale-105 active:scale-95 bg-white text-black`}
-                style={{
-                    fontFamily: 'var(--font-geist-mono)',
-                    fontSize: '16px'
-                }}
-            >
-                Get Started
-            </Link>
+            <div className="w-full flex justify-center mt-auto">
+                <Button
+                    href={buttonLink}
+                    variant="primary"
+                    className="!w-full !max-w-none !h-[50px]" // Full width, no max-width, shorter height
+                >
+                    Get Started
+                </Button>
+            </div>
         </div>
     );
 }
