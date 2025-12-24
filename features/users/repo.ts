@@ -1,11 +1,16 @@
 import { getDb } from '@/lib/env';
 import { User, UserRole } from './types';
+import { unstable_cache } from 'next/cache';
 
-export async function getUserByEmail(email: string): Promise<User | null> {
-    const db = getDb();
-    const result = await db.prepare('SELECT * FROM users WHERE email = ?').bind(email).first<User>();
-    return result;
-}
+export const getUserByEmail = unstable_cache(
+    async (email: string): Promise<User | null> => {
+        const db = getDb();
+        const result = await db.prepare('SELECT * FROM users WHERE email = ?').bind(email).first<User>();
+        return result;
+    },
+    ['user-by-email'],
+    { revalidate: 300, tags: ['users'] }
+);
 
 export async function createUser(user: {
     id: string;
@@ -80,21 +85,29 @@ export async function getUserCount(): Promise<number> {
     return result?.count || 0;
 }
 
-export async function getAllUsers(limit = 50, offset = 0): Promise<User[]> {
-    const db = getDb();
-    const { results } = await db.prepare('SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?')
-        .bind(limit, offset)
-        .all<User>();
-    return results;
-}
+export const getAllUsers = unstable_cache(
+    async (limit = 50, offset = 0): Promise<User[]> => {
+        const db = getDb();
+        const { results } = await db.prepare('SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?')
+            .bind(limit, offset)
+            .all<User>();
+        return results;
+    },
+    ['all-users'],
+    { revalidate: 60, tags: ['users'] }
+);
 
 export async function deleteUser(id: string): Promise<void> {
     const db = getDb();
     await db.prepare('DELETE FROM users WHERE id = ?').bind(id).run();
 }
 
-export async function getUserById(id: string): Promise<User | null> {
-    const db = getDb();
-    const result = await db.prepare('SELECT * FROM users WHERE id = ?').bind(id).first<User>();
-    return result;
-}
+export const getUserById = unstable_cache(
+    async (id: string): Promise<User | null> => {
+        const db = getDb();
+        const result = await db.prepare('SELECT * FROM users WHERE id = ?').bind(id).first<User>();
+        return result;
+    },
+    ['user-by-id'],
+    { revalidate: 300, tags: ['users'] }
+);

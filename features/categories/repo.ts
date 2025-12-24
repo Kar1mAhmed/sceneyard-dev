@@ -11,11 +11,17 @@ function slugify(text: string): string {
         .replace(/^-+|-+$/g, '');
 }
 
-export async function getCategories(): Promise<Category[]> {
-    const db = getDb();
-    const { results } = await db.prepare('SELECT * FROM styles ORDER BY name ASC').all<Category>();
-    return results;
-}
+import { unstable_cache } from 'next/cache';
+
+export const getCategories = unstable_cache(
+    async (): Promise<Category[]> => {
+        const db = getDb();
+        const { results } = await db.prepare('SELECT * FROM styles ORDER BY name ASC').all<Category>();
+        return results;
+    },
+    ['all-categories'],
+    { revalidate: 3600, tags: ['categories'] }
+);
 
 export const getAllCategories = getCategories;
 

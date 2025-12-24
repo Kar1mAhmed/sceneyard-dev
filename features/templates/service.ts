@@ -21,3 +21,5 @@ export const getTemplateById = repo.getTemplateById;
 export const deleteTemplate = repo.deleteTemplate;
 export const getTemplatesWithThumbnails = repo.getTemplatesWithThumbnails;
 export const getTemplateStats = repo.getTemplateStats;
+export const getTemplates = repo.getTemplates;
+export const getFeaturedTemplates = repo.getFeaturedTemplates;

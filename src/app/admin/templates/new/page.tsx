@@ -2,11 +2,12 @@ import { auth } from "@/features/auth/auth";
 import { getAllCategories } from "@/features/categories/service";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { headers } from "next/headers";
 import { CreateTemplateForm } from "../../components/CreateTemplateForm";
+import { Suspense } from "react";
+import { connection } from 'next/server';
 
-export default async function NewTemplatePage() {
-    await headers();
+async function NewTemplateContent() {
+    await connection();
     const session = await auth();
 
     if (session?.user?.role !== "admin") {
@@ -15,6 +16,10 @@ export default async function NewTemplatePage() {
 
     const categories = await getAllCategories();
 
+    return <CreateTemplateForm categories={categories} />;
+}
+
+export default function NewTemplatePage() {
     return (
         <div className="min-h-screen bg-black admin-bg-pattern text-white p-8 font-sans selection:bg-purple-500/30">
             <div className="max-w-4xl mx-auto space-y-8">
@@ -29,7 +34,13 @@ export default async function NewTemplatePage() {
                     <h1 className="text-4xl font-bold text-white">Add New Template</h1>
                 </div>
 
-                <CreateTemplateForm categories={categories} />
+                <Suspense fallback={
+                    <div className="flex items-center justify-center p-12">
+                        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
+                    </div>
+                }>
+                    <NewTemplateContent />
+                </Suspense>
             </div>
         </div>
     );

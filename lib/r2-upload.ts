@@ -97,6 +97,10 @@ export async function generateLowQualityVideo(
             return;
         }
 
+        // Enable high-quality downscaling
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
         video.src = URL.createObjectURL(videoFile);
         video.muted = true;
 
@@ -110,13 +114,13 @@ export async function generateLowQualityVideo(
                 canvas.width = Math.round(targetHeight * aspectRatio);
             } else {
                 // Vertical or Square video: Scale WIDTH to targetHeight, height scales proportionally
-                // This ensures for 9:16 vertical video, we get 720x1280 instead of 405x720
                 canvas.width = targetHeight;
                 canvas.height = Math.round(targetHeight / aspectRatio);
             }
 
             // Set up MediaRecorder to capture the canvas
-            const stream = canvas.captureStream(30); // 30 FPS
+            // Reduced frame rate to 15 FPS for smaller file size while maintaining motion
+            const stream = canvas.captureStream(15);
 
             // Get audio from original video if it exists
             video.play();
@@ -124,7 +128,8 @@ export async function generateLowQualityVideo(
             const chunks: Blob[] = [];
             const mediaRecorder = new MediaRecorder(stream, {
                 mimeType: 'video/webm;codecs=vp9',
-                videoBitsPerSecond: 2500000 // 2.5 Mbps for better quality
+                // 3.0 Mbps for 720p at 15fps provides very high quality per frame
+                videoBitsPerSecond: 3000000
             });
 
             mediaRecorder.ondataavailable = (e) => {
