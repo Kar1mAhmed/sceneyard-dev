@@ -85,7 +85,7 @@ export async function uploadToR2(
  */
 export async function generateLowQualityVideo(
     videoFile: File,
-    targetHeight: number = 720
+    targetHeight: number = 1080
 ): Promise<Blob> {
     return new Promise((resolve, reject) => {
         const video = document.createElement('video');
@@ -105,7 +105,7 @@ export async function generateLowQualityVideo(
         video.muted = true;
 
         video.onloadedmetadata = () => {
-            // Calculate dimensions maintaining aspect ratio, ensuring SHORT edge is at least targetHeight (720px)
+            // Calculate dimensions maintaining aspect ratio, ensuring SHORT edge is at least targetHeight (1080px)
             const aspectRatio = video.videoWidth / video.videoHeight;
 
             if (video.videoWidth > video.videoHeight) {
@@ -119,7 +119,7 @@ export async function generateLowQualityVideo(
             }
 
             // Set up MediaRecorder to capture the canvas
-            // Reduced frame rate to 15 FPS for smaller file size while maintaining motion
+            // Use 30 FPS for smooth motion
             const stream = canvas.captureStream(15);
 
             // Get audio from original video if it exists
@@ -128,8 +128,8 @@ export async function generateLowQualityVideo(
             const chunks: Blob[] = [];
             const mediaRecorder = new MediaRecorder(stream, {
                 mimeType: 'video/webm;codecs=vp9',
-                // 3.0 Mbps for 720p at 15fps provides very high quality per frame
-                videoBitsPerSecond: 3000000
+                // 8.0 Mbps for 1080p at 30fps provides crystal clear thumbnails
+                videoBitsPerSecond: 4000000
             });
 
             mediaRecorder.ondataavailable = (e) => {
