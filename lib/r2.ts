@@ -53,10 +53,15 @@ export async function deleteFileFromR2(key: string): Promise<void> {
  * Works in both SSR and client-side contexts.
  */
 export function getPublicR2Url(r2Key: string): string {
-    const publicDomain = process.env.NEXT_PUBLIC_R2_DOMAIN || process.env.R2_PUBLIC_DOMAIN;
-    if (!publicDomain) {
-        throw new Error('R2_PUBLIC_DOMAIN not configured');
-    }
-    return `${publicDomain}/${r2Key}`;
-}
+    const env = getCloudflareEnv();
 
+    // Priority:
+    // 1. NEXT_PUBLIC_R2_DOMAIN (Defined in env or baked into client)
+    // 2. R2_PUBLIC_DOMAIN from Cloudflare Context (Server-side)
+    // 3. Fallback to production domain
+    const publicDomain = process.env.NEXT_PUBLIC_R2_DOMAIN || env.R2_PUBLIC_DOMAIN || 'https://media.sceneyard.com';
+
+    // Remove trailing slash if present to avoid double slashes
+    const cleanDomain = publicDomain.replace(/\/$/, '');
+    return `${cleanDomain}/${r2Key}`;
+}
