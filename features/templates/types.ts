@@ -46,5 +46,6 @@ export interface CreateTemplateData {
     ae_version_min?: string;
     tags?: string;
     is_featured?: boolean;
+    categories?: string[];
 }
 

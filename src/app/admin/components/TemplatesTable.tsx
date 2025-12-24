@@ -312,7 +312,7 @@ export function TemplatesTable({ initialTemplates, categories }: TemplatesTableP
                                                 </div>
                                             )}
                                         </td>
-                                        <td className="p-6">
+                                        <td className="p-6 max-w-[200px]">
                                             <div>
                                                 <div className="font-medium text-white">{template.title}</div>
                                                 <div className="text-sm text-gray-400 line-clamp-1">{template.description || 'No description'}</div>

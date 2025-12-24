@@ -111,7 +111,7 @@ export async function getTemplateById(id: string): Promise<TemplateWithAssets | 
 
 export async function createAsset(data: {
     id: string;
-    kind: 'preview' | 'download';
+    kind: 'preview' | 'download' | 'thumbnail';
     r2_key: string;
     mime: string;
     bytes: number;
@@ -119,11 +119,15 @@ export async function createAsset(data: {
     const db = getDb();
     const now = Math.floor(Date.now() / 1000);
 
+    // Map 'thumbnail' to 'preview' for database storage (same logical category)
+    const dbKind = data.kind === 'thumbnail' ? 'preview' : data.kind;
+
     await db.prepare(`
         INSERT INTO assets (id, kind, r2_key, mime, bytes, created_at)
         VALUES (?, ?, ?, ?, ?, ?)
-    `).bind(data.id, data.kind, data.r2_key, data.mime, data.bytes, now).run();
+    `).bind(data.id, dbKind, data.r2_key, data.mime, data.bytes, now).run();
 }
+
 
 export async function createTemplate(data: {
     title: string;
@@ -136,17 +140,18 @@ export async function createTemplate(data: {
     ae_version_min?: string;
     tags?: string;
     is_featured?: boolean;
+    categories?: string[];
 }): Promise<Template> {
     const db = getDb();
     const now = Math.floor(Date.now() / 1000);
     const templateId = uuidv4();
 
     await db.prepare(`
-        INSERT INTO templates (
-            id, title, description, preview_asset_id, preview_thumbnail_id, file_asset_id, 
-            ae_version_min, credits_cost, orientation, tags_text, is_featured, created_at, updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).bind(
+        INSERT INTO templates(
+                id, title, description, preview_asset_id, preview_thumbnail_id, file_asset_id,
+                ae_version_min, credits_cost, orientation, tags_text, is_featured, created_at, updated_at
+            ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `).bind(
         templateId,
         data.title,
         data.description,
@@ -161,6 +166,10 @@ export async function createTemplate(data: {
         now,
         now
     ).run();
+
+    if (data.categories && data.categories.length > 0) {
+        await setTemplateCategories(templateId, data.categories);
+    }
 
     return {
         id: templateId,
@@ -201,7 +210,7 @@ export async function updateTemplate(id: string, data: Partial<Template> & { cat
         sets.push('updated_at = ?');
         values.push(Math.floor(Date.now() / 1000));
         values.push(id);
-        await db.prepare(`UPDATE templates SET ${sets.join(', ')} WHERE id = ?`).bind(...values).run();
+        await db.prepare(`UPDATE templates SET ${sets.join(', ')} WHERE id = ? `).bind(...values).run();
     }
 
     if (data.categories) {
@@ -238,9 +247,9 @@ export async function deleteTemplate(id: string): Promise<void> {
     for (const r2Key of r2KeysToDelete) {
         try {
             await deleteFileFromR2(r2Key);
-            console.log(`[Template Deletion] Deleted R2 file: ${r2Key}`);
+            console.log(`[Template Deletion]Deleted R2 file: ${r2Key}`);
         } catch (error) {
-            console.error(`[Template Deletion] Failed to delete R2 file: ${r2Key}`, error);
+            console.error(`[Template Deletion]Failed to delete R2 file: ${r2Key}`, error);
             // Continue with other deletions even if one fails
         }
     }
@@ -263,5 +272,5 @@ export async function deleteTemplate(id: string): Promise<void> {
         .bind(now, id)
         .run();
 
-    console.log(`[Template Deletion] Template ${id} deleted successfully with ${r2KeysToDelete.length} R2 files`);
+    console.log(`[Template Deletion]Template ${id} deleted successfully with ${r2KeysToDelete.length} R2 files`);
 }

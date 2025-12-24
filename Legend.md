@@ -1,7 +1,7 @@
 # SceneYard - Project Legend
 
-**Last Updated**: December 17, 2025  
-**Current Phase**: Landing Page Completion & Interactive Elements  
+**Last Updated**: December 24, 2025  
+**Current Phase**: Architectural Refinement & Marketplace Infrastructure  
 **Tech Stack**: Next.js 16 + Cloudflare Workers + D1 + R2
 
 ---
@@ -72,90 +72,20 @@ SceneYard is a credit-based marketplace for After Effects templates. Users subsc
 - ✅ Responsive design
 - ✅ Form validation and error handling
 - ✅ **Inline Editing**: Category names can be edited directly in the list
-# SceneYard - Project Legend
-
-**Last Updated**: November 26, 2025  
-**Current Phase**: Admin Dashboard & Templates System Development  
-**Tech Stack**: Next.js 16 + Cloudflare Workers + D1 + R2
-
----
-
-## � Project Overview
-
-SceneYard is a credit-based marketplace for After Effects templates. Users subscribe to plans, receive monthly credits, and download premium templates. The platform features:
-
-- **Subscription System**: Starter, Pro, Ultimate tiers with monthly credits
-- **Template Marketplace**: High-quality After Effects templates with preview videos
-- **Credit Economy**: Templates cost 1-4 credits based on complexity
-- **Admin Dashboard**: Full management interface for users, templates, and categories
+#### **7. Architectural Rebirth (Service/Repo Pattern)**
+- ✅ **Strict Layering**: Refactored codebase to use `features/*/service.ts` for logic and `features/*/repo.ts` for DB access.
+- ✅ **Server/Client Separation**: Refactored admin pages (e.g., `NewTemplatePage`) to be Server Components with lightweight Client Component forms.
+- ✅ **Type Safety**: Unified `Template`, `Asset`, and `Category` types across layers with strict TypeScript.
+- ✅ **Dev Tools**: Implemented `/api/seed` to generate 100+ random templates for UI testing.
 
 ---
 
-## 🎯 Current Development Stage
+## 🚧 In Progress
 
-### ✅ Completed Features
-
-#### **1. Authentication & User Management**
-- ✅ NextAuth v5 with Google OAuth
-- ✅ User schema with roles (user/admin)
-- ✅ "First user is admin" logic
-- ✅ Admin-only access control
-- ✅ User management page with status, subscription, and actions
-
-#### **2. Database Architecture**
-- ✅ Cloudflare D1 (SQLite) with migrations
-- ✅ Users, Plans, Subscriptions, Templates, Assets tables
-- ✅ Categories (styles) and Tags with many-to-many relationships
-- ✅ Full-text search (FTS5) for templates
-- ✅ Soft deletes and audit trails
-
-#### **3. Admin Dashboard**
-- ✅ Statistics overview (users, templates)
-- ✅ Purple-themed dark mode UI with dotted background pattern
-- ✅ Manage Users page with role editing and deletion
-- ✅ Manage Templates page with stats and list view
-- ✅ Manage Categories page for template organization
-- ✅ **Component Organization**: Admin components isolated in `src/app/admin/components/`
-
-#### **4. Templates System**
-- ✅ Template CRUD operations
-- ✅ Asset management (preview video, thumbnail, download file)
-- ✅ R2 direct upload (bypasses Worker limits)
-- ✅ Client-side video thumbnail generation (480p)
-- ✅ Template orientation (horizontal/vertical)
-- ✅ Categories and smart tags with autocomplete
-- ✅ Credits cost (1-4), likes, downloads tracking
-- ✅ Draft/Published status
-- ✅ **Live Refresh**: Categories and Templates updates reflect immediately using `revalidatePath`
-- ✅ **Video Previews**: Hover-to-play video thumbnails on listing page
-- ✅ **Template Detail**: High-quality video player and secure zip download
-
-#### **5. R2 Asset Storage & Security**
-- ✅ Direct R2 uploads via presigned URLs
-- ✅ **Streaming API**: `/api/r2/stream` for video playback
-- ✅ **Secure Downloads**: `/api/r2/download` for authenticated zip file access
-- ✅ **Security Model**: 
-    - **Videos**: Publicly accessible via streaming API (7-day cache)
-    - **Zip Files**: Restricted to Admin/Purchased users (requires auth, no public access)
-- ✅ Asset metadata in D1 database
-
-#### **6. UI/UX**
-- ✅ Landing page with hero section
-- ✅ Admin dashboard with solid purple theme
-- ✅ Dotted background pattern across all admin pages
-- ✅ Responsive design
-- ✅ Form validation and error handling
-- ✅ **Inline Editing**: Category names can be edited directly in the list
-
----
-
-## �🚧 In Progress
-
-### **Template Form Enhancements**
-- ✅ Categories multi-select with checkboxes
-- ✅ Smart tags input with autocomplete
-- ✅ Min AE Version dropdown (2024, 2023, 2022, etc.)
-- ✅ Modern delete confirmation modal
+### **Template Marketplace & Search**
+- [/] Template browse page with vertical/horizontal filters
+- [/] Search bar with FTS5 implementation
+- [ ] Template likes and interaction metrics
 
 ---
 
@@ -284,8 +214,8 @@ sceneyard-dev/
 ### **Build Warnings**
 - ⚠️ CSS `@theme` rule warning (Tailwind v4 syntax, can be ignored)
 
-### **R2 Upload**
-- ⚠️ 503 errors reported during template upload (investigating - added detailed logging)
+### **R2 Upload & Creation**
+- ✅ **RESOLEVED**: Fixed `FOREIGN KEY constraint failed` during template creation by ensuring Asset creation precedes Template creation.
 
 ---
 
@@ -366,185 +296,24 @@ npm run build        # Production build
 
 ---
 
-## 📝 Recent Changes (Last Session)
+### **December 24, 2025 - Architectural Refinement & Infrastructure Fixes**
+1. ✅ **Service/Repo Layering**:
+   - Implemented `service.ts` for all features to centralize business logic.
+   - Refactored all API routes to use the service layer, removing direct DB access from the edge.
+   - Unified error handling and logging at the service level.
 
-### **December 17, 2025 - Landing Page Completion**
-1. ✅ **Full Section Implementation**:
-   - Built **Pricing**, **Golden Member**, **FAQ**, and **Footer** sections.
-   - Implemented responsive design, animations, and dark mode theming.
-   - **Footer**: Custom layout with split navigation, oversized logo, and auto-hiding Navbar interaction.
+2. ✅ **Template Creation Stability**:
+   - Fixed a critical "D1_ERROR: FOREIGN KEY constraint failed" by updating the presigned URL flow to create asset records in the DB *before* the template is instantiated.
+   - Refactored `NewTemplatePage` into a Server Component for better performance and data hydration.
 
-2. ✅ **Architecture Refinement**:
-   - Created `LandingPageWrapper` (Client Component) to handle global page state (Navbar visibility) while preserving Server Components for performance.
-   - Optimized `FeaturedTemplates` to remain async Server Component.
+3. ✅ **Developer Experience**:
+   - Created `/api/seed` endpoint to generate a full library of 100 dummy templates for UI testing.
+   - Cleaned up NextAuth role typing issues (removed @ts-ignore).
 
-3. ✅ **Interactive Elements**:
-   - `Navbar`: Auto-hides when Footer enters view.
-   - `FAQ`: Smooth accordion animations using Grid transition.
-   - `Pricing`: Interactive monthly/yearly toggle.
-
-
-### **December 11, 2025 - Landing Page Navbar Component**
-1. ✅ **Navbar Component Creation**:
-   - Created reusable `Navbar.tsx` component in `src/components/`
-   - Implemented glassmorphism effect using `.glass` utility class
-   - Added SceneYard logo with gradient SVG (purple to cyan)
-   - Included navigation links for Library and Pricing
-
-2. ✅ **Styling & Interactions**:
-   - Added `.navbar-link` utility class with animated gradient underline
-   - Implemented hover effects with smooth transitions
-   - Used BR Sonoma font and design system color tokens
-   - Fixed positioning at top of page with proper z-index
-
-3. ✅ **Integration**:
-   - Integrated navbar into landing page (`page.tsx`)
-   - Adjusted hero section padding to account for fixed navbar
-   - Fixed import path for module resolution
-   - Verified appearance in browser with screenshots
-
-### **December 9, 2025 - Design System Implementation**
-1. ✅ **Complete Color Palette**:
-   - Implemented all color palettes: Absolute (White/Black), Primary purples (55-80), Accents (90, 95, 97, 99)
-   - Added Dark shades (03-30) for backgrounds and depth
-   - Added Grey shades (40-99) for text and UI elements
-   - Organized as CSS custom properties in `globals.css`
-
-2. ✅ **BR Sonoma Font Integration**:
-   - Added font-face declarations for all 5 weights (Light, Regular, Medium, SemiBold, Bold)
-   - Implemented font preloading in `layout.tsx` for better performance
-   - Used `font-display: swap` to prevent FOUT
-   - Font files in OTF format (can be optimized to WOFF2 later)
-
-3. ✅ **Design Tokens & Utilities**:
-   - Created comprehensive CSS custom properties for Tailwind v4
-   - Added spacing scale (xs to 3xl), border radius, shadows
-   - Implemented utility classes: `.glass`, `.gradient-text`, animation classes
-   - Organized design system with clear sections and comments
-
-4. ✅ **Landing Page Updates**:
-   - Updated `page.tsx` to use new color tokens (dark-03 bg, primary-60 purple)
-   - Applied gradient text effect to headline
-   - Enhanced animations (fade-in-up, pulse-glow)
-   - Improved visual hierarchy and spacing
-   - Added second background glow (cyan accent)
-
-5. ✅ **SEO & Performance**:
-   - Updated metadata with better descriptions and keywords
-   - Added Open Graph tags for social sharing
-   - Preloaded critical font files
-   - Optimized font loading strategy
-
-### **December 8, 2025 - R2 & Template Deletion Enhancements**
-1. ✅ **R2 Storage Fixes**:
-   - Fixed `R2_PUBLIC_DOMAIN` environment variable issue (exposed to client-side).
-   - Configured CORS for R2 bucket to allow uploads from admin panel.
-   - Refactored `VideoThumbnail` and `TemplateMediaViewer` to use hardcoded public URLs for better stability.
-
-2. ✅ **Template Management**:
-   - Implemented **Cascade Deletion**: Deleting a template now automatically removes associated stored files (preview, thumbnail, download) from R2.
-   - Prevents storage leaks and reduces costs.
-   - Soft-deletes database records for audit trail.
-
-### **December 4, 2025 - API Logging Implementation**
-1. ✅ **Comprehensive API Endpoint Logging**:
-   - Added structured logging to all 11 API endpoints.
-   - **Categories**: GET, POST, PUT, DELETE with user tracking.
-   - **R2 Storage**: Download, upload, stream, presigned-url logs with file metadata.
-   - **Templates**: Create & Assets logs with credit costs and asset IDs.
-   - All logs include: timestamp, user email, method, status, duration, and sanitized parameters.
-
-### **November 26, 2025 - Session 2**
-1. ✅ **Edit Template Form Enhancements**:
-   - Refactored into `EditTemplateForm.tsx` client component
-   - Added `TagInput` for better tag management
-   - Implemented category selection with checkboxes
-   - Added AE Version dropdown (2024, 2023, 2022, etc.)
-   - Created modern delete confirmation modal with glassmorphism
-   - Styled timestamps (Created at, Updated at)
-   - Moved server actions to `actions.ts`
-
-2. ✅ **Toast Notification System**:
-   - Created `ToastProvider.tsx` context component
-   - Added admin layout wrapper for toast provider
-   - Integrated success/error toasts in EditTemplateForm
-   - Auto-dismiss after 3 seconds with manual close option
-   - Smooth slide-in animations from right
-   - Modern design with icons and glassmorphism
-
-3. ✅ **Template Sorting Features**:
-   - Created `TemplatesTable.tsx` client component
-   - Added modern icon-based sort controls
-   - Implemented client-side sorting (Recent, Likes, Downloads, A-Z)
-   - Active state with purple glow effect
-   - Instant sorting without server calls
-
-4. ✅ **Bug Fixes & Improvements**:
-   - Fixed Suspense boundary error (moved `await params` inside Suspense)
-   - Fixed form submission (changed `action` to `onSubmit`)
-   - Fixed database schema error (applied `template_styles` migration)
-   - Restored missing `createAsset` and `createTemplate` exports
-   - Added `await connection()` to R2 upload endpoint
-   - Improved error handling with detailed logging in upload endpoint
-
-5. ✅ **Type System Updates**:
-   - Added `categories` property to `TemplateWithAssets` type
-   - Updated `updateTemplate` to handle category updates
-   - Updated `getTemplateById` to fetch categories
-   - Exported `getAllCategories` alias for consistency
-
-### **November 26, 2025 - Session 1**
-1. ✅ **Admin Panel Enhancements**:
-   - Implemented inline category editing with live refresh
-   - Added video thumbnails with hover-to-play on templates list
-   - Enhanced template detail view with video player and secure download
-2. ✅ **R2 Integration**:
-   - Replaced signed URLs with direct R2 bucket binding
-   - Created streaming endpoint for videos
-   - Created secure download endpoint for zip files
-3. ✅ **Component Reorganization**:
-   - Moved admin components to `src/app/admin/components/`
-   - Cleaned up `src/components/`
-4. ✅ **Bug Fixes**:
-   - Fixed `DevalueError` in streaming route
-   - Resolved TypeScript errors in admin components
-   - Fixed syntax errors in `TemplateMediaViewer`
+4. ✅ **Storage Cleanup**:
+   - Added `deleted_at` to assets table.
+   - Improved R2 cleanup logic during template deletion.
 
 ---
 
-## 📈 Next Steps
-
-1. **Landing Page Development**
-   - ✅ Build hero section with dynamic background effects
-   - ✅ Create demo section with video template previews
-   - ✅ Add pricing section with subscription tiers
-   - ✅ Implement FAQ section
-   - ✅ Design footer with links and branding
-
-2. **Component Library**
-   - Create reusable button components (primary, secondary, outline)
-   - Build input field components with validation
-   - Design card components for templates
-   - Implement navigation bar
-   - Create modal/dialog components
-
-3. **Templates Marketplace (Public)**
-   - Build templates browse page
-   - Implement search and filtering
-   - Create template detail page
-   - Add preview video player
-   - Design download flow
-
-4. **User Management Actions (Admin)**
-   - Implement role editing (user ↔ admin)
-   - Add user deletion with confirmation
-   - Add user search and filtering
-
-5. **Subscription System**
-   - Implement plans management
-   - Add subscription creation/update
-   - Integrate Lemon Squeezy webhooks
-
----
-
-**Status**: Landing Page fully implemented with high-end aesthetic, responsive design, and interactive elements. Pricing, FAQ, and Footer sections complete. Admin dashboard stable. Next focus: Public Marketplace functionality (Browse/Search/Detail).
+**Status**: Backend infrastructure is now highly modular and stable. Landing page and Admin dashboard are fully established. Next focus is building the Public Marketplace browse and search experience.

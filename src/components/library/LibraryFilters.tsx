@@ -82,10 +82,10 @@ function FilterButton({
                                             className="transition-colors"
                                             style={{
                                                 fontFamily: 'var(--font-poppins), sans-serif',
-                                                fontSize: '12px',
+                                                fontSize: '14px',
                                                 fontWeight: 400,
                                                 lineHeight: '120%',
-                                                color: isSelected ? 'rgba(117, 88, 248, 1)' : 'rgba(175, 176, 182, 1)'
+                                                color: isSelected ? '#BEAFFF' : '#AFB0B6'
                                             }}
                                         >
                                             {option}
@@ -93,9 +93,9 @@ function FilterButton({
 
                                         {/* Custom Checkbox */}
                                         <div
-                                            className={`w-5 h-5 rounded flex items-center justify-center transition-all duration-200 ${isSelected
-                                                ? "bg-[rgba(117,88,248,1)] border border-[rgba(117,88,248,1)] text-white"
-                                                : "bg-transparent border border-white"
+                                            className={`w-5 h-5 rounded flex items-center justify-center transition-all duration-200  ${isSelected
+                                                ? "bg-[rgba(148,124,255,1)] border-[2px] border-[#BEAFFF] text-white"
+                                                : "bg-[#232329] border-[2px] border-[#3B3B45]"
                                                 }`}
                                         >
                                             {isSelected && <RxCheck size={14} />}

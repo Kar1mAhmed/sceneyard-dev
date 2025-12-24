@@ -8,7 +8,7 @@ export async function createTemplate(data: CreateTemplateData): Promise<Template
 
 export async function createAsset(data: {
     id: string;
-    kind: 'preview' | 'download';
+    kind: 'preview' | 'download' | 'thumbnail';
     r2_key: string;
     mime: string;
     bytes: number;

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/features/auth/auth';
 import { v4 as uuidv4 } from 'uuid';
 import { generatePresignedPutUrl } from '@/lib/r2';
+import { createAsset } from '@/features/templates/service';
 
 export async function POST(request: NextRequest) {
     const startTime = Date.now();
@@ -50,6 +51,17 @@ export async function POST(request: NextRequest) {
             const extension = filename.split('.').pop();
             r2Key = `${kind}s/${assetId}.${extension}`;
             console.log(`[/api/r2/presigned-url] [POST] Generating new key: ${r2Key} - User: ${userEmail}`);
+
+            // Create asset record in database BEFORE returning the ID
+            // This ensures the foreign key constraint will be satisfied when creating templates
+            await createAsset({
+                id: assetId,
+                kind: kind as 'preview' | 'download' | 'thumbnail',
+                r2_key: r2Key,
+                mime: contentType,
+                bytes: 0 // Will be updated after upload if needed
+            });
+            console.log(`[/api/r2/presigned-url] [POST] Asset record created: ${assetId} - User: ${userEmail}`);
         }
 
         console.log(`[/api/r2/presigned-url] [POST] Generating signed URL for: ${r2Key} (${kind}) - User: ${userEmail}`);
