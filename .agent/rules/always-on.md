@@ -11,3 +11,4 @@ trigger: always_on
 - The root-level `Legend.md` file must always be kept up to date. Any new changes or shifts in the project's development state must be added to the legend file so it always reflects the latest progress and current dev stage.
 - Always make sure types are defined and everything follows TypeScript rules.
 - Always add logs to API endpoints.
+- Never export as " export const dynamic = "force-dynamic"; " because we are using Cache Components

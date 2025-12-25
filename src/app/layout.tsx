@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
+import { Providers } from "@/src/components/Providers";
 
 const geistMono = Geist_Mono({
   subsets: ["latin"],
@@ -25,18 +26,26 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+import { auth } from "@/features/auth/auth";
+
+// ... existing imports ...
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <head>
 
       </head>
       <body className={`antialiased ${geistMono.variable} ${poppins.variable}`}>
-        {children}
+        <Providers session={session}>
+          {children}
+        </Providers>
       </body>
     </html>
   );

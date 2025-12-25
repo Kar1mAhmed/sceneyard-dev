@@ -4,7 +4,7 @@ import { createTemplate } from '@/features/templates/service';
 import { CreateTemplateData } from '@/features/templates/types';
 
 export async function POST(request: NextRequest) {
-    const startTime = Date.now();
+    const startTime = Date.now();``
 
     try {
         const session = await auth();
