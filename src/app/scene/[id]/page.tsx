@@ -8,6 +8,10 @@ import { LikeButton } from "@/src/components/ui/LikeButton";
 import { getPublicR2Url } from "@/lib/r2";
 import Footer from "@/src/components/Footer";
 import { Button } from "@/src/components/ui/Button";
+import SectionHeader from "@/src/components/SectionHeader";
+import TemplateGrid from "@/src/components/library/TemplateGrid";
+import { getTemplatesWithThumbnails } from "@/features/templates/service";
+import SelectionBox from "@/src/components/ui/SelectionBox";
 
 interface ScenePageProps {
     params: Promise<{ id: string }>;
@@ -24,6 +28,9 @@ export default async function ScenePage({ params }: ScenePageProps) {
     const previewUrl = template.preview_asset?.r2_key
         ? getPublicR2Url(template.preview_asset.r2_key)
         : null;
+
+    // Fetch "suggestions" (just first 20 recent templates for now)
+    const suggestedTemplates = await getTemplatesWithThumbnails(20, 0, 'recent');
 
     return (
         <GridBackground>
@@ -198,6 +205,17 @@ export default async function ScenePage({ params }: ScenePageProps) {
                         </div>
                     </div>
                 </TemplateHeader>
+
+                {/* Suggestions Section */}
+                <div className="mt-32 w-full">
+                    <SectionHeader
+                        title={<SelectionBox text="SUGGESTIONS" color="var(--color-primary-95)" />}
+                        subtitle="You may also like"
+                    />
+                    <div className="mt-12">
+                        <TemplateGrid templates={suggestedTemplates} />
+                    </div>
+                </div>
             </main>
             <Footer />
         </GridBackground>

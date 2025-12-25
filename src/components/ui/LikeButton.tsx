@@ -21,7 +21,7 @@ export function LikeButton({ initialLikes, isInitiallyLiked = false, className =
     return (
         <button
             onClick={toggleLike}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300 text-white backdrop-blur-md shadow-lg hover:scale-105 active:scale-95 ${isLiked ? 'bg-[#D77BFF]' : 'bg-[#37383E]'
+            className={`flex items-center gap-2 px-4 py-1.5 rounded-full transition-all duration-300 text-white backdrop-blur-md shadow-lg hover:scale-105 active:scale-95 ${isLiked ? 'bg-[#D77BFF]' : 'bg-[#37383E]'
                 } ${className}`}
             style={{
                 boxShadow: isLiked
