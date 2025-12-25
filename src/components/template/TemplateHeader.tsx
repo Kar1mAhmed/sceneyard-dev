@@ -15,12 +15,12 @@ export default function TemplateHeader({ title, children }: TemplateHeaderProps)
         const center = (columnCount - 1) / 2;
         const distanceFromCenter = Math.abs(i - center) / center;
 
-        // Dynamic brightness curve: sharper drop-off to make center distinct
-        const brightness = Math.pow(1 - distanceFromCenter, 1.5);
+        // Spread the brightness more evenly across the center columns
+        const brightness = Math.pow(1 - distanceFromCenter, 1.4);
 
-        // Darker purple palette compared to LibraryHeader
-        const brightPurple = { r: 100, g: 70, b: 200 }; // Darker bright purple for center
-        const darkPurple = { r: 30, g: 25, b: 120 }; // Even darker purple for edges
+        // More vibrant "Electric Purple" palette from the image
+        const brightPurple = { r: 110, g: 60, b: 255 };
+        const darkPurple = { r: 35, g: 15, b: 110 };
 
         const r = Math.round(darkPurple.r + (brightPurple.r - darkPurple.r) * brightness);
         const g = Math.round(darkPurple.g + (brightPurple.g - darkPurple.g) * brightness);
@@ -36,18 +36,18 @@ export default function TemplateHeader({ title, children }: TemplateHeaderProps)
                 className="absolute inset-0 flex"
                 style={{
                     height: '100vh',
-                    // Mask to fade columns from top to bottom
-                    maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%)',
-                    WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%)',
+                    // Precise mask to match image's visibility of background grid
+                    maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%)',
                 }}
             >
-                {/* Center Glow Effect - matching LibraryHeader */}
+                {/* Center Glow Effect - "Spotlight" feel from the image */}
                 <div
                     className="absolute inset-0 pointer-events-none z-[5]"
                     style={{
                         background: `
-                            radial-gradient(circle at center, rgba(130, 100, 200, 0.4) 0%, transparent 80%),
-                            radial-gradient(circle at top center, rgba(140, 110, 220, 0.5) 0%, transparent 60%)
+                            radial-gradient(circle at center 40%, rgba(140, 80, 255, 0.5) 0%, transparent 60%),
+                            radial-gradient(ellipse at center 30%, rgba(200, 160, 255, 0.3) 0%, transparent 50%)
                         `
                     }}
                 />
@@ -58,15 +58,16 @@ export default function TemplateHeader({ title, children }: TemplateHeaderProps)
                         className="flex-1 h-full relative"
                         style={{
                             backgroundColor: color,
-                            borderRight: index < columnCount - 1 ? '1px solid rgba(255, 255, 255, 0.06)' : 'none',
-                            borderLeft: index > 0 ? '1px solid rgba(255, 255, 255, 0.08)' : 'none'
+                            // Subtle brightening of the vertical lines to match the image's "highlight" effect
+                            borderRight: index < columnCount - 1 ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
+                            borderLeft: index > 0 ? '1px solid rgba(255, 255, 255, 0.03)' : 'none'
                         }}
                     />
                 ))}
             </div>
 
-            {/* Content Container */}
-            <div className="relative z-10 flex flex-col items-center pt-24 md:pt-32 lg:pt-40 px-4">
+            {/* Content Container - Remove horizontal padding wrapper to allow Ribbon to be full width */}
+            <div className="relative z-10 flex flex-col items-center pt-24 md:pt-32 lg:pt-40">
                 {/* Template Title - Figma specs: Poppins 500, 64px, line-height 67px - Solid White */}
                 <h1
                     className="text-center max-w-5xl px-4"

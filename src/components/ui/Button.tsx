@@ -27,6 +27,7 @@ export const Button = ({
     disabled:cursor-not-allowed
     cursor-pointer
     whitespace-nowrap
+    group
   `;
 
     // Size styles
@@ -42,7 +43,7 @@ export const Button = ({
         primary: `
       bg-white text-black
       hover:bg-[rgba(202,202,206,1)]
-      active:bg-[var(--color-primary-70)]
+      active:bg-[var(--color-primary-70)] active:text-white
       disabled:bg-[rgba(121,124,134,1)] disabled:text-white/50
     `,
         secondary: `
@@ -50,7 +51,7 @@ export const Button = ({
       border border-[rgba(121,124,134,1)]
       text-white
       hover:border-[var(--color-primary-70)] hover:bg-[rgba(148,124,255,0.3)]
-      active:bg-[var(--color-primary-95)] active:border-transparent active:text-black
+      active:bg-[var(--color-primary-95)] active:border-transparent active:text-white
       disabled:border-[rgba(98,100,108,1)] disabled:text-[rgba(98,100,108,1)]
     `,
         'hero-primary': `

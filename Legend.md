@@ -69,9 +69,9 @@ SceneYard is a credit-based marketplace for After Effects templates. Users subsc
 - ✅ Landing page with hero section
 - ✅ Admin dashboard with solid purple theme
 - ✅ Dotted background pattern across all admin pages
-- ✅ Responsive design
-- ✅ Form validation and error handling
-- ✅ **Inline Editing**: Category names can be edited directly in the list
+- ✅ **High-Fidelity Loading**: Branded `Loading` component with SMIL morphing, rhythmic leg animation, and Geist Mono typography.
+- ✅ **Toggleable Aesthetics**: Optional pulsing purple glow and cutout effect for extreme flexibility.
+- ✅ **Visual Verification**: Dedicated `/test-loading` page for cross-component validation.
 #### **7. Architectural Rebirth (Service/Repo Pattern)**
 - ✅ **Strict Layering**: Refactored codebase to use `features/*/service.ts` for logic and `features/*/repo.ts` for DB access.
 - ✅ **Server/Client Separation**: Refactored admin pages (e.g., `NewTemplatePage`) to be Server Components with lightweight Client Component forms.
@@ -326,6 +326,12 @@ npm run build        # Production build
    - Navbar reappears instantly when scrolling up or at the top of the page.
    - Smooth 500ms CSS transition for premium feel.
    - Integrated with existing footer visibility logic.
+
+3. ✅ **Global Branding & Loading System**:
+   - **High-Fidelity Branded Loader**: Replaced legacy spinners with a code-driven `Loading` component using SVG morphing between brand frames.
+   - **"Living Brand" Animation**: Integrated rhythmic leg "breathing" and slow idle rotation for a futuristic, mechanical feel.
+   - **Premium Aesthetics**: Geist Mono typography, radiant purple ambient glow, and even-odd cutout transparency.
+   - **Verification Page**: Created `/test-loading` to showcase the component in inline, fullscreen, and button-nested states.
 
 ---
 

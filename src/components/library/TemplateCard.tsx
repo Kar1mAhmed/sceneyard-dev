@@ -1,8 +1,10 @@
 'use client';
 
+import Link from 'next/link';
 import React, { useState, useRef } from 'react';
-import { Heart, ArrowDownToLine, CreditCard, Play } from 'lucide-react';
+import { ArrowDownToLine, CreditCard, Play } from 'lucide-react';
 import { getPublicR2Url } from '@/lib/r2';
+import { LikeButton } from '../ui/LikeButton';
 
 interface TemplateCardProps {
     template: {
@@ -18,7 +20,6 @@ interface TemplateCardProps {
 
 export default function TemplateCard({ template }: TemplateCardProps) {
     const [isHovered, setIsHovered] = useState(false);
-    const [isLiked, setIsLiked] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const handleMouseEnter = () => {
@@ -36,18 +37,14 @@ export default function TemplateCard({ template }: TemplateCardProps) {
         }
     };
 
-    const toggleLike = (e: React.MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setIsLiked(!isLiked);
-    };
 
     const thumbnailUrl = template.thumbnail_r2_key
         ? getPublicR2Url(template.thumbnail_r2_key)
         : null;
 
     return (
-        <div
+        <Link
+            href={`/scene/${template.id}`}
             className={`relative rounded-[24px] overflow-hidden group cursor-pointer bg-dark-08 transition-all duration-500 h-full ${template.orientation === 'vertical' ? 'row-span-2' : 'row-span-1'
                 }`}
             onMouseEnter={handleMouseEnter}
@@ -94,23 +91,9 @@ export default function TemplateCard({ template }: TemplateCardProps) {
                         {template.title}
                     </h3>
 
-                    <button
-                        onClick={toggleLike}
-                        className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300 bg-[#D77BFF] text-white backdrop-blur-md shadow-lg hover:scale-105 active:scale-95`}
-                        style={{
-                            boxShadow: '0 4px 15px rgba(215, 123, 255, 0.4)'
-                        }}
-                    >
-                        <Heart
-                            size={16}
-                            fill={isLiked ? "white" : "none"}
-                            strokeWidth={2.5}
-                            className="text-white"
-                        />
-                        <span className="text-[16px] font-medium leading-[1.2]">
-                            {template.likes_count + (isLiked ? 1 : 0)}
-                        </span>
-                    </button>
+                    <LikeButton
+                        initialLikes={template.likes_count}
+                    />
                 </div>
 
                 {/* Bottom Section */}
@@ -130,6 +113,6 @@ export default function TemplateCard({ template }: TemplateCardProps) {
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }

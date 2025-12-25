@@ -1,21 +1,13 @@
 import TemplateHeader from "@/src/components/template/TemplateHeader";
 import { Ribbon } from "@/src/components/ui/Ribbon";
-
-// Mock template data for testing - will be replaced with actual data fetching
-const mockTemplate = {
-    id: "1",
-    title: "Match Cut Intro Creator | Text & Logo Opener",
-    description: "Create stunning match cut intros with sharp headings and professional typography.",
-    previewUrl: "/api/r2/stream?key=preview.mp4",
-    credits: 2,
-    likes: 115,
-};
-
-// Ribbon items for template page
-const ribbonItems = [
-    { text: "NO PLUGINS", icon: "x" },
-    { text: "TUTORIAL INCLUDED", icon: "star" },
-];
+import Navbar from "@/src/components/Navbar";
+import GridBackground from "@/src/components/layout/GridBackground";
+import { getTemplateById } from "@/features/templates/service";
+import { notFound } from "next/navigation";
+import { LikeButton } from "@/src/components/ui/LikeButton";
+import { getPublicR2Url } from "@/lib/r2";
+import Footer from "@/src/components/Footer";
+import { Button } from "@/src/components/ui/Button";
 
 interface ScenePageProps {
     params: Promise<{ id: string }>;
@@ -23,18 +15,21 @@ interface ScenePageProps {
 
 export default async function ScenePage({ params }: ScenePageProps) {
     const { id } = await params;
+    const template = await getTemplateById(id);
 
-    // TODO: Fetch template data from service
-    // const template = await templateService.getById(id);
-    const template = mockTemplate;
+    if (!template) {
+        notFound();
+    }
+
+    const previewUrl = template.preview_asset?.r2_key
+        ? getPublicR2Url(template.preview_asset.r2_key)
+        : null;
 
     return (
-        <main className="min-h-screen bg-[var(--color-dark-03)]">
-            <TemplateHeader title={template.title}>
-                {/* Ribbon - matching landing page style */}
-                <div className="w-full mt-8">
-
-
+        <GridBackground>
+            <Navbar />
+            <main className="min-h-screen mb-24">
+                <TemplateHeader title={template.title}>
                     <Ribbon
                         items={[
                             { text: "FEATURED TEMPLATES", icon: "box" },
@@ -43,43 +38,168 @@ export default async function ScenePage({ params }: ScenePageProps) {
                         ]}
                         backgroundColor="var(--color-primary-95)"
                         textColor="#FFFFFF"
-                        // borderColor="rgba(255,255,255,0.2)"
                         className="border-t border-b border-white/10"
                     />
 
-
-                </div>
-
-                {/* Video Preview Placeholder */}
-                <div className="mt-8 w-full max-w-5xl relative rounded-2xl overflow-hidden bg-black/50 backdrop-blur-sm border border-white/10">
-                    <div className="aspect-video w-full flex items-center justify-center">
-                        <div className="text-center">
-                            <div className="w-20 h-20 rounded-full bg-cyan-400/20 flex items-center justify-center mx-auto mb-4">
-                                <svg className="w-10 h-10 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z" />
-                                </svg>
+                    {/* Video Preview Container */}
+                    <div className="mt-8 md:mt-16 w-full max-w-7xl px-4 relative">
+                        <div className="relative rounded-[32px] overflow-hidden bg-black/50 backdrop-blur-sm border border-white/10 shadow-2xl group">
+                            <div className="aspect-video w-full flex items-center justify-center">
+                                {previewUrl ? (
+                                    <video
+                                        src={previewUrl}
+                                        className="w-full h-full object-contain"
+                                        controls
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
+                                    />
+                                ) : (
+                                    <div className="text-center">
+                                        <div className="w-20 h-20 rounded-full bg-cyan-400/20 flex items-center justify-center mx-auto mb-4">
+                                            <svg className="w-10 h-10 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M8 5v14l11-7z" />
+                                            </svg>
+                                        </div>
+                                        <p className="text-white/60 text-sm">Video Preview Unavailable</p>
+                                    </div>
+                                )}
                             </div>
-                            <p className="text-white/60 text-sm">Video Preview - Template ID: {id}</p>
+
+                            {/* Like Button Overlay - Top Right */}
+                            <div className="absolute top-6 right-6 z-20">
+                                <LikeButton
+                                    initialLikes={template.likes_count}
+                                    className="scale-110"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Categories and Tags Section */}
+                        <div className="mt-8 flex flex-wrap gap-3 justify-center">
+                            {/* Categories */}
+                            {template.categories?.map((cat) => (
+                                <div
+                                    key={cat.id}
+                                    className="px-6 py-2 rounded-full bg-[#1A1B1E] border border-white/5 text-white/90"
+                                    style={{
+                                        fontFamily: 'var(--font-geist-mono), monospace',
+                                        fontSize: '14px',
+                                        fontWeight: 500,
+                                        lineHeight: '100%'
+                                    }}
+                                >
+                                    {cat.name}
+                                </div>
+                            ))}
+
+                            {/* Tags */}
+                            {template.tags_text?.split(',').map((tag, index) => {
+                                const trimmedTag = tag.trim();
+                                if (!trimmedTag) return null;
+                                return (
+                                    <div
+                                        key={index}
+                                        className="px-6 py-2 rounded-full bg-[#1A1B1E] border border-white/5 text-white/60"
+                                        style={{
+                                            fontFamily: 'var(--font-geist-mono), monospace',
+                                            fontSize: '14px',
+                                            fontWeight: 500,
+                                            lineHeight: '100%'
+                                        }}
+                                    >
+                                        {trimmedTag}
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {/* Description Section */}
+                        <div className="mt-20 w-full max-w-4xl px-4 text-left">
+                            <h2 className="text-white/40 text-[20px] font-semibold tracking-wider mb-6" style={{ fontFamily: 'var(--font-poppins)' }}>Description</h2>
+                            <p className="text-white/80 text-[18px] leading-[1.6] font-regular" style={{ fontFamily: 'var(--font-poppins)' }}>
+                                {template.description}
+                            </p>
+                        </div>
+
+                        {/* Metadata Grid */}
+                        <div className="mt-20 w-full max-w-5xl px-4 grid grid-cols-2 md:grid-cols-4 gap-12 text-center mx-auto">
+                            {/* File Size */}
+                            <div className="flex flex-col items-center gap-2">
+                                <span className="text-white/40 text-sm font-medium  tracking-wider" style={{ fontFamily: 'var(--font-poppins)' }}>File Size</span>
+                                <span className="text-white text-[18px] font-medium" style={{ fontFamily: 'var(--font-poppins)' }}>
+                                    {template.file_asset?.bytes ? `${(template.file_asset.bytes / (1024 * 1024)).toFixed(1)} MB` : 'N/A'}
+                                </span>
+                            </div>
+
+                            {/* Category */}
+                            <div className="flex flex-col items-center gap-2">
+                                <span className="text-white/40 text-sm font-medium  tracking-wider" style={{ fontFamily: 'var(--font-poppins)' }}>Category</span>
+                                <span className="text-white text-[18px] font-medium" style={{ fontFamily: 'var(--font-poppins)' }}>
+                                    {template.categories?.[0]?.name || 'After Effects'}
+                                </span>
+                            </div>
+
+                            {/* AE Version */}
+                            <div className="flex flex-col items-center gap-2">
+                                <span className="text-white/40 text-sm font-medium  tracking-wider" style={{ fontFamily: 'var(--font-poppins)' }}>After Effects Version</span>
+                                <span className="text-white text-[18px] font-medium" style={{ fontFamily: 'var(--font-poppins)' }}>
+                                    {template.ae_version_min || 'CC'}
+                                </span>
+                            </div>
+
+                            {/* Aspect Ratio */}
+                            <div className="flex flex-col items-center gap-2">
+                                <span className="text-white/40 text-sm font-medium   tracking-wider" style={{ fontFamily: 'var(--font-poppins)' }}>Aspect ratio</span>
+                                <span className="text-white text-[18px] font-medium" style={{ fontFamily: 'var(--font-poppins)' }}>
+                                    {template.orientation === 'horizontal' ? '16:9 (1920x1080 FHD)' : '9:16 (1080x1920 Vertical)'}
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="mt-24 mb-32 flex flex-col md:flex-row items-center justify-center gap-6">
+                            {previewUrl && (
+                                <Button
+                                    href={previewUrl}
+                                    variant="primary"
+                                    className="min-w-[320px] transition-transform hover:scale-105 active:scale-95"
+                                    style={{
+                                        fontFamily: 'var(--font-geist-mono), monospace',
+                                        fontWeight: 500,
+                                        fontSize: '16px',
+                                        lineHeight: '100%'
+                                    }}
+                                    // @ts-ignore - added download prop for actual link behavior
+                                    download={`${template.title}_preview.mp4`}
+                                >
+                                    <div className="w-7 h-7 flex items-center justify-center">
+                                        <img src="/custom-icons/download.svg" alt="" className="w-full h-full transition-all group-active:brightness-0 group-active:invert" />
+                                    </div>
+                                    Download preview
+                                </Button>
+                            )}
+                            <Button
+                                variant="secondary"
+                                className="min-w-[320px] transition-all hover:scale-105 active:scale-95"
+                                style={{
+                                    fontFamily: 'var(--font-geist-mono), monospace',
+                                    fontWeight: 500,
+                                    fontSize: '16px',
+                                    lineHeight: '100%'
+                                }}
+                            >
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                    <img src="/custom-icons/share.svg" alt="" className="w-full h-full transition-all group-active:brightness-0 group-active:invert" />
+                                </div>
+                                Share
+                            </Button>
                         </div>
                     </div>
-
-                    {/* Like Buttons */}
-                    <div className="absolute top-4 right-4 flex gap-2">
-                        <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm text-white text-sm border border-white/10">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
-                            {template.likes}
-                        </button>
-                        <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm">
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                            </svg>
-                            {template.likes}
-                        </button>
-                    </div>
-                </div>
-            </TemplateHeader>
-        </main>
+                </TemplateHeader>
+            </main>
+            <Footer />
+        </GridBackground>
     );
 }

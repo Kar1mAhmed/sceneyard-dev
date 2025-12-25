@@ -48,7 +48,7 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
         <div className="fixed inset-0 z-[200]">
             {/* Backdrop */}
             <div
-                className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
+                className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ease-in-out ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
                 onClick={onClose}
             />
 
