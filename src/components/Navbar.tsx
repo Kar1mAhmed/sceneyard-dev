@@ -8,12 +8,42 @@ interface NavbarProps {
     isHidden?: boolean;
 }
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoginPopup from "./auth/LoginPopup";
 
 export default function Navbar({ isHidden = false }: NavbarProps) {
     const pathname = usePathname();
     const [isLoginOpen, setIsLoginOpen] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    useEffect(() => {
+        const controlNavbar = () => {
+            if (typeof window !== 'undefined') {
+                if (window.scrollY < 10) {
+                    setIsVisible(true);
+                } else if (window.scrollY > lastScrollY) { // if scroll down hide the navbar
+                    setIsVisible(false);
+                } else { // if scroll up show the navbar
+                    setIsVisible(true);
+                }
+
+                // remember current page location to use in the next move
+                setLastScrollY(window.scrollY);
+            }
+        };
+
+        if (typeof window !== 'undefined') {
+            window.addEventListener('scroll', controlNavbar);
+
+            // cleanup function
+            return () => {
+                window.removeEventListener('scroll', controlNavbar);
+            };
+        }
+    }, [lastScrollY]);
+
+    const effectivelyHidden = isHidden || !isVisible;
 
     const navLinks = [
         { href: "/", label: "Home" },
@@ -25,12 +55,12 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
     return (
         <>
             <header
-                className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out ${isHidden ? '-translate-y-full' : 'translate-y-0'}`}
+                className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out ${effectivelyHidden ? '-translate-y-full' : 'translate-y-0'}`}
                 style={{
                     height: '100px',
                     paddingLeft: '125px',
                     paddingRight: '125px',
-                    background: isHidden ? 'transparent' : 'linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%)',
+                    background: effectivelyHidden ? 'transparent' : 'linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%)',
                 }}
             >
                 {/* Gradient Blur Layer */}

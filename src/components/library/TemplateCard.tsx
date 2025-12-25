@@ -48,15 +48,10 @@ export default function TemplateCard({ template }: TemplateCardProps) {
 
     return (
         <div
-            className={`relative rounded-[24px] overflow-hidden group cursor-pointer bg-dark-08 transition-all duration-500 ${template.orientation === 'vertical' ? 'row-span-2' : 'row-span-1'
+            className={`relative rounded-[24px] overflow-hidden group cursor-pointer bg-dark-08 transition-all duration-500 h-full ${template.orientation === 'vertical' ? 'row-span-2' : 'row-span-1'
                 }`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            style={{
-                // Horizontal: 387/288 ≈ 1.34375
-                // Vertical: 387/591 ≈ 0.6548
-                aspectRatio: template.orientation === 'vertical' ? '387/591' : '387/288',
-            }}
         >
             {/* Media Content */}
             <div className="absolute inset-0 z-0">
@@ -95,7 +90,7 @@ export default function TemplateCard({ template }: TemplateCardProps) {
             >
                 {/* Top Section */}
                 <div className="flex justify-between items-start">
-                    <h3 className="text-white font-medium text-[16px] leading-[1.2] max-w-[65%] drop-shadow-lg line-clamp-2 uppercase">
+                    <h3 className="text-white font-medium text-[16px] leading-[1.2] max-w-[65%] drop-shadow-lg line-clamp-2 whitespace-nowrap">
                         {template.title}
                     </h3>
 

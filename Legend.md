@@ -314,6 +314,63 @@ npm run build        # Production build
    - Added `deleted_at` to assets table.
    - Improved R2 cleanup logic during template deletion.
 
+### **December 25, 2025 - Library UI Enhancements**
+1. ✅ **Library Grid Layout**:
+   - Implemented smart masonry grid with responsive row heights (220px-260px).
+   - Vertical videos span 2 rows, horizontal videos span 1 row.
+   - Using `grid-flow-row-dense` to auto-fill gaps and prevent empty spaces.
+
+2. ✅ **Scroll-Hide Navbar**:
+   - Added scroll direction detection to the Navbar component.
+   - Navbar hides automatically when scrolling down to maximize content visibility.
+   - Navbar reappears instantly when scrolling up or at the top of the page.
+   - Smooth 500ms CSS transition for premium feel.
+   - Integrated with existing footer visibility logic.
+
 ---
 
-**Status**: Backend infrastructure is now highly modular and stable. Landing page and Admin dashboard are fully established. Next focus is building the Public Marketplace browse and search experience.
+## 📊 Brief vs. Implementation Gap Analysis
+
+Based on the [Full Project Brief](./Docs/sceneyard_full_brief.md), here is the current status:
+
+### ✅ **Implemented (Aligned with Brief)**
+| Feature | Brief Section | Status |
+|---------|---------------|--------|
+| Google OAuth | Section 5, 10 | ✅ Complete |
+| Template Library | Section 5 | ✅ Complete |
+| Categories & Tags | Section 5 | ✅ Complete |
+| Credits Cost System | Section 6 | ✅ DB Ready (1-4 credits) |
+| Admin Dashboard | Section 5 | ✅ Complete |
+| R2 Storage (Preview/Download) | Section 7, 8 | ✅ Complete |
+| FTS5 Search | Section 7 | ✅ DB Ready |
+| User Roles | Section 8 | ✅ Complete |
+| Responsive UI | Section 9 | ✅ Complete |
+
+### 🚧 **In Progress**
+| Feature | Brief Section | Notes |
+|---------|---------------|-------|
+| Templates Page (Browse) | Section 9 | Grid done, filters in progress |
+| Search & Filter | Section 5 | FTS5 ready, UI pending |
+
+### ❌ **Not Yet Started (From Brief)**
+| Feature | Brief Section | Priority |
+|---------|---------------|----------|
+| Credit Ledger System | Section 7 | High |
+| Subscription Management | Section 6, 10 | High |
+| Lemon Squeezy Payments | Section 7 | High |
+| Download Flow (Credit Deduction) | Section 10 | High |
+| Account Page | Section 9 | Medium |
+| Pricing Page | Section 9 | Medium |
+| Referral System | Section 6 | Low |
+| Golden Membership | Section 6 | Low |
+| Favorites/Likes UI | Section 5 | Low |
+
+### 🎯 **Recommended Next Steps**
+1. **Complete Search UI**: Connect FTS5 backend to the search bar on the Library page.
+2. **Build Pricing Page**: Display subscription tiers (Starter, Pro, Ultimate).
+3. **Implement Credit System**: Create `credits_ledger` table, service, and deduction logic.
+4. **Integrate Lemon Squeezy**: Set up webhooks for subscription/payment events.
+
+---
+
+**Status**: Backend infrastructure is now highly modular and stable. Landing page and Admin dashboard are fully established. The Public Library browse page is functional with smart grid layout. Next focus is Search UI, Pricing, and Credit System.
