@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { User } from '@/features/users/types';
 import { updateUserRoleAction, deleteUserAction } from '../users/actions';
 import { useToast } from '@/src/components/ToastProvider';
+import Loading from '@/src/components/ui/Loading';
 
 interface EditUserFormProps {
     user: User;
@@ -229,7 +230,7 @@ export function EditUserForm({ user, currentUserId }: EditUserFormProps) {
                             >
                                 {processing ? (
                                     <>
-                                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        <Loading size={16} />
                                         Processing...
                                     </>
                                 ) : (
@@ -264,7 +265,7 @@ export function EditUserForm({ user, currentUserId }: EditUserFormProps) {
                             >
                                 {processing ? (
                                     <>
-                                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        <Loading size={16} />
                                         Deleting...
                                     </>
                                 ) : (

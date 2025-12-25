@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { Suspense } from "react";
 import { EditTemplateForm } from "../../components/EditTemplateForm";
+import Loading from "@/src/components/ui/Loading";
 
 async function EditTemplateContent({ params }: { params: Promise<{ id: string }> }) {
     await headers();
@@ -29,7 +30,7 @@ async function EditTemplateContent({ params }: { params: Promise<{ id: string }>
 function EditTemplateLoading() {
     return (
         <div className="min-h-screen bg-black flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+            <Loading text="LOADING TEMPLATE" />
         </div>
     );
 }

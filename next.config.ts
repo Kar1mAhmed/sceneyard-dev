@@ -15,8 +15,7 @@ const nextConfig: NextConfig = {
   },
   // Optimize for Cloudflare Workers edge runtime
   experimental: {
-    serverActions: {
-      bodySizeLimit: '2mb',
+    serverActions: { 
     },
   },
 };

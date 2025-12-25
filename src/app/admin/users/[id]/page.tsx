@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { Suspense } from "react";
 import { EditUserForm } from "@/src/app/admin/components/EditUserForm";
-
+import Loading from "@/src/components/ui/Loading";
 
 
 import { connection } from 'next/server';

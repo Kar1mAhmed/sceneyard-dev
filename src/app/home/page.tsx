@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { Suspense } from "react";
+import Loading from "@/src/components/ui/Loading";
 
 async function HomeContent() {
     await headers();
@@ -69,7 +70,7 @@ async function HomeContent() {
 function HomeLoading() {
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            <Loading text="LOADING EXPERIENCE" />
         </div>
     );
 }

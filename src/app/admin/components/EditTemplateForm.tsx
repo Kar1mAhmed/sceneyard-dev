@@ -8,6 +8,7 @@ import { TemplateMediaViewer } from './TemplateMediaViewer';
 import TagInput from '@/src/components/TagInput';
 import { updateTemplateAction, deleteTemplateAction } from '../templates/actions';
 import { useToast } from '@/src/components/ToastProvider';
+import Loading from '@/src/components/ui/Loading';
 
 interface Category {
     id: string;
@@ -240,9 +241,14 @@ export function EditTemplateForm({ template, categories }: EditTemplateFormProps
                         <button
                             type="submit"
                             disabled={saving}
-                            className="px-6 py-3 bg-purple-500 text-white rounded-xl font-bold hover:bg-purple-600 transition-colors disabled:opacity-50"
+                            className="px-6 py-3 bg-purple-500 text-white rounded-xl font-bold hover:bg-purple-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                         >
-                            {saving ? 'Saving...' : 'Save Changes'}
+                            {saving ? (
+                                <>
+                                    <Loading size={20} />
+                                    Saving...
+                                </>
+                            ) : 'Save Changes'}
                         </button>
                     </div>
                 </div>
@@ -271,7 +277,7 @@ export function EditTemplateForm({ template, categories }: EditTemplateFormProps
                             >
                                 {deleting ? (
                                     <>
-                                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        <Loading size={16} />
                                         Deleting...
                                     </>
                                 ) : (

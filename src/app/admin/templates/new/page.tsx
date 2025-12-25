@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CreateTemplateForm } from "../../components/CreateTemplateForm";
 import { Suspense } from "react";
 import { connection } from 'next/server';
+import Loading from "@/src/components/ui/Loading";
 
 async function NewTemplateContent() {
     await connection();
@@ -36,7 +37,7 @@ export default function NewTemplatePage() {
 
                 <Suspense fallback={
                     <div className="flex items-center justify-center p-12">
-                        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
+                        <Loading text="PREPARING EDITOR" />
                     </div>
                 }>
                     <NewTemplateContent />

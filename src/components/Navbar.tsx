@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import LoginPopup from "./auth/LoginPopup";
 import UserSidebar from "./UserSidebar";
 import { MenuGridIcon } from "./ui/MenuGridIcon";
+import Loading from "./ui/Loading";
 
 interface NavbarProps {
     isHidden?: boolean;
@@ -74,14 +75,17 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                     background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%)'
                 }}
             >
-                <div className="relative" style={{ width: '220px', height: '94px' }}>
-                    <Image
-                        src="/logo.svg"
-                        alt="SceneYard"
-                        fill
-                        className="object-contain"
-                        priority
-                    />
+                <div className="flex items-center justify-between w-full">
+                    <div className="relative" style={{ width: '220px', height: '94px' }}>
+                        <Image
+                            src="/logo.svg"
+                            alt="SceneYard"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
+                    </div>
+                    <Loading size={32} />
                 </div>
             </header>
         );

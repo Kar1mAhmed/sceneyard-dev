@@ -3,11 +3,11 @@ import { getCategories, getCategoryStats, createCategory, deleteCategory, update
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { headers } from "next/headers";
-import { Suspense } from "react";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, unstable_noStore } from "next/cache";
 import { CategoryItem } from "../components/CategoryItem";
 
-async function CategoriesList() {
+export default async function CategoriesPage() {
+    unstable_noStore();
     await headers();
     const session = await auth();
     if (session?.user?.role !== "admin") redirect("/home");
@@ -98,21 +98,5 @@ async function CategoriesList() {
                 </div>
             </div>
         </div>
-    );
-}
-
-function CategoriesLoading() {
-    return (
-        <div className="min-h-screen bg-black flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
-        </div>
-    );
-}
-
-export default function CategoriesPage() {
-    return (
-        <Suspense fallback={<CategoriesLoading />}>
-            <CategoriesList />
-        </Suspense>
     );
 }

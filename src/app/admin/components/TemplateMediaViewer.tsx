@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { FileReplacement } from './FileReplacement';
 import { useRouter } from 'next/navigation';
+import Loading from '@/src/components/ui/Loading';
 
 interface TemplateMediaViewerProps {
     templateId: string;
@@ -110,7 +111,7 @@ export function TemplateMediaViewer({ templateId, previewR2Key, thumbnailR2Key, 
                         >
                             {isLoadingDownload ? (
                                 <>
-                                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                    <Loading size={16} />
                                     Preparing...
                                 </>
                             ) : (

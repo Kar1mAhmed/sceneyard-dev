@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
 import { headers } from "next/headers";
+import Loading from "@/src/components/ui/Loading";
 
 async function AdminDashboardContent() {
     await headers();
@@ -134,7 +135,7 @@ async function AdminDashboardContent() {
 function AdminLoading() {
     return (
         <div className="min-h-screen bg-black flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+            <Loading text="LOADING DASHBOARD" />
         </div>
     );
 }

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { uploadTemplateAssets } from '@/lib/r2-upload';
 import TagInput from '@/src/components/TagInput';
 import { useToast } from '@/src/components/ToastProvider';
+import Loading from '@/src/components/ui/Loading';
 
 interface Category {
     id: string;
@@ -270,9 +271,14 @@ export function CreateTemplateForm({ categories }: CreateTemplateFormProps) {
                     <button
                         type="submit"
                         disabled={uploading}
-                        className="px-6 py-3 bg-purple-500 text-white rounded-xl font-bold hover:bg-purple-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-6 py-3 bg-purple-500 text-white rounded-xl font-bold hover:bg-purple-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                        {uploading ? 'Uploading...' : 'Create Template'}
+                        {uploading ? (
+                            <>
+                                <Loading size={20} />
+                                Uploading...
+                            </>
+                        ) : 'Create Template'}
                     </button>
                 </div>
             </form>
