@@ -115,7 +115,7 @@ export default function HeroSection() {
                     className="text-white font-extrabold tracking-[-0.02em] flex flex-col items-center justify-center w-full relative mb-6 uppercase"
                     style={{
                         fontFamily: 'var(--font-poppins), sans-serif',
-                        fontSize: 'clamp(32px, 8vw, 100px)',
+                        fontSize: 'clamp(32px, 8vw, 80px)',
                         lineHeight: '130%',
                         letterSpacing: '-0.02em',
                         fontWeight: 800

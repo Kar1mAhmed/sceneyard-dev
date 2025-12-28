@@ -97,8 +97,8 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                 className={`fixed top-0 left-0 right-0 transition-[transform,background-color,opacity] duration-500 ease-in-out ${effectivelyHidden ? '-translate-y-full' : 'translate-y-0'}`}
                 style={{
                     height: '100px',
-                    paddingLeft: 'clamp(24px, 7vw, 125px)',
-                    paddingRight: 'clamp(24px, 7vw, 125px)',
+                    paddingLeft: 'clamp(8px, 4vw, 125px)',
+                    paddingRight: 'clamp(8px, 4vw, 125px)',
                     background: (effectivelyHidden || isSidebarOpen) ? 'transparent' : 'linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%)',
                     zIndex: isSidebarOpen ? 210 : 50, // Higher than sidebar z-200, immediate shift
                     pointerEvents: isSidebarOpen ? 'none' : 'auto', // Don't block sidebar clicks
