@@ -73,7 +73,7 @@ export default function PricingSection() {
             {/* Unused Credits Roll Over Header */}
             <div className="text-center">
                 <h2
-                    className="text-white text-4xl md:text-5xl font-semibold mb-3"
+                    className="text-white text-4xl md:text-5xl font-semibold mb-3 mx-10"
                     style={{ fontFamily: 'var(--font-poppins)' }}
                 >
                     Unused Credits Roll Over
@@ -87,11 +87,14 @@ export default function PricingSection() {
             </div>
 
             {/* Pricing Cards Section with Full Width Lines */}
-            <div className="w-full relative pb-24">
-                {/* Cards Container with Grid Margin */}
-                <div className="w-full px-4 md:px-[var(--grid-margin)] flex justify-center pt-12 xl:pt-24">
+            <div className="w-full relative pb-12 md:pb-24">
+                {/* Cards Container - Constrained to grid margins */}
+                <div
+                    className="flex justify-center pt-8 md:pt-12 xl:pt-24 mx-auto px-4"
+                    style={{ width: 'calc(100% - (var(--grid-margin) * 2))', maxWidth: '1596px' }}
+                >
                     <div
-                        className="grid grid-cols-1 lg:grid-cols-3 gap-6 xl:gap-[48px] mx-auto w-full max-w-lg md:max-w-3xl lg:max-w-[1100px] xl:max-w-[1598px]"
+                        className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:gap-6 xl:gap-[48px] w-full"
                     >
                         {/* PLUS Plan - Dark */}
                         <PricingCard

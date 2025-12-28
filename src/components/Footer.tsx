@@ -56,29 +56,28 @@ const Footer = ({ onVisibilityChange }: FooterProps) => {
             {/* Main Content Split */}
             <div className="w-full max-w-[1598px] grid grid-cols-1 lg:grid-cols-2">
                 {/* LEFT SIDE: Brand & CTA */}
-                <div className="flex flex-col justify-between py-12 px-8 lg:px-16 border-b lg:border-b-0 lg:border-r border-[var(--color-grid-line)]">
+                <div className="flex flex-col justify-between py-8 md:py-12 px-6 md:px-8 lg:px-16 border-b lg:border-b-0 lg:border-r border-[var(--color-grid-line)]">
                     <div className="mb-0">
-                        {/* Logo */}
-                        <div className="mb-8">
+                        {/* Logo - Smaller on mobile */}
+                        <div className="mb-4 md:mb-8 flex justify-center lg:justify-start">
                             <Image
                                 src="/logo.svg"
                                 alt="SceneYard"
-                                width={180}
-                                height={180}
-                                className="object-contain" // Keeping it safe
+                                width={140}
+                                height={140}
+                                className="object-contain md:w-[180px] md:h-[180px]"
                             />
                         </div>
 
-                        {/* BIG CTA */}
-                        <div className="flex flex-col gap-0 w-full">
-                            {/* Row 1: START CREATING */}
-                            <div className="whitespace-nowrap">
+                        {/* BIG CTA - Responsive sizing */}
+                        <div className="flex flex-col gap-0 w-full items-center lg:items-start">
+                            {/* Mobile: Stacked and smaller */}
+                            <div className="text-center lg:text-left">
                                 <span
-                                    className="text-white uppercase leading-none"
+                                    className="text-white uppercase leading-none block text-2xl md:text-4xl lg:text-[56px]"
                                     style={{
                                         fontFamily: 'var(--font-poppins)',
                                         fontWeight: 400,
-                                        fontSize: '56px',
                                         lineHeight: '100%',
                                         letterSpacing: '0%'
                                     }}
@@ -88,25 +87,24 @@ const Footer = ({ onVisibilityChange }: FooterProps) => {
                             </div>
 
                             {/* Row 2: NOW + Button */}
-                            <div className="flex items-center gap-6 mt-2">
+                            <div className="flex items-center justify-center lg:justify-start gap-4 md:gap-6 mt-2">
                                 <span
-                                    className="text-white uppercase leading-none"
+                                    className="text-white uppercase leading-none text-2xl md:text-4xl lg:text-[56px]"
                                     style={{
                                         fontFamily: 'var(--font-poppins)',
                                         fontWeight: 400,
-                                        fontSize: '56px',
                                         lineHeight: '100%',
                                         letterSpacing: '0%'
                                     }}
                                 >
                                     NOW
                                 </span>
-                                {/* Purple CTA Button - Moved next to NOW */}
+                                {/* Purple CTA Button */}
                                 <Link
                                     href="/templates"
-                                    className="flex items-center justify-center w-[100px] h-[50px] bg-[#CFA6FA] hover:bg-[#b88df0] transition-colors rounded-full text-black"
+                                    className="flex items-center justify-center w-12 h-12 md:w-[100px] md:h-[50px] bg-[#CFA6FA] hover:bg-[#b88df0] transition-colors rounded-full text-black"
                                 >
-                                    <ArrowUpRight size={28} />
+                                    <ArrowUpRight size={20} className="md:w-7 md:h-7" />
                                 </Link>
                             </div>
                         </div>

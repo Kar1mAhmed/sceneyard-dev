@@ -11,20 +11,19 @@ interface RealityCardProps {
 
 function RealityCard({ text, subText, icon, className = "", iconStyle = {} }: RealityCardProps) {
     return (
-        <div className={`group relative flex flex-row items-center justify-between gap-2 hover:bg-[#7558F8] transition-colors duration-300 ${className} min-h-[280px] 2xl:min-h-[353px]`}
+        <div className={`group relative flex flex-col md:flex-row items-center justify-between gap-4 md:gap-2 hover:bg-[#7558F8] transition-colors duration-300 ${className} min-h-[200px] md:min-h-[280px] 2xl:min-h-[353px] p-6 md:p-0`}
             style={{
                 // User requested specific settings - making responsive
                 // padding: '64px', // Moving to className for responsiveness
             }}
         >
-            {/* Text Content - Reduced space as requested */}
-            <div className="flex flex-col gap-2 w-[65%] z-10 pl-8 py-8 2xl:pl-[64px] 2xl:py-[64px]">
-                <p className="text-white"
+            {/* Text Content - On top for mobile */}
+            <div className="flex flex-col gap-2 w-full md:w-[65%] z-10 text-center md:text-left md:pl-8 md:py-8 2xl:pl-[64px] 2xl:py-[64px] order-1 md:order-1">
+                <p className="text-white text-base md:text-[2vw]"
                     style={{
                         fontFamily: 'var(--font-poppins)',
                         fontWeight: 500, // Medium
                         fontStyle: 'normal',
-                        fontSize: '2vw', // User spec
                         lineHeight: '120%',
                         letterSpacing: '0%'
                     }}>
@@ -37,10 +36,10 @@ function RealityCard({ text, subText, icon, className = "", iconStyle = {} }: Re
                 )}
             </div>
 
-            {/* Icon - Bigger side, bigger icon */}
-            <div className="flex-1 flex items-center justify-center z-10">
+            {/* Icon - Below text on mobile */}
+            <div className="flex-1 flex items-center justify-center md:justify-center z-10 order-2 md:order-2">
                 <div
-                    className="bg-[#7558F8] group-hover:bg-[#00FFF0] transition-colors duration-300 scale-125 origin-center"
+                    className="bg-[#7558F8] group-hover:bg-[#00FFF0] transition-colors duration-300 scale-110 md:scale-125 origin-center"
                     style={{
                         ...iconStyle, // Width, height, rotation from props
                         maskImage: `url('${icon}')`,
@@ -69,11 +68,11 @@ export default function RealitySection() {
                     subtitle="here's the reality"
                     title={
                         <div className="flex flex-col items-center gap-2">
-                            <div className="flex flex-row items-center justify-center gap-[0.2em] whitespace-nowrap w-full z-10">
+                            <div className="flex flex-wrap md:flex-nowrap items-center justify-center gap-[0.2em] w-full z-10">
                                 <SelectionBox text="YOU KNOW HOW" color="var(--color-primary-95)" />
                                 <span>TO BUILD IT</span>
                             </div>
-                            <div className="flex flex-row items-center justify-center gap-[0.2em] whitespace-nowrap w-full z-10">
+                            <div className="flex flex-wrap md:flex-nowrap items-center justify-center gap-[0.2em] w-full z-10">
                                 <span>BUT DO YOU</span>
                                 <SelectionBox text="HAVE THE TIME?" color="var(--color-primary-95)" />
                             </div>
@@ -87,7 +86,7 @@ export default function RealitySection() {
                 - Bounded width (90% mx-auto) to fit vertical lines.
                 - Relative pos for internal dividers.
             */}
-            <div className="w-full relative my-24">
+            <div className="w-full relative my-12 md:my-24">
 
                 {/* 
                    FULL WIDTH HORIZONTAL LINES 

@@ -5,7 +5,7 @@ import { Button } from "../ui/Button";
 
 export default function HeroSection() {
     return (
-        <div className="min-h-screen relative overflow-hidden flex items-center justify-center rounded-bl-[90px] rounded-br-[90px]">
+        <div className="min-h-screen relative overflow-hidden flex items-center justify-center rounded-bl-[90px] rounded-br-[90px] w-full">
             {/* Background Image */}
             <Image
                 src="/BG.webp"
@@ -23,89 +23,87 @@ export default function HeroSection() {
                 }}
             />
 
-            {/* Floating Icons - Randomized Distribution to break symmetry */}
+            {/* Floating Icons - Pushed further to corners */}
 
-            {/* LEFT SIDE */}
-            {/* Icon 3: Cursor - Top Left */}
+            {/* Icon 1: Cursor */}
             <div
                 className="absolute pointer-events-none z-0 animate-float icon-glow"
                 style={{
-                    width: 'clamp(40px, 8vw, 88px)',
-                    height: 'clamp(36px, 7vw, 81px)',
-                    top: '12%',
-                    left: '5%',
-                    '--rotation': '8.7deg'
+                    width: 'clamp(32px, 6vw, 88px)',
+                    height: 'clamp(28px, 5vw, 81px)',
+                    top: '20%',  /* Pushed further up */
+                    left: '5%',  /* Pushed further left */
+                    '--rotation': '22deg'
                 } as React.CSSProperties}
             >
                 <Image src="/icons/white/cursor.svg" alt="" fill className="object-contain" />
             </div>
 
-            {/* Icon 6: FX - Middle Left */}
-            <div
-                className="absolute pointer-events-none z-0 hidden sm:block animate-float-delayed-1 icon-glow"
-                style={{
-                    width: 'clamp(50px, 10vw, 100px)',
-                    height: 'clamp(50px, 10vw, 100px)',
-                    top: '60%',
-                    left: '10%',
-                    '--rotation': '8deg'
-                } as React.CSSProperties}
-            >
-                <Image src="/icons/white/fx.svg" alt="" fill className="object-contain" />
-            </div>
-
-            {/* Icon 2: Sun - Bottom Left */}
-            <div
-                className="absolute pointer-events-none z-0 hidden lg:block animate-float-delayed-2 icon-glow"
-                style={{
-                    width: '100px',
-                    height: '100px',
-                    bottom: '15%',
-                    left: '2%',
-                    '--rotation': '8deg'
-                } as React.CSSProperties}
-            >
-                <Image src="/icons/white/sun.svg" alt="" fill className="object-contain" />
-            </div>
-
-            {/* RIGHT SIDE */}
-            {/* Icon 5: Box - Top Right */}
+            {/* Icon 2: Box */}
             <div
                 className="absolute pointer-events-none z-0 animate-float-delayed-1 icon-glow"
                 style={{
-                    width: 'clamp(40px, 8vw, 72px)',
-                    height: 'clamp(50px, 10vw, 91px)',
-                    top: '8%',
-                    right: '10%',
-                    '--rotation': '-9.5deg'
+                    width: 'clamp(32px, 6vw, 72px)',
+                    height: 'clamp(40px, 8vw, 91px)',
+                    top: '15%',  /* Pushed further up */
+                    right: '8%', /* Pushed further right */
+                    '--rotation': '-25deg'
                 } as React.CSSProperties}
             >
                 <Image src="/icons/white/box.svg" alt="" fill className="object-contain" />
             </div>
 
-            {/* Icon 4: Hourglass - Middle Right */}
+            {/* Icon 3: Hourglass */}
             <div
                 className="absolute pointer-events-none z-0 animate-float icon-glow"
                 style={{
-                    width: 'clamp(40px, 8vw, 89px)',
-                    height: 'clamp(36px, 7vw, 82px)',
-                    top: '35%',
-                    right: '2%',
-                    '--rotation': '8.7deg'
+                    width: 'clamp(32px, 6vw, 89px)',
+                    height: 'clamp(28px, 5vw, 82px)',
+                    top: '52%',  /* Adjusted height */
+                    right: '2%',  /* Pushed further right */
+                    '--rotation': '12deg'
                 } as React.CSSProperties}
             >
                 <Image src="/icons/white/hour-glass.svg" alt="" fill className="object-contain" />
             </div>
 
-            {/* Icon 1: Hand - Bottom Right */}
+            {/* Icon 4: Sun */}
             <div
-                className="absolute pointer-events-none z-0 hidden lg:block animate-float-delayed-2 icon-glow"
+                className="absolute pointer-events-none z-0 animate-float-delayed-2 icon-glow"
                 style={{
-                    width: '79px',
-                    height: '100px',
-                    bottom: '10%',
-                    right: '20%',
-                    '--rotation': '-9.5deg'
+                    width: 'clamp(40px, 8vw, 100px)',
+                    height: 'clamp(40px, 8vw, 100px)',
+                    bottom: '10%', /* Pushed further down */
+                    left: '30%',
+                    '--rotation': '-15deg'
+                } as React.CSSProperties}
+            >
+                <Image src="/icons/white/sun.svg" alt="" fill className="object-contain" />
+            </div>
+
+            {/* Icon 5: FX */}
+            <div
+                className="absolute pointer-events-none z-0 animate-float-delayed-1 icon-glow"
+                style={{
+                    width: 'clamp(36px, 7vw, 100px)',
+                    height: 'clamp(36px, 7vw, 100px)',
+                    bottom: '5%',  /* Pushed further down */
+                    left: '2%',   /* Pushed further left */
+                    '--rotation': '28deg'
+                } as React.CSSProperties}
+            >
+                <Image src="/icons/white/fx.svg" alt="" fill className="object-contain" />
+            </div>
+
+            {/* Icon 6: Hand */}
+            <div
+                className="absolute pointer-events-none z-0 animate-float-delayed-2 icon-glow"
+                style={{
+                    width: 'clamp(36px, 7vw, 79px)',
+                    height: 'clamp(44px, 9vw, 100px)',
+                    bottom: '18%',
+                    right: '12%', /* Pushed further right */
+                    '--rotation': '-18deg'
                 } as React.CSSProperties}
             >
                 <Image src="/icons/white/hand.svg" alt="" fill className="object-contain" />
@@ -114,25 +112,26 @@ export default function HeroSection() {
             {/* Main Content */}
             <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 w-full mt-[120px] md:mt-[50px]">
                 <h1
-                    className="text-white font-bold tracking-[-0.02em] flex flex-col items-center justify-center w-full relative mb-6"
+                    className="text-white font-extrabold tracking-[-0.02em] flex flex-col items-center justify-center w-full relative mb-6 uppercase"
                     style={{
                         fontFamily: 'var(--font-poppins), sans-serif',
-                        fontSize: 'clamp(28px, 6vw, 72px)',
-                        lineHeight: '115%',
-                        letterSpacing: '-0.02em'
+                        fontSize: 'clamp(32px, 8vw, 100px)',
+                        lineHeight: '130%',
+                        letterSpacing: '-0.02em',
+                        fontWeight: 800
                     }}
                 >
                     {/* Line 1 */}
                     <div className="flex flex-wrap items-center justify-center gap-[0.2em] w-full z-10">
-                        <span>A curated</span>
-                        <SelectionBox text="After Effects" color="#00FFF0" className="mx-0 align-middle translate-y-[-2px]" />
-                        <span>library</span>
+                        <span>A CURATED</span>
+                        <SelectionBox text="AFTER EFFECTS" color="#00FFF0" className="mx-0 align-middle translate-y-[-2px]" />
+                        <span>LIBRARY</span>
                     </div>
 
                     {/* Line 2 */}
                     <div className="flex flex-wrap items-center justify-center gap-[0.2em] w-full z-10">
-                        <span>built for real</span>
-                        <SelectionBox text="projects" color="#00FFF0" className="mx-0 align-middle translate-y-[-2px]" />
+                        <span>BUILT FOR REAL</span>
+                        <SelectionBox text="PROJECTS" color="#00FFF0" className="mx-0 align-middle translate-y-[-2px]" />
                     </div>
                 </h1>
 

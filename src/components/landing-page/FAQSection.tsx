@@ -24,14 +24,13 @@ function FAQItem({ question, answer, isOpen, onClick }: FAQItemProps) {
         >
             <button
                 onClick={onClick}
-                className="w-full flex items-center justify-between px-6 py-8 text-left group transition-colors duration-300 bg-transparent"
+                className="w-full flex items-center justify-between px-4 md:px-6 py-6 md:py-8 text-left group transition-colors duration-300 bg-transparent"
             >
                 <span
-                    className="uppercase transition-colors duration-300"
+                    className="uppercase transition-colors duration-300 text-lg md:text-2xl lg:text-[32px]"
                     style={{
                         fontFamily: 'var(--font-poppins)',
                         fontWeight: 600,
-                        fontSize: '32px',
                         lineHeight: '100%',
                         color: isOpen ? 'rgba(228, 228, 230, 1)' : 'rgba(98, 100, 108, 1)'
                     }}
@@ -41,29 +40,26 @@ function FAQItem({ question, answer, isOpen, onClick }: FAQItemProps) {
 
                 {/* Icon Circle */}
                 <div
-                    className={`flex items-center justify-center rounded-full transition-all duration-300 ${isOpen ? 'bg-[var(--color-primary-95)] text-white border-transparent' : 'bg-transparent text-[rgba(98,100,108,1)] border border-[rgba(59,59,69,1)]'}`}
+                    className={`flex items-center justify-center rounded-full transition-all duration-300 w-10 h-10 md:w-[52px] md:h-[52px] flex-shrink-0 ${isOpen ? 'bg-[var(--color-primary-95)] text-white border-transparent' : 'bg-transparent text-[rgba(98,100,108,1)] border border-[rgba(59,59,69,1)]'}`}
                     style={{
-                        width: '52px',
-                        height: '52px',
                         transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)'
                     }}
                 >
-                    <ChevronDown size={24} />
+                    <ChevronDown size={20} className="md:w-6 md:h-6" />
                 </div>
             </button>
 
-            {/* Answer Content Wrapper - Grid Transition for smoothness */}
+            {/* Answer Content Wrapper */}
             <div
                 className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
             >
                 <div className="overflow-hidden">
-                    <div className="px-6 pb-8">
+                    <div className="px-4 md:px-6 pb-6 md:pb-8">
                         <p
-                            className="text-white/80"
+                            className="text-white/80 text-sm md:text-lg"
                             style={{
                                 fontFamily: 'var(--font-geist-mono)',
                                 fontWeight: 400,
-                                fontSize: '18px',
                                 lineHeight: '130%',
                                 color: 'rgba(228, 228, 230, 0.8)'
                             }}
@@ -89,9 +85,9 @@ export default function FAQSection() {
     ];
 
     return (
-        <section className="w-full relative py-20 flex flex-col items-center">
+        <section className="w-full relative py-10 md:py-20 flex flex-col items-center">
             {/* Header */}
-            <div className="w-full relative z-20 mb-16 px-4">
+            <div className="w-full relative z-20 mb-8 md:mb-16 px-4">
                 <SectionHeader
                     title="Frequently Asked Questions"
                     subtitle={
@@ -100,8 +96,11 @@ export default function FAQSection() {
                 />
             </div>
 
-            {/* Accordion List */}
-            <div className="w-full px-4 md:px-[var(--grid-margin)] flex flex-col mb-16">
+            {/* Accordion List - Constrained to grid margins */}
+            <div
+                className="flex flex-col mb-8 md:mb-16 mx-auto px-4"
+                style={{ width: 'calc(100% - (var(--grid-margin) * 2))', maxWidth: '1596px' }}
+            >
                 {questions.map((item, index) => (
                     <FAQItem
                         key={index}

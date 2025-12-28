@@ -8,7 +8,7 @@ export default function SkillValueSection() {
     const borderClass = 'border-primary-70/30';
 
     return (
-        <div className="w-full relative mt-24 flex flex-col">
+        <div className="w-full relative mt-12 md:mt-24 flex flex-col">
             {/* 
                Shared Typography Styles 
                These are applied inline to match specific user request perfectly 
@@ -36,7 +36,7 @@ export default function SkillValueSection() {
                     }}
                 >
                     {/* Text Content */}
-                    <div className="flex flex-col gap-6 text-white z-10 w-full lg:w-auto text-center lg:text-left items-center lg:items-start">
+                    <div className="flex flex-col gap-6 text-white z-10 w-full lg:w-auto text-center lg:text-left items-center lg:items-start mb-6 lg:mb-0">
                         <h2 style={bigTextStyle} className="text-4xl md:text-6xl lg:text-[82px] whitespace-pre-wrap">
                             We're not <br />
                             <span className="inline-block relative">
@@ -70,7 +70,7 @@ export default function SkillValueSection() {
             </div>
 
             {/* BLOCK 2: Transparent, Image Left, Text Right */}
-            <div className="w-full relative mt-24">
+            <div className="w-full relative mt-12 md:mt-24">
                 {/* Full Width Lines */}
                 <div className={`absolute top-0 left-0 right-0 h-[1px] ${borderColorClass}`} />
                 <div className={`absolute bottom-0 left-0 right-0 h-[1px] ${borderColorClass}`} />
@@ -95,7 +95,7 @@ export default function SkillValueSection() {
                     </div>
 
                     {/* Text Content */}
-                    <div className="flex flex-col gap-6 text-white z-10 w-full lg:w-auto flex items-center lg:items-end text-center lg:text-right">
+                    <div className="flex flex-col gap-6 text-white z-10 w-full lg:w-auto flex items-center lg:items-end text-center lg:text-right mb-6 lg:mb-0">
                         <h2 style={bigTextStyle} className="text-4xl md:text-6xl lg:text-[82px] whitespace-pre-wrap">
                             Skip the <br />
                             <span className="inline-block relative">

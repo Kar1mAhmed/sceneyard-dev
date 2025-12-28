@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/Button";
 
@@ -32,6 +33,7 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
     const { data: session, status } = useSession();
     const [isMounted, setIsMounted] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
+    const pathname = usePathname();
 
     const isLoggedIn = status === "authenticated" && !!session;
 
@@ -56,6 +58,28 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
     const handleGoogleLogin = () => {
         signIn("google", { callbackUrl: "/library" });
     };
+
+    const isHome = pathname === "/";
+    const isLibrary = pathname === "/library";
+    const isPricing = pathname === "/pricing";
+    const isAbout = pathname === "/about";
+    const isContact = pathname === "/contact";
+    const isHowToUse = pathname === "/how-to-use";
+    const isFAQ = pathname === "/faq";
+
+    // Sections for mobile as per requested design
+    const mobileMainItems = [
+        { label: "HOME", href: "/", active: isHome },
+        { label: "ABOUT US", href: "/about", active: isAbout },
+        { label: "LIBRARY", href: "/library", active: isLibrary },
+        { label: "PRICING", href: "/pricing", active: isPricing },
+    ];
+
+    const mobileSupportItems = [
+        { label: "CONTACT US", href: "/contact", active: isContact, icon: "mail" },
+        { label: "HOW TO USE", href: "/how-to-use", active: isHowToUse, icon: "help" },
+        { label: "FAQ", href: "/faq", active: isFAQ, icon: "file" },
+    ];
 
     return (
         <div className="fixed inset-0 z-[200]">
@@ -82,7 +106,6 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
                     ${isAnimating ? 'translate-x-0' : 'translate-x-full'} 
                     w-full lg:w-[min(400px,85vw)]`}
                 style={{
-                    // Lightly transparent for mobile, solid-ish for desktop
                     background: typeof window !== 'undefined' && window.innerWidth >= 1024 ? '#000000DB' : 'rgba(0, 0, 0, 0.1)',
                     backdropFilter: 'blur(32.79999923706055px)',
                     WebkitBackdropFilter: 'blur(32.79999923706055px)'
@@ -174,23 +197,56 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
                 </div>
 
                 {/* Menu Items Container */}
-                <div className="flex-1 overflow-y-auto py-[max(1rem,2vh)] custom-scrollbar">
-                    {(isLoggedIn ? menuItems : guestMenuItems).map((item) => (
-                        <MenuItem key={item.label} item={item} onClose={onClose} />
-                    ))}
+                <div className="flex-1 overflow-y-auto pt-4 pb-8 custom-scrollbar">
+                    {/* Desktop Content */}
+                    <div className="hidden lg:block">
+                        {(isLoggedIn ? menuItems : guestMenuItems).map((item) => (
+                            <MenuItem key={item.label} item={item} onClose={onClose} />
+                        ))}
+                    </div>
 
-                    {/* Mobile Sign-in (If guest) */}
-                    {!isLoggedIn && (
-                        <div className="px-8 pt-6 flex justify-center w-full lg:hidden">
-                            <Button
-                                onClick={handleGoogleLogin}
-                                variant="primary"
-                                className="w-full !max-w-none"
-                            >
-                                Sign-in
-                            </Button>
+                    {/* Mobile Content - Two Sections */}
+                    <div className="lg:hidden flex flex-col">
+                        {/* Section 1 */}
+                        <div className="flex flex-col">
+                            {mobileMainItems.map((item) => (
+                                <MenuItem
+                                    key={item.label}
+                                    item={item}
+                                    onClose={onClose}
+                                    isActive={item.active}
+                                />
+                            ))}
                         </div>
-                    )}
+
+                        {/* Divider */}
+                        <div className="mx-8 my-6 h-[1px] bg-white/10" />
+
+                        {/* Section 2 */}
+                        <div className="flex flex-col">
+                            {mobileSupportItems.map((item) => (
+                                <MenuItem
+                                    key={item.label}
+                                    item={item}
+                                    onClose={onClose}
+                                    isActive={item.active}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Mobile Sign-in (If guest) */}
+                        {!isLoggedIn && (
+                            <div className="px-8 mt-4 mb-8 flex justify-center w-full lg:hidden">
+                                <Button
+                                    onClick={handleGoogleLogin}
+                                    variant="primary"
+                                    className="w-full !max-w-none"
+                                >
+                                    Sign-in
+                                </Button>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* 3. Desktop Footer (GitHub Legacy) */}
@@ -221,22 +277,9 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
                     </button>
                 </div>
 
-                {/* 4. Mobile Footer - Fixed Font Size */}
+                {/* 4. Mobile Footer - Sign-out for Mobile */}
                 {isLoggedIn && (
                     <div className="lg:hidden px-8 py-4 border-t border-white/10 space-y-1">
-                        <Link
-                            href="/support"
-                            onClick={onClose}
-                            className="flex items-center gap-4 p-3 group transition-all hover:bg-white/5 rounded-xl"
-                        >
-                            <div className="w-8 h-8 flex items-center justify-center" style={{ color: '#62646C' }}>
-                                <MenuIcon type="help-circle" />
-                            </div>
-                            <span className="text-[#AFB0B6] font-medium uppercase tracking-wider text-base">
-                                SUPPORT
-                            </span>
-                        </Link>
-
                         <button
                             onClick={handleSignOut}
                             className="flex items-center gap-4 p-3 text-[#FF5B5B] transition-all w-full group hover:bg-red-400/5 rounded-xl"
@@ -255,7 +298,7 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
     );
 }
 
-function MenuItem({ item, onClose }: { item: any, onClose: () => void }) {
+function MenuItem({ item, onClose, isActive = false }: { item: any, onClose: () => void, isActive?: boolean }) {
     return (
         <Link
             href={item.href}
@@ -264,29 +307,35 @@ function MenuItem({ item, onClose }: { item: any, onClose: () => void }) {
         >
             <div className="flex items-center gap-6 lg:gap-[max(1rem,1.5vw)]">
                 {/* Icon: Enlarged on mobile (w-8 h-8) */}
-                <div
-                    className="w-8 h-8 lg:w-[min(1.5rem,4vh)] lg:h-[min(1.5rem,4vh)] flex items-center justify-center transition-colors px-1 lg:px-0"
-                    style={{ color: '#62646C' }}
-                >
-                    <MenuIcon type={item.icon} />
+                {item.icon && (
+                    <div
+                        className="w-8 h-8 lg:w-[min(1.5rem,4vh)] lg:h-[min(1.5rem,4vh)] flex items-center justify-center transition-colors px-1 lg:px-0"
+                        style={{ color: isActive ? '#00FFF0' : '#62646C' }}
+                    >
+                        <MenuIcon type={item.icon} />
+                    </div>
+                )}
+                <div className="flex flex-col">
+                    <span
+                        className="uppercase tracking-normal text-[16px] lg:text-[clamp(0.9rem,1.8vh,1.25rem)] transition-colors leading-[120%]"
+                        style={{
+                            fontFamily: 'Poppins, sans-serif',
+                            fontWeight: 400,
+                            color: isActive ? '#00FFF0' : (typeof window !== 'undefined' && window.innerWidth >= 1024 ? '#AFB0B6' : '#E4E4E6')
+                        }}
+                    >
+                        {item.label}
+                    </span>
+                    {isActive && (
+                        <div className="h-[1.5px] w-full bg-[#00FFF0] mt-1 lg:hidden" />
+                    )}
                 </div>
-                <span
-                    className="uppercase tracking-normal text-[16px] lg:text-[clamp(0.9rem,1.8vh,1.25rem)] transition-colors leading-[120%]"
-                    style={{
-                        fontFamily: 'Poppins, sans-serif',
-                        fontWeight: 400,
-                        // Mobile: Gry-5 (#E4E4E6), Desktop: Original (#AFB0B6)
-                        color: typeof window !== 'undefined' && window.innerWidth >= 1024 ? '#AFB0B6' : '#E4E4E6'
-                    }}
-                >
-                    {item.label}
-                </span>
             </div>
             {/* Arrow indicator */}
             <div className="relative w-6 h-6 lg:w-[min(1rem,3vh)] lg:h-[min(1rem,3vh)] flex-shrink-0">
                 <div
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-[75%] border-t-[1.5px] border-r-[1.5px] rotate-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                    style={{ borderColor: 'rgba(215, 123, 255, 1)' }}
+                    style={{ borderColor: isActive ? '#00FFF0' : '#FFFFFF' }}
                 />
             </div>
         </Link>

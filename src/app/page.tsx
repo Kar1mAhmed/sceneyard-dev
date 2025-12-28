@@ -41,7 +41,7 @@ export default function Home() {
           textColor="var(--color-grid-line)"
           borderColor="var(--color-grid-line)"
           iconColor="var(--color-grid-line)"
-          className="opacity-80 my-64"
+          className="opacity-80 my-24 md:my-64"
         />
 
         <FeaturesSection />
@@ -59,7 +59,7 @@ export default function Home() {
           textColor="var(--color-grid-line)"
           borderColor="var(--color-grid-line)"
           iconColor="var(--color-grid-line)"
-          className="opacity-80 my-64"
+          className="opacity-80 my-24 md:my-64"
         />
 
         <ForWhoSection />
@@ -77,7 +77,7 @@ export default function Home() {
           textColor="var(--color-grid-line)"
           borderColor="var(--color-grid-line)"
           iconColor="var(--color-grid-line)"
-          className="opacity-80 my-64"
+          className="opacity-80 my-24 md:my-64"
         />
 
         <PricingSection />

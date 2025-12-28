@@ -57,10 +57,10 @@ export default function ForWhoSection() {
                     subtitle="If you use After Effects, this is for you."
                     title={
                         <div className="flex flex-col items-center gap-2">
-                            <div className="flex flex-row items-center justify-center gap-[0.2em] whitespace-nowrap w-full z-10">
+                            <div className="flex flex-wrap md:flex-nowrap items-center justify-center gap-[0.2em] w-full z-10">
                                 <span>BUILT FOR ANYONE WHO</span>
                             </div>
-                            <div className="flex flex-row items-center justify-center gap-[0.2em] whitespace-nowrap w-full z-10">
+                            <div className="flex flex-wrap md:flex-nowrap items-center justify-center gap-[0.2em] w-full z-10">
                                 <SelectionBox text="KNOWS AE" color="var(--color-primary-95)" />
                             </div>
                         </div>
@@ -69,7 +69,7 @@ export default function ForWhoSection() {
             </div>
 
             {/* Scrolling Cards Container */}
-            <div className="w-full relative mt-24">
+            <div className="w-full relative mt-12 md:mt-24">
                 {/* Top Line */}
                 <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: 'var(--color-grid-line)' }} />
 

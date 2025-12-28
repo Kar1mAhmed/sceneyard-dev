@@ -29,11 +29,8 @@ export default function PricingCard({
 
     return (
         <div
-            className={`relative flex flex-col w-full max-w-[512px] h-auto min-h-[450px] xl:min-h-[615px] justify-between p-6 xl:pt-[40px] xl:pr-[32px] xl:pb-[40px] xl:pl-[32px] transition-transform duration-300 hover:scale-[1.02] ${isPurple ? "bg-[#5D18EB]" : "bg-[#131316]"
+            className={`relative flex flex-col w-full max-w-[512px] h-auto min-h-[450px] xl:min-h-[615px] justify-between p-6 xl:pt-[40px] xl:pr-[32px] xl:pb-[40px] xl:pl-[32px] transition-transform duration-300 hover:scale-[1.02] rounded-2xl ${isPurple ? "bg-[#5D18EB]" : "bg-[#131316]"
                 }`}
-            style={{
-                borderRadius: 'none',
-            }}
         >
             {/* Header */}
             <div className="flex justify-between items-start mb-6">

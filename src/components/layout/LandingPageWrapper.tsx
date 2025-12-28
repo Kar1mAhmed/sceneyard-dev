@@ -12,7 +12,7 @@ export default function LandingPageWrapper({ children }: LandingPageWrapperProps
     const [isFooterVisible, setIsFooterVisible] = useState(false);
 
     return (
-        <main className="min-h-screen">
+        <main className="min-h-screen w-full overflow-x-hidden relative">
             <Navbar isHidden={isFooterVisible} />
             {children}
             <Footer onVisibilityChange={setIsFooterVisible} />
