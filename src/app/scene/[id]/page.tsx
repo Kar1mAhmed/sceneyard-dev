@@ -1,4 +1,4 @@
-import TemplateHeader from "@/src/components/template/TemplateHeader";
+import BigColumnHeader from "@/src/components/ui/BigColumnsHeader";
 import { Ribbon } from "@/src/components/ui/Ribbon";
 import Navbar from "@/src/components/Navbar";
 import GridBackground from "@/src/components/layout/GridBackground";
@@ -36,7 +36,7 @@ export default async function ScenePage({ params }: ScenePageProps) {
         <GridBackground>
             <Navbar />
             <main className="min-h-screen mb-24">
-                <TemplateHeader title={template.title}>
+                <BigColumnHeader title={template.title}>
                     <Ribbon
                         items={[
                             { text: "FEATURED TEMPLATES", icon: "box" },
@@ -204,7 +204,7 @@ export default async function ScenePage({ params }: ScenePageProps) {
                             </Button>
                         </div>
                     </div>
-                </TemplateHeader>
+                </BigColumnHeader>
 
                 {/* Suggestions Section */}
                 <div className="mt-32 w-full">
@@ -214,6 +214,23 @@ export default async function ScenePage({ params }: ScenePageProps) {
                     />
                     <div className="mt-12">
                         <TemplateGrid templates={suggestedTemplates} />
+                    </div>
+
+                    {/* Back to Library Button */}
+                    <div className="mt-24 mb-32 flex justify-center">
+                        <Button
+                            href="/library"
+                            variant="secondary"
+                            className="min-w-[320px] transition-all hover:scale-105 active:scale-95"
+                            style={{
+                                fontFamily: 'var(--font-geist-mono), monospace',
+                                fontWeight: 500,
+                                fontSize: '16px',
+                                lineHeight: '100%'
+                            }}
+                        >
+                            Back to Library
+                        </Button>
                     </div>
                 </div>
             </main>

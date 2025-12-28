@@ -59,10 +59,10 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
     const effectivelyHidden = isHidden || !isVisible;
 
     const navLinks = [
+        { href: "/library", label: "Library" },
         { href: "/", label: "Home" },
-        { href: "/about", label: "About Us" },
-        { href: "/library", label: "library" },
         { href: "/pricing", label: "Pricing" },
+        { href: "/contact", label: "Contact Us" },
     ];
 
     // Don't render complex navbar until session is checked to avoid flicker
@@ -97,8 +97,8 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                 className={`fixed top-0 left-0 right-0 transition-[transform,background-color,opacity] duration-500 ease-in-out ${effectivelyHidden ? '-translate-y-full' : 'translate-y-0'}`}
                 style={{
                     height: '100px',
-                    paddingLeft: '125px',
-                    paddingRight: '125px',
+                    paddingLeft: 'clamp(24px, 7vw, 125px)',
+                    paddingRight: 'clamp(24px, 7vw, 125px)',
                     background: (effectivelyHidden || isSidebarOpen) ? 'transparent' : 'linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%)',
                     zIndex: isSidebarOpen ? 210 : 50, // Higher than sidebar z-200, immediate shift
                     pointerEvents: isSidebarOpen ? 'none' : 'auto', // Don't block sidebar clicks
@@ -120,9 +120,9 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                     {/* Logo - Left */}
                     <Link
                         href={isLoggedIn ? "/library" : "/"}
-                        className="flex items-center relative z-[111] pointer-events-auto transition-opacity hover:opacity-80"
+                        className={`flex items-center relative z-[111] pointer-events-auto transition-all duration-300 hover:opacity-80 ${isSidebarOpen ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
                     >
-                        <div className="relative" style={{ width: '220px', height: '94px' }}>
+                        <div className="relative w-[150px] md:w-[220px] h-[64px] md:h-[94px]">
                             <Image
                                 src="/logo.svg"
                                 alt="SceneYard"
@@ -133,10 +133,10 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                         </div>
                     </Link>
 
-                    {/* Navigation Links - Center (only for guests) */}
+                    {/* Navigation Links - Center (only for desktop guests) */}
                     {!isLoggedIn && !isSidebarOpen && (
                         <nav
-                            className="flex items-center gap-[20px] absolute left-1/2 -translate-x-1/2"
+                            className="hidden lg:flex items-center gap-[20px] absolute left-1/2 -translate-x-1/2"
                             style={{
                                 fontFamily: 'var(--font-geist-mono), monospace',
                                 fontWeight: 400,
@@ -185,7 +185,7 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                         </nav>
                     )}
 
-                    {/* Right Side - Login Button (guests) or Menu Icon (logged in) */}
+                    {/* Right Side - Login Button (desktop guests) or Menu Icon (logged in or mobile) */}
                     <div className="relative z-[111] pointer-events-auto">
                         {isLoggedIn ? (
                             !isSidebarOpen && (
@@ -195,22 +195,34 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                                 />
                             )
                         ) : (
-                            <button
-                                onClick={() => setIsLoginOpen(true)}
-                                className="flex items-center justify-center bg-transparent border border-white text-white hover:bg-white hover:text-black transition-all duration-200 whitespace-nowrap cursor-pointer"
-                                style={{
-                                    height: '48px',
-                                    padding: '8px 32px',
-                                    borderRadius: '100px',
-                                    fontFamily: 'var(--font-geist-mono), monospace',
-                                    fontWeight: 500,
-                                    fontSize: '18px',
-                                    lineHeight: '150%',
-                                    letterSpacing: '0%'
-                                }}
-                            >
-                                Login
-                            </button>
+                            <>
+                                {/* Desktop Login */}
+                                <button
+                                    onClick={() => setIsLoginOpen(true)}
+                                    className="hidden lg:flex items-center justify-center bg-transparent border border-white text-white hover:bg-white hover:text-black transition-all duration-200 whitespace-nowrap cursor-pointer"
+                                    style={{
+                                        height: '48px',
+                                        padding: '8px 32px',
+                                        borderRadius: '100px',
+                                        fontFamily: 'var(--font-geist-mono), monospace',
+                                        fontWeight: 500,
+                                        fontSize: '18px',
+                                        lineHeight: '150%',
+                                        letterSpacing: '0%'
+                                    }}
+                                >
+                                    Login
+                                </button>
+                                {/* Mobile Menu Icon for Guests */}
+                                <div className="lg:hidden">
+                                    {!isSidebarOpen && (
+                                        <MenuGridIcon
+                                            size={40}
+                                            onClick={() => setIsSidebarOpen(true)}
+                                        />
+                                    )}
+                                </div>
+                            </>
                         )}
                     </div>
                 </div>
@@ -222,7 +234,7 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                 onClose={() => setIsLoginOpen(false)}
             />
 
-            {/* User Sidebar (for logged in users) */}
+            {/* User Sidebar (for logged in or guests on mobile) */}
             <UserSidebar
                 isOpen={isSidebarOpen}
                 onClose={() => setIsSidebarOpen(false)}

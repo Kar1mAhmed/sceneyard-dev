@@ -28,10 +28,10 @@ export default function HeroSection() {
             {/* LEFT SIDE */}
             {/* Icon 3: Cursor - Top Left */}
             <div
-                className="absolute pointer-events-none z-0 hidden md:block animate-float icon-glow"
+                className="absolute pointer-events-none z-0 animate-float icon-glow"
                 style={{
-                    width: '88px',
-                    height: '81px',
+                    width: 'clamp(40px, 8vw, 88px)',
+                    height: 'clamp(36px, 7vw, 81px)',
                     top: '12%',
                     left: '5%',
                     '--rotation': '8.7deg'
@@ -42,12 +42,12 @@ export default function HeroSection() {
 
             {/* Icon 6: FX - Middle Left */}
             <div
-                className="absolute pointer-events-none z-0 hidden lg:block animate-float-delayed-1 icon-glow"
+                className="absolute pointer-events-none z-0 hidden sm:block animate-float-delayed-1 icon-glow"
                 style={{
-                    width: '100px',
-                    height: '100px',
+                    width: 'clamp(50px, 10vw, 100px)',
+                    height: 'clamp(50px, 10vw, 100px)',
                     top: '60%',
-                    left: '16%',
+                    left: '10%',
                     '--rotation': '8deg'
                 } as React.CSSProperties}
             >
@@ -73,10 +73,10 @@ export default function HeroSection() {
             <div
                 className="absolute pointer-events-none z-0 animate-float-delayed-1 icon-glow"
                 style={{
-                    width: '72px',
-                    height: '91px',
+                    width: 'clamp(40px, 8vw, 72px)',
+                    height: 'clamp(50px, 10vw, 91px)',
                     top: '8%',
-                    right: '18%',
+                    right: '10%',
                     '--rotation': '-9.5deg'
                 } as React.CSSProperties}
             >
@@ -85,10 +85,10 @@ export default function HeroSection() {
 
             {/* Icon 4: Hourglass - Middle Right */}
             <div
-                className="absolute pointer-events-none z-0 hidden md:block animate-float icon-glow"
+                className="absolute pointer-events-none z-0 animate-float icon-glow"
                 style={{
-                    width: '89px',
-                    height: '82px',
+                    width: 'clamp(40px, 8vw, 89px)',
+                    height: 'clamp(36px, 7vw, 82px)',
                     top: '35%',
                     right: '2%',
                     '--rotation': '8.7deg'
@@ -112,25 +112,25 @@ export default function HeroSection() {
             </div>
 
             {/* Main Content */}
-            <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full mt-[50px]">
+            <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 w-full mt-[120px] md:mt-[50px]">
                 <h1
                     className="text-white font-bold tracking-[-0.02em] flex flex-col items-center justify-center w-full relative mb-6"
                     style={{
                         fontFamily: 'var(--font-poppins), sans-serif',
-                        fontSize: 'clamp(32px, 3.5vw, 84px)',
-                        lineHeight: '135%',
-                        letterSpacing: '0%'
+                        fontSize: 'clamp(28px, 6vw, 72px)',
+                        lineHeight: '115%',
+                        letterSpacing: '-0.02em'
                     }}
                 >
                     {/* Line 1 */}
-                    <div className="flex flex-row items-center justify-center gap-[0.2em] whitespace-nowrap w-full z-10">
-                        <span>a curated</span>
+                    <div className="flex flex-wrap items-center justify-center gap-[0.2em] w-full z-10">
+                        <span>A curated</span>
                         <SelectionBox text="After Effects" color="#00FFF0" className="mx-0 align-middle translate-y-[-2px]" />
                         <span>library</span>
                     </div>
 
                     {/* Line 2 */}
-                    <div className="flex flex-row items-center justify-center gap-[0.2em] whitespace-nowrap w-full z-10">
+                    <div className="flex flex-wrap items-center justify-center gap-[0.2em] w-full z-10">
                         <span>built for real</span>
                         <SelectionBox text="projects" color="#00FFF0" className="mx-0 align-middle translate-y-[-2px]" />
                     </div>
@@ -138,12 +138,11 @@ export default function HeroSection() {
 
                 {/* Subtitle */}
                 <p
-                    className="text-grey-90 max-w-[800px] z-10 mb-10"
+                    className="text-grey-90 max-w-[800px] z-10 mb-10 text-[16px] md:text-[24px]"
                     style={{
                         fontFamily: 'var(--font-geist-mono), monospace',
                         fontWeight: 500,
-                        fontSize: '24px',
-                        lineHeight: '120%',
+                        lineHeight: '135%',
                         letterSpacing: '0%',
                         textAlign: 'center'
                     }}

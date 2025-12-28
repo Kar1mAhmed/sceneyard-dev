@@ -7,7 +7,7 @@ interface LibraryHeaderProps {
     subtitle?: string;
 }
 
-export default function LibraryHeader({
+export default function SmallColumnHeader({
     title = "Explore Templates",
     subtitle = "Discover and download professional video templates for your projects"
 }: LibraryHeaderProps) {

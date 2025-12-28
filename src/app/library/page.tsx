@@ -1,7 +1,7 @@
 import GridBackground from "@/src/components/layout/GridBackground";
 import Navbar from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
-import LibraryHeader from "@/src/components/library/LibraryHeader";
+import SmallColumnsHeader from "@/src/components/ui/SmallColumnsHeader";
 import SearchLibrary from "@/src/components/library/SearchLibrary";
 import LibraryFilters from "@/src/components/library/LibraryFilters";
 
@@ -19,7 +19,7 @@ export default function LibraryPage() {
         <GridBackground>
             <Navbar />
             <main className="min-h-screen pt-48">
-                <LibraryHeader />
+                <SmallColumnsHeader />
                 <SearchLibrary />
                 <LibraryFilters />
 

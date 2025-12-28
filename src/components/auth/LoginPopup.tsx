@@ -16,7 +16,7 @@ export default function LoginPopup({ isOpen, onClose, message = "Login and start
     if (!isOpen) return null;
 
     const handleGoogleLogin = () => {
-        signIn("google");
+        signIn("google", { callbackUrl: "/library" });
     };
 
     return (

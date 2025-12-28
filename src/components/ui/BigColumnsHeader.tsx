@@ -7,7 +7,7 @@ interface TemplateHeaderProps {
     children?: React.ReactNode;
 }
 
-export default function TemplateHeader({ title, children }: TemplateHeaderProps) {
+export default function BigColumnsHeader({ title, children }: TemplateHeaderProps) {
     // Generate column colors - darker edges, brighter center (matching LibraryHeader but darker)
     const columnCount = 21;
     const columns = Array.from({ length: columnCount }, (_, i) => {
