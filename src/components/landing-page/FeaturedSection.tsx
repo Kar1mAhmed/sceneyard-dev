@@ -34,7 +34,7 @@ export default function FeaturedSection({ videos }: FeaturedSectionProps) {
                 */}
                         <video
                             src={video.thumbnailUrl}
-                            className="w-full h-full object-cover transition-opacity duration-500"
+                            className="w-full h-full object-cover transition-opacity"
                             autoPlay
                             muted
                             loop
@@ -53,7 +53,7 @@ export default function FeaturedSection({ videos }: FeaturedSectionProps) {
           100% { transform: translateX(-50%); }
         }
         .animate-marquee {
-          animation: marquee 40s linear infinite;
+          animation: marquee 100s linear infinite;
         }
       `}</style>
         </div>

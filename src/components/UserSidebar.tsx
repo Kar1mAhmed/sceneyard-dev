@@ -152,7 +152,7 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
                 </div>
 
                 {/* 2. Mobile Header */}
-                <div className="lg:hidden flex items-center justify-between px-8 pt-8 pb-4">
+                <div className="lg:hidden flex items-center justify-between px-4 pt-8 pb-4">
                     <div className="relative w-[180px] h-[60px]">
                         <Image
                             src="/logo.svg"

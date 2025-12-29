@@ -20,7 +20,7 @@ export default function SectionHeader({ title, subtitle, description, className 
 
             {/* Content - Constrained to grid margins */}
             <div
-                className="flex flex-col items-center gap-4 md:gap-6 z-10 px-4 mx-auto overflow-hidden text-center"
+                className="flex flex-col items-center gap-4 md:gap-6 z-10 px-4 mx-auto text-center"
                 style={{ width: 'calc(100% - (var(--grid-margin) * 2))', maxWidth: '100%' }}
             >
                 {/* Main Title - Font specs from Figma / User feedback */}

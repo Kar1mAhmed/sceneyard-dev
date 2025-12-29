@@ -44,9 +44,9 @@ export default function Home() {
           className="opacity-80 my-24 md:my-64"
         />
 
-        <FeaturesSection />
+        {/* <FeaturesSection /> */}
 
-        <Ribbon
+        {/* <Ribbon
           items={[
             { text: "CREATIVE FREEDOM", icon: "sun" },
             { text: "FAST WORKFLOW", icon: "timer" },
@@ -60,7 +60,7 @@ export default function Home() {
           borderColor="var(--color-grid-line)"
           iconColor="var(--color-grid-line)"
           className="opacity-80 my-24 md:my-64"
-        />
+        /> */}
 
         <ForWhoSection />
 
