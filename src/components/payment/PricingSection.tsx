@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SectionHeader from "../SectionHeader";
+import SectionHeader from "../ui/SectionHeader";
 import PricingCard from "./PricingCard";
 
 import SelectionBox from "../ui/SelectionBox";

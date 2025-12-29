@@ -78,6 +78,10 @@ SceneYard is a credit-based marketplace for After Effects templates. Users subsc
 - ✅ **Type Safety**: Unified `Template`, `Asset`, and `Category` types across layers with strict TypeScript.
 - ✅ **Dev Tools**: Implemented `/api/seed` to generate 100+ random templates for UI testing.
 
+#### **8. Pricing & Payments**
+- ✅ **Pricing Page**: Dedicated page at `/pricing` assembling Golden Member perks, subscription plans, and secure payment highlights.
+- ✅ **Secure Checkout Section**: Branded "Easy and Secure Payment" section with varied icons (Credit Card, Lock, Cancellation) and trusted provider logos.
+
 ---
 
 ## 🚧 In Progress

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/src/components/Navbar";
-import Footer from "@/src/components/Footer";
+import Navbar from "@/src/components/layout/Navbar";
+import Footer from "@/src/components/layout/Footer";
 
 interface LandingPageWrapperProps {
     children: React.ReactNode;

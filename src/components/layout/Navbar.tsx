@@ -5,10 +5,10 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import LoginPopup from "./auth/LoginPopup";
-import UserSidebar from "./UserSidebar";
-import { MenuGridIcon } from "./ui/MenuGridIcon";
-import Loading from "./ui/Loading";
+import LoginPopup from "@/src/components/auth/LoginPopup";
+import UserSidebar from "@/src/components/layout/UserSidebar";
+import { MenuGridIcon } from "../ui/MenuGridIcon";
+import Loading from "../ui/Loading";
 
 interface NavbarProps {
     isHidden?: boolean;

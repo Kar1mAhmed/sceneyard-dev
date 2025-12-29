@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { TemplateWithAssets } from '@/features/templates/types';
 import { TemplateMediaViewer } from './TemplateMediaViewer';
-import TagInput from '@/src/components/TagInput';
+import TagInput from '@/src/components/ui/TagInput';
 import { updateTemplateAction, deleteTemplateAction } from '../templates/actions';
-import { useToast } from '@/src/components/ToastProvider';
+import { useToast } from '@/src/components/layout/ToastProvider';
 import Loading from '@/src/components/ui/Loading';
 
 interface Category {

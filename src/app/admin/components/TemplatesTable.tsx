@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { VideoThumbnail } from './VideoThumbnail';
 import { toggleFeaturedTemplate } from '../actions';
 import { useRouter } from 'next/navigation';
-import { useToast } from '@/src/components/ToastProvider';
+import { useToast } from '@/src/components/layout/ToastProvider';
 
 interface Category {
     id: string;

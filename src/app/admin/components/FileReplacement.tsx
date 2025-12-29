@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { replaceTemplateFile } from '@/lib/r2-upload';
-import { useToast } from '@/src/components/ToastProvider';
+import { useToast } from '@/src/components/layout/ToastProvider';
 import Loading from '@/src/components/ui/Loading';
 
 interface FileReplacementProps {

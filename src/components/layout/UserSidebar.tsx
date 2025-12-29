@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Button } from "./ui/Button";
+import { Button } from "../ui/Button";
 
 interface UserSidebarProps {
     isOpen: boolean;

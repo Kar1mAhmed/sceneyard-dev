@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import SectionHeader from "../SectionHeader";
+import SectionHeader from "../ui/SectionHeader";
 import SelectionBox from "../ui/SelectionBox";
 
 interface FeatureItem {

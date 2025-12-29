@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { User } from '@/features/users/types';
 import { updateUserRoleAction, deleteUserAction } from '../users/actions';
-import { useToast } from '@/src/components/ToastProvider';
+import { useToast } from '@/src/components/layout/ToastProvider';
 import Loading from '@/src/components/ui/Loading';
 
 interface EditUserFormProps {

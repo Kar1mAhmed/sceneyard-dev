@@ -1,14 +1,14 @@
 import BigColumnHeader from "@/src/components/ui/BigColumnsHeader";
 import { Ribbon } from "@/src/components/ui/Ribbon";
-import Navbar from "@/src/components/Navbar";
+import Navbar from "@/src/components/layout/Navbar";
 import GridBackground from "@/src/components/layout/GridBackground";
 import { getTemplateById } from "@/features/templates/service";
 import { notFound } from "next/navigation";
 import { LikeButton } from "@/src/components/ui/LikeButton";
 import { getPublicR2Url } from "@/lib/r2";
-import Footer from "@/src/components/Footer";
+import Footer from "@/src/components/layout/Footer";
 import { Button } from "@/src/components/ui/Button";
-import SectionHeader from "@/src/components/SectionHeader";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 import TemplateGrid from "@/src/components/library/TemplateGrid";
 import { getTemplatesWithThumbnails } from "@/features/templates/service";
 import SelectionBox from "@/src/components/ui/SelectionBox";

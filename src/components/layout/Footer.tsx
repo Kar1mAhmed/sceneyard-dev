@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Ribbon } from "./ui/Ribbon";
+import { Ribbon } from "../ui/Ribbon";
 import { ArrowUpRight, Facebook, Twitter, Linkedin, X } from "lucide-react"; // Using generic icons
 
 interface FooterProps {

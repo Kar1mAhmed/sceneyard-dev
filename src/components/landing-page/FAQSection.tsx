@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import SectionHeader from "../SectionHeader";
+import SectionHeader from "../ui/SectionHeader";
 import { ChevronDown, ChevronUp, ArrowUp } from "lucide-react"; // Or custom icon
 import { Button } from "../ui/Button";
 

@@ -4,8 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { uploadTemplateAssets } from '@/lib/r2-upload';
-import TagInput from '@/src/components/TagInput';
-import { useToast } from '@/src/components/ToastProvider';
+import TagInput from '@/src/components/ui/TagInput';
+import { useToast } from '@/src/components/layout/ToastProvider';
 import Loading from '@/src/components/ui/Loading';
 
 interface Category {
