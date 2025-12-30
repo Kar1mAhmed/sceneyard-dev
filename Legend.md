@@ -1,6 +1,6 @@
 # SceneYard - Project Legend
 
-**Last Updated**: December 24, 2025  
+**Last Updated**: December 30, 2025  
 **Current Phase**: Architectural Refinement & Marketplace Infrastructure  
 **Tech Stack**: Next.js 16 + Cloudflare Workers + D1 + R2
 
@@ -70,6 +70,7 @@ SceneYard is a credit-based marketplace for After Effects templates. Users subsc
 - ✅ Admin dashboard with solid purple theme
 - ✅ Dotted background pattern across all admin pages
 - ✅ **High-Fidelity Loading**: Branded `Loading` component with SMIL morphing, rhythmic leg animation, and Geist Mono typography.
+- ✅ **FAQ Page**: Dedicated `/faq` page with expanded questions and contact integration.
 - ✅ **Toggleable Aesthetics**: Optional pulsing purple glow and cutout effect for extreme flexibility.
 - ✅ **Visual Verification**: Dedicated `/test-loading` page for cross-component validation.
 #### **7. Architectural Rebirth (Service/Repo Pattern)**
@@ -80,6 +81,8 @@ SceneYard is a credit-based marketplace for After Effects templates. Users subsc
 
 #### **8. Pricing & Payments**
 - ✅ **Pricing Page**: Dedicated page at `/pricing` assembling Golden Member perks, subscription plans, and secure payment highlights.
+- ✅ **Yearly Toggle**: Functional switch between monthly and annual billing with discounted rates.
+- ✅ **Enhanced Features**: Detailed feature lists for each tier including credit-based downloads, premium templates, and priority access.
 - ✅ **Secure Checkout Section**: Branded "Easy and Secure Payment" section with varied icons (Credit Card, Lock, Cancellation) and trusted provider logos.
 
 ---

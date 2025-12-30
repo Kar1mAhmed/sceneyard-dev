@@ -80,7 +80,7 @@ export default function PricingCard({
                         className="text-white/60 uppercase text-xs xl:text-sm tracking-wider"
                         style={{ fontFamily: 'var(--font-geist-mono)' }}
                     >
-                        PER MONTH
+                        {period === 'monthly' ? "PER MONTH" : "PER MONTH, BILLED ANNUALLY"}
                     </span>
                 </div>
             </div>
