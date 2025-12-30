@@ -95,7 +95,7 @@ export default function FAQSection() {
                     }
                 />
             </div>
-
+    
             {/* Accordion List - Constrained to grid margins */}
             <div
                 className="flex flex-col mb-8 md:mb-16 mx-auto px-4"
