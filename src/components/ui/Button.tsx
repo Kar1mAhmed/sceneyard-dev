@@ -82,9 +82,9 @@ export const Button = ({
         `.trim();
 
         if (href && !disabled) {
-            return <Link href={href} className={combinedStyles}>{children}</Link>;
+            return <Link href={href} className={combinedStyles} style={{ fontFamily: 'var(--font-geist-mono)' }}>{children}</Link>;
         }
-        return <button disabled={disabled} className={combinedStyles} {...props}>{children}</button>;
+        return <button disabled={disabled} className={combinedStyles} style={{ fontFamily: 'var(--font-geist-mono)' }} {...props}>{children}</button>;
     }
 
     const combinedStyles = `
@@ -97,7 +97,7 @@ export const Button = ({
 
     if (href && !disabled) {
         return (
-            <Link href={href} className={combinedStyles}>
+            <Link href={href} className={combinedStyles} style={{ fontFamily: 'var(--font-geist-mono)' }}>
                 {children}
             </Link>
         );
@@ -107,6 +107,7 @@ export const Button = ({
         <button
             disabled={disabled}
             className={combinedStyles}
+            style={{ fontFamily: 'var(--font-geist-mono)' }}
             {...props}
         >
             {children}

@@ -19,7 +19,10 @@ export default function TermsPage() {
                     />
                 </div>
 
-                <div className="max-w-[1240px] mx-auto px-6 md:px-[var(--grid-margin)] pb-32">
+                <div
+                    className="mx-auto px-6 pb-32 max-w-[1240px] w-full"
+                    style={{ width: 'calc(100% - (var(--grid-margin) * 2))' }}
+                >
                     <LegalSection
                         number="1"
                         title="Commercial License"

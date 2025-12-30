@@ -94,10 +94,14 @@ export default function SecureCheckoutSection() {
                 <SectionHeader
                     title={
                         <div className="flex flex-col items-center gap-2">
-                            <div className="flex flex-wrap md:flex-nowrap items-center justify-center gap-[0.2em] w-full z-10">
+                            <div className="flex flex-row flex-wrap items-center justify-center gap-x-[0.3em] gap-y-2 w-full z-10 px-4">
+                                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl uppercase text-white font-medium whitespace-nowrap">
+                                    EASY AND
+                                </span>
                                 <SelectionBox
-                                    text="EASY AND SECURE PAYMENT"
+                                    text="SECURE PAYMENT"
                                     color="var(--color-primary-95)"
+                                    className="!text-2xl sm:!text-3xl md:!text-4xl lg:!text-6xl uppercase"
                                 />
                             </div>
                         </div>
