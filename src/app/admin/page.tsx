@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { headers } from "next/headers";
 import Loading from "@/src/components/ui/Loading";
+import { FiMail } from "react-icons/fi";
 
 async function AdminDashboardContent() {
     await headers();
@@ -85,25 +86,35 @@ async function AdminDashboardContent() {
                         </div>
                     </div>
 
-                    {/* Other Stats */}
-                    {[
-                        { label: "Active Subscriptions", value: "856", change: "+5%", trend: "up" },
-                        { label: "Revenue (MTD)", value: "$12,450", change: "+18%", trend: "up" },
-                    ].map((stat) => (
-                        <div key={stat.label} className="group relative overflow-hidden bg-zinc-900 rounded-3xl border border-white/5 hover:border-purple-500/50 transition-all duration-300 p-8">
-                            <div className="relative z-10">
+                    {/* Contact Messages Card with Action */}
+                    <div className="group relative overflow-hidden bg-zinc-900 rounded-3xl border border-white/5 hover:border-purple-500/50 transition-all duration-300 p-8">
+                        <div className="relative z-10 flex flex-col h-full justify-between">
+                            <div>
                                 <div className="flex justify-between items-start">
-                                    <p className="text-sm font-medium text-gray-400 uppercase tracking-wider">{stat.label}</p>
-                                    <span className={`text-xs px-2 py-1 rounded-full font-medium ${stat.trend === 'up' ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
-                                        {stat.change}
-                                    </span>
+                                    <p className="text-sm font-medium text-gray-400 uppercase tracking-wider">Support Messages</p>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-xs px-2 py-1 rounded-full font-medium bg-purple-500/10 text-purple-400">
+                                            Manage Outreach
+                                        </span>
+                                    </div>
                                 </div>
-                                <p className="text-4xl font-bold mt-4 text-white">
-                                    {stat.value}
-                                </p>
+                                <div className="mt-4 flex items-center gap-3">
+                                    <div className="p-3 bg-purple-500/10 rounded-2xl border border-purple-500/20 group-hover:scale-110 transition-transform">
+                                        <FiMail className="w-6 h-6 text-purple-400" />
+                                    </div>
+                                    <p className="text-lg font-medium text-white italic">Inbox</p>
+                                </div>
+                            </div>
+                            <div className="mt-6">
+                                <Link href="/admin/messages" className="inline-flex items-center gap-2 text-sm font-medium text-purple-400 hover:text-purple-300 transition-colors">
+                                    View Messages
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </Link>
                             </div>
                         </div>
-                    ))}
+                    </div>
                 </div>
 
                 {/* Charts Area */}

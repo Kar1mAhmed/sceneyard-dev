@@ -31,7 +31,8 @@
 		"R2_SECRET_ACCESS_KEY": "e28458f8be0645e80026639cb1376aecffae1765f79f082758f4eab8421b15a5",
 		"R2_BUCKET_NAME": "sceneyard-r2",
 		"R2_PUBLIC_DOMAIN": "https://media.sceneyard.com",
-		"NEXT_PUBLIC_R2_DOMAIN": "https://media.sceneyard.com"
+		"NEXT_PUBLIC_R2_DOMAIN": "https://media.sceneyard.com",
+		"RESEND_API_KEY": "re_19W1S3xS_RrKi926Msjk4VWB6J7ZuRQ7j"
 	},
 	
 	"d1_databases": [

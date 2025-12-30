@@ -259,14 +259,6 @@ template_tags (junction)
 
 ### User Interactions
 
-#### Likes (Favorites)
-
-```
-likes
-├── id (uuid)
-├── user_id (FK → users)
-├── template_id (FK → templates)
-└── created_at
 UNIQUE (user_id, template_id)
 ```
 
@@ -274,6 +266,25 @@ UNIQUE (user_id, template_id)
 
 - One like per user per template
 - Triggers update `templates.likes_count`
+
+#### Contacts (Support & Outreach)
+
+```
+contacts
+├── id (uuid)
+├── name
+├── email
+├── message
+├── status (unread|read|replied)
+├── created_at
+└── updated_at
+```
+
+**Design Notes:**
+
+- Stores contact form submissions
+- `status` tracks internal handling
+- Timestamps for SLA tracking
 
 #### Downloads (Usage Tracking)
 

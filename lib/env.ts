@@ -13,6 +13,7 @@ export interface CloudflareEnv {
     R2_SECRET_ACCESS_KEY: string;
     R2_BUCKET_NAME: string;
     R2_PUBLIC_DOMAIN: string;
+    RESEND_API_KEY: string;
 }
 
 export function getCloudflareEnv(): CloudflareEnv {
@@ -22,6 +23,7 @@ export function getCloudflareEnv(): CloudflareEnv {
     try {
         const cfContext = getCloudflareContext();
         if (cfContext && cfContext.env) {
+            console.log('[Env] Using Cloudflare context environment');
             return cfContext.env as unknown as CloudflareEnv;
         }
     } catch (e) {
@@ -30,6 +32,7 @@ export function getCloudflareEnv(): CloudflareEnv {
 
     // Fallback to process.env for local dev if not running in worker context yet
     // or if specific vars are needed that are polyfilled
+    console.log('[Env] Falling back to process.env');
     return process.env as unknown as CloudflareEnv;
 }
 
