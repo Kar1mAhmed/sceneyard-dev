@@ -82,6 +82,27 @@ export default function PrivacyPage() {
                             <p>You have full control over your data. You can request to view, update, or permanently delete your account and all associated data by contacting us at support@sceneyard.com.</p>
                         }
                     />
+
+                    <LegalSection
+                        number="5"
+                        title="Return & Refund Policy"
+                        content={
+                            <>
+                                <p>SceneYard provides digital assets. Due to their nature, products cannot be returned once downloaded.</p>
+                                <div className="mt-4 space-y-4">
+                                    <div className="flex flex-col gap-2">
+                                        <p className="font-semibold text-white/90">Refund Eligibility</p>
+                                        <p>Refunds are considered only for technical defects that our team cannot resolve within 48 hours, or for unused subscription credits if requested within 7 days of purchase (provided <span className="underline">zero credits</span> have been used).</p>
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <p className="font-semibold text-white/90">Cancellations</p>
+                                        <p>Subscriptions can be cancelled anytime. Access to remaining credits continues until the end of the billing period. Cancellation does not trigger an automatic refund.</p>
+                                    </div>
+                                    <p className="text-sm italic text-gray-400">Request a review by emailing support@sceneyard.com.</p>
+                                </div>
+                            </>
+                        }
+                    />
                 </div>
             </GridBackground>
         </LandingPageWrapper>

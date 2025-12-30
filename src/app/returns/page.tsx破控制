@@ -1,0 +1,83 @@
+import LandingPageWrapper from "@/src/components/layout/LandingPageWrapper";
+import GridBackground from "@/src/components/layout/GridBackground";
+import LegalHero from "@/src/components/legal/LegalHero";
+import LegalSection from "@/src/components/legal/LegalSection";
+
+export const metadata = {
+    title: "Return Policy | SceneYard",
+    description: "Read our policies regarding refunds and returns for digital products and subscriptions.",
+};
+
+export default function ReturnPolicyPage() {
+    return (
+        <LandingPageWrapper>
+            <GridBackground>
+                <div className="pt-40 md:pt-64">
+                    <LegalHero
+                        title="Return Policy"
+                        subtitle="At SceneYard, we strive for creative excellence. This policy outlines our stance on refunds and returns for our digital assets and subscription plans."
+                    />
+                </div>
+
+                <div
+                    className="mx-auto px-6 pb-32 max-w-[1240px] w-full"
+                    style={{ width: 'calc(100% - (var(--grid-margin) * 2))' }}
+                >
+                    <LegalSection
+                        number="1"
+                        title="Digital Products Nature"
+                        content={
+                            <>
+                                <p>Due to the nature of digital goods (After Effects templates, Motion Scenes, etc.), products cannot be "returned" in the traditional sense once they have been downloaded or accessed.</p>
+                                <p className="mt-4">When you use credits to download a template, you receive immediate access to the source files, which are non-retrievable once delivered.</p>
+                            </>
+                        }
+                    />
+
+                    <LegalSection
+                        number="2"
+                        title="Refund Eligibility"
+                        content={
+                            <>
+                                <p>Refunds are handled on a case-by-case basis under the following conditions:</p>
+                                <ul className="list-disc list-inside space-y-2">
+                                    <li><span className="text-white font-semibold">Technical Defect:</span> If a template is fundamentally broken or doesn't match its description, and our support team cannot fix it within 48 hours.</li>
+                                    <li><span className="text-white font-semibold">Unused Credits:</span> Refunds for subscription charges may be considered if requested within 7 days of the transaction, provided <span className="underline">zero credits</span> from that billing cycle have been used.</li>
+                                    <li><span className="text-white font-semibold">Duplicate Purchase:</span> Accidents happen. Contact us if you accidentally purchased the same plan twice.</li>
+                                </ul>
+                            </>
+                        }
+                    />
+
+                    <LegalSection
+                        number="3"
+                        title="Subscription Cancellations"
+                        content={
+                            <>
+                                <p>You can cancel your subscription at any time through your Account Settings. Your access and any remaining credits will remain active until the end of your current billing period.</p>
+                                <p className="mt-4">Please note that cancelling a subscription does not automatically trigger a refund for the current or previous months.</p>
+                            </>
+                        }
+                    />
+
+                    <LegalSection
+                        number="4"
+                        title="How to Request a Refund"
+                        content={
+                            <>
+                                <p>To initiate a review for a refund, please email us at <span className="text-purple-400">support@sceneyard.com</span> with:</p>
+                                <ul className="list-disc list-inside space-y-2 mt-4">
+                                    <li>Your account email address.</li>
+                                    <li>Order/Invoice ID.</li>
+                                    <li>Reason for the request (include screenshots if there is a technical issue).</li>
+                                </ul>
+                                <p className="mt-4 italic text-gray-400">We aim to process all requests within 3-5 business days.</p>
+                            </>
+                        }
+                    />
+                </div>
+            </GridBackground>
+        </LandingPageWrapper>
+    );
+}
+破控制
