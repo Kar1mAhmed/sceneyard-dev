@@ -103,8 +103,12 @@ SceneYard is a credit-based marketplace for After Effects templates. Users subsc
 ### **Template Marketplace & Search**
 - ✅ Template browse page with vertical/horizontal filters
 - ✅- **Library Responsiveness**: Reduced top margin, aligned search bar/filters with grid margins. Implemented a premium mobile filter modal with smooth animations and solid design. Enhanced template grid with 2-column mobile layout, smart spanning for vertical items, and optimized row heights.
+- ✅ **Settings Pages Layout**: Created `ProfileHeader` and `SettingsNav` components. Built `/favorites` page with `BigColumnsHeader` integration.
+- ✅ **Settings Route Group**: Implemented `(settings)` route group with shared layout. Pages: `/profile`, `/favorites`, `/downloads`, `/plan`.
 - [/] Search bar with FTS5 implementation
 - [ ] Template likes and interaction metrics
+- ✅ **Download History**: Full-stack implementation of template purchase tracking, credit costs, and a polished user-facing history page with real-time data fetching and brand-accurate loading states.
+- ✅ **UI Refinement**: Consistent settings navigation, premium empty states, and optimized action buttons on the scene detail page.
 
 ---
 

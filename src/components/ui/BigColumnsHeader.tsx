@@ -5,9 +5,10 @@ import React from "react";
 interface TemplateHeaderProps {
     title: string;
     children?: React.ReactNode;
+    height?: string;
 }
 
-export default function BigColumnsHeader({ title, children }: TemplateHeaderProps) {
+export default function BigColumnsHeader({ title, children, height = '100vh' }: TemplateHeaderProps) {
     // Generate column colors - darker edges, brighter center (matching LibraryHeader but darker)
     const columnCount = 21;
     const columns = Array.from({ length: columnCount }, (_, i) => {
@@ -30,12 +31,12 @@ export default function BigColumnsHeader({ title, children }: TemplateHeaderProp
     });
 
     return (
-        <div className="relative w-full" style={{ minHeight: '100vh' }}>
+        <div className="relative w-full" style={{ minHeight: height }}>
             {/* Gradient Columns Background - 100vh with vertical fade */}
             <div
                 className="absolute inset-0 flex"
                 style={{
-                    height: '100vh',
+                    height: height,
                     // Precise mask to match image's visibility of background grid
                     maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%)',
                     WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%)',

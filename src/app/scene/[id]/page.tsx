@@ -12,6 +12,7 @@ import SectionHeader from "@/src/components/ui/SectionHeader";
 import TemplateGrid from "@/src/components/library/TemplateGrid";
 import { getTemplatesWithThumbnails } from "@/features/templates/service";
 import SelectionBox from "@/src/components/ui/SelectionBox";
+import DownloadTemplateButton from "@/src/components/scene/DownloadTemplateButton";
 
 interface ScenePageProps {
     params: Promise<{ id: string }>;
@@ -167,26 +168,12 @@ export default async function ScenePage({ params }: ScenePageProps) {
 
                         {/* Action Buttons */}
                         <div className="mt-24 mb-32 flex flex-col md:flex-row items-center justify-center gap-6">
-                            {previewUrl && (
-                                <Button
-                                    href={previewUrl}
-                                    variant="primary"
-                                    className="min-w-[320px] transition-transform hover:scale-105 active:scale-95"
-                                    style={{
-                                        fontFamily: 'var(--font-geist-mono), monospace',
-                                        fontWeight: 500,
-                                        fontSize: '16px',
-                                        lineHeight: '100%'
-                                    }}
-                                    // @ts-ignore - added download prop for actual link behavior
-                                    download={`${template.title}_preview.mp4`}
-                                >
-                                    <div className="w-7 h-7 flex items-center justify-center">
-                                        <img src="/custom-icons/download.svg" alt="" className="w-full h-full transition-all group-active:brightness-0 group-active:invert" />
-                                    </div>
-                                    Download preview
-                                </Button>
-                            )}
+                            {/* Download Template Button */}
+                            <DownloadTemplateButton
+                                templateId={template.id}
+                                templateTitle={template.title}
+                            />
+
                             <Button
                                 variant="secondary"
                                 className="min-w-[320px] transition-all hover:scale-105 active:scale-95"
