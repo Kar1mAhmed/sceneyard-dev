@@ -31,7 +31,7 @@ export default function TemplateGrid({ templates }: TemplateGridProps) {
     return (
         <div className="w-full flex justify-center px-[calc(var(--grid-margin)+1.5%)] pb-20">
             <div className="w-full">
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 grid-flow-row-dense auto-rows-[160px] sm:auto-rows-[200px] md:auto-rows-[240px]">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 grid-flow-row-dense auto-rows-[140px] sm:auto-rows-[200px] md:auto-rows-[240px]">
                     {templates.map((template) => (
                         <TemplateCard key={template.id} template={template} />
                     ))}
