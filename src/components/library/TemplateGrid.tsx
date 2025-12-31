@@ -15,9 +15,19 @@ interface Template {
 
 interface TemplateGridProps {
     templates: Template[];
+    likedTemplateIds?: string[];
+    rowHeight?: {
+        mobile: string;
+        sm: string;
+        md: string;
+    };
 }
 
-export default function TemplateGrid({ templates }: TemplateGridProps) {
+export default function TemplateGrid({
+    templates,
+    likedTemplateIds = [],
+    rowHeight = { mobile: '140px', sm: '200px', md: '240px' }
+}: TemplateGridProps) {
     if (!templates || templates.length === 0) {
         return (
             <div className="w-full flex justify-center py-20 px-4">
@@ -31,9 +41,20 @@ export default function TemplateGrid({ templates }: TemplateGridProps) {
     return (
         <div className="w-full flex justify-center px-[calc(var(--grid-margin)+1.5%)] pb-20">
             <div className="w-full">
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 grid-flow-row-dense auto-rows-[140px] sm:auto-rows-[200px] md:auto-rows-[240px]">
+                <div
+                    className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 grid-flow-row-dense auto-rows-[var(--row-h-mobile)] sm:auto-rows-[var(--row-h-sm)] md:auto-rows-[var(--row-h-md)]"
+                    style={{
+                        '--row-h-mobile': rowHeight.mobile,
+                        '--row-h-sm': rowHeight.sm,
+                        '--row-h-md': rowHeight.md,
+                    } as React.CSSProperties}
+                >
                     {templates.map((template) => (
-                        <TemplateCard key={template.id} template={template} />
+                        <TemplateCard
+                            key={template.id}
+                            template={template}
+                            isInitiallyLiked={likedTemplateIds.includes(template.id)}
+                        />
                     ))}
                 </div>
             </div>

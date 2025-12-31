@@ -8,10 +8,23 @@ import LibraryFilters from "@/src/components/library/LibraryFilters";
 import { Suspense } from "react";
 import { getTemplatesWithThumbnails } from "@/features/templates/service";
 import TemplateGrid from "@/src/components/library/TemplateGrid";
+import Loading from "@/src/components/ui/Loading";
+
+import { auth } from "@/features/auth/auth";
+import { getLikedTemplateIds } from "@/features/likes/service";
 
 async function TemplatesLoader() {
-    const templates = await getTemplatesWithThumbnails(100, 0, 'recent');
-    return <TemplateGrid templates={templates} />;
+    const [templates, session] = await Promise.all([
+        getTemplatesWithThumbnails(100, 0, 'recent'),
+        auth()
+    ]);
+
+    let likedTemplateIds: string[] = [];
+    if (session?.user?.id) {
+        likedTemplateIds = await getLikedTemplateIds(session.user.id);
+    }
+
+    return <TemplateGrid templates={templates} likedTemplateIds={likedTemplateIds} />;
 }
 
 export default function LibraryPage() {
@@ -24,10 +37,8 @@ export default function LibraryPage() {
                 <LibraryFilters />
 
                 <Suspense fallback={
-                    <div className="w-full flex justify-center py-20 px-4">
-                        <div className="w-full max-w-6xl text-center py-20 animate-pulse bg-white/[0.02] rounded-[40px]">
-                            <p className="text-white/20">Loading amazing templates...</p>
-                        </div>
+                    <div className="w-full flex justify-center py-60 px-4 relative isolate">
+                        <Loading size={120} />
                     </div>
                 }>
                     <TemplatesLoader />

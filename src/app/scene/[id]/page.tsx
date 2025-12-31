@@ -78,6 +78,7 @@ export default async function ScenePage({ params }: ScenePageProps) {
                             {/* Like Button Overlay - Top Right */}
                             <div className="absolute top-6 right-6 z-20">
                                 <LikeButton
+                                    templateId={template.id}
                                     initialLikes={template.likes_count}
                                     className="scale-110"
                                 />

@@ -1,7 +1,7 @@
 # SceneYard - Project Legend
 
 **Last Updated**: December 31, 2025  
-**Current Phase**: Administrative Infrastructure & User Outreach  
+**Current Phase**: User Account & Credit Economy  
 **Tech Stack**: Next.js 16 + Cloudflare Workers + D1 + R2 + Resend
 
 ---
@@ -96,19 +96,32 @@ SceneYard is a credit-based marketplace for After Effects templates. Users subsc
 - ✅ **Legal Consolidation**: Unified Privacy and Return & Refund Policy into a single `/privacy` destination.
 - ✅ **Mobile Optimization**: Refined contact page hero and header margins for various device breakpoints.
 
+#### **11. Settings & User Account**
+- ✅ **Settings Route Group**: Implemented `(settings)` route group with shared layout for unified user navigation.
+- ✅ **Core Pages**: Profile, Favorites, Downloads, and Plan management shells.
+- ✅ **Unified UI**: Custom `ProfileHeader` and `SettingsNav` for consistent branded experience across account pages.
+
+#### **12. Download History & R2 Flow**
+- ✅ **Purchase Tracking**: Full-stack implementation using `downloads` ledger to track template acquisitions.
+- ✅ **Dynamic UI**: Polished downloads page with real-time fetching, empty states, and high-fidelity loading markers.
+- ✅ **Hover-to-Play Thumbnails**: Video-based thumbnails in history lists that play only on hover to save bandwidth and reduce visual noise.
+- ✅ **R2 Reliability**: Fixed R2 download parameter mismatch and relaxed permissions to allow authenticated users to download purchased assets.
+
+#### **13. Likes & Favorites System**
+- ✅ **Backend Feature**: Created `features/likes/` with `repo.ts` and `service.ts` for like toggle, check, and fetch operations.
+- ✅ **API Endpoint**: `/api/likes` with POST (toggle) and GET (fetch) handlers with full auth protection.
+- ✅ **Optimistic UI**: LikeButton component with instant feedback, API sync, and toast notifications.
+- ✅ **Favorites Page**: Full grid display of liked templates with hover-to-play thumbnails.
+- ✅ **Empty State**: Branded `FavoriteEmptyState` matching downloads page aesthetic.
+- ✅ **Toast Redesign**: Updated toast notifications to match `SelectionBox` style with borders and corner handles.
+
 ---
 
 ## 🚧 In Progress
 
 ### **Template Marketplace & Search**
-- ✅ Template browse page with vertical/horizontal filters
-- ✅- **Library Responsiveness**: Reduced top margin, aligned search bar/filters with grid margins. Implemented a premium mobile filter modal with smooth animations and solid design. Enhanced template grid with 2-column mobile layout, smart spanning for vertical items, and optimized row heights.
-- ✅ **Settings Pages Layout**: Created `ProfileHeader` and `SettingsNav` components. Built `/favorites` page with `BigColumnsHeader` integration.
-- ✅ **Settings Route Group**: Implemented `(settings)` route group with shared layout. Pages: `/profile`, `/favorites`, `/downloads`, `/plan`.
 - [/] Search bar with FTS5 implementation
-- [ ] Template likes and interaction metrics
-- ✅ **Download History**: Full-stack implementation of template purchase tracking, credit costs, and a polished user-facing history page with real-time data fetching and brand-accurate loading states.
-- ✅ **UI Refinement**: Consistent settings navigation, premium empty states, and optimized action buttons on the scene detail page.
+- [ ] Real credit deduction logic (Ledger integration)
 
 ---
 
@@ -127,7 +140,6 @@ SceneYard is a credit-based marketplace for After Effects templates. Users subsc
 - [ ] User profile page
 
 ### **Low Priority**
-- [ ] Template likes/favorites
 - [ ] Template reviews/ratings
 - [ ] Collections/bundles
 - [ ] Referral system
@@ -175,19 +187,31 @@ sceneyard-dev/
 │   │   │   │   ├── actions.ts  # Server actions
 │   │   │   │   └── [id]/
 │   │   │   └── categories/
-│   │   └── api/            # API routes
-│   │       ├── r2/
-│   │       │   ├── public-url/
-│   │       │   ├── download-url/
-│   │       │   ├── stream/     # Video streaming
-│   │       │   ├── download/   # Zip download
-│   │       │   └── upload/     # Direct R2 upload
-│   │       ├── templates/
-│   │       ├── categories/
-│   │       └── tags/
-│   └── components/         # Shared components
-│       ├── TagInput.tsx
-│       └── ToastProvider.tsx
+│   │   ├── (settings)/     # User settings route group
+│   │   │   ├── downloads/
+│   │   │   ├── favorites/
+│   │   │   ├── profile/
+│   │   │   └── plan/
+│   │   ├── api/            # API routes
+│   │   │   ├── r2/
+│   │   │   │   ├── public-url/
+│   │   │   │   ├── download-url/
+│   │   │   │   ├── stream/     # Video streaming
+│   │   │   │   ├── download/   # Zip download
+│   │   │   │   └── upload/     # Direct R2 upload
+│   │   │   ├── templates/
+│   │   │   ├── downloads/      # Download history API
+│   │   │   ├── categories/
+│   │   │   └── tags/
+│   │   └── components/         # Shared components
+│   │       ├── scene/
+│   │       │   └── DownloadTemplateButton.tsx
+│   │       ├── settings/
+│   │       │   ├── DownloadRow.tsx
+│   │       │   ├── DownloadEmptyState.tsx
+│   │       │   └── SettingsNav.tsx
+│   │       ├── TagInput.tsx
+│   │       └── ToastProvider.tsx
 └── wrangler.jsonc          # Cloudflare config
 
 ---
@@ -387,9 +411,9 @@ Based on the [Full Project Brief](./Docs/sceneyard_full_brief.md), here is the c
 | Credit Ledger System | Section 7 | High |
 | Subscription Management | Section 6, 10 | High |
 | Lemon Squeezy Payments | Section 7 | High |
-| Download Flow (Credit Deduction) | Section 10 | High |
-| Account Page | Section 9 | Medium |
-| Pricing Page | Section 9 | Medium |
+| Download Flow (Credit Deduction) | Section 10 | ✅ Tracking Ready |
+| Account Page | Section 9 | ✅ UI Shell Ready |
+| Pricing Page | Section 9 | ✅ Complete |
 | Referral System | Section 6 | Low |
 | Golden Membership | Section 6 | Low |
 | Favorites/Likes UI | Section 5 | Low |
@@ -418,6 +442,21 @@ Based on the [Full Project Brief](./Docs/sceneyard_full_brief.md), here is the c
    - Consolidated legal docs into a unified `/privacy` page to streamline user navigation.
    - Refined the Contact landing page with white spotlight effects and left-pinned 3D illustrations for 2K displays.
 
+### **December 31, 2025 - Download Economy & Settings Rebirth**
+1. ✅ **Download History System**:
+   - Implemented a robust transaction ledger for template downloads.
+   - Built a high-performance history page with **Hover-to-Play** video thumbnails and `var(--Dark-3)` premium background.
+   - Fixed R2 streaming issues by transitioning from `next/image` to raw `video` tags for .mp4 thumbnails.
+
+2. ✅ **Database Recovery & Consolidation**:
+   - Resolved a critical Cloudflare D1 parser "fuck up" by consolidating fragmented migrations.
+   - Bypassed migration runner limitations for complex `TRIGGER` logic by using direct D1 execution.
+   - Unified the `downloads` schema to strictly follow `Schema.md` (Foreign Key referencing `templates`).
+
+3. ✅ **User Experience (Settings)**:
+   - Launched the `(settings)` route group with a consistent navigation bar and profile header.
+   - Aligned all account-level pages with the cinematic brand aesthetic.
+
 ---
 
-**Status**: Backend infrastructure is stable. The project now features a complete administrative management loop for users, templates, and support outreach. Next focus is completing the Search UI and starting the Credit Ledger system.
+**Status**: Backend infrastructure is stable, and the core user experience (Downloads/Settings) is now live. The database migration history has been optimized and consolidated. Next focus is completing the Search UI and finalizing the Credit Ledger deduction logic.

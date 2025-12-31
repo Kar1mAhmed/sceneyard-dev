@@ -16,9 +16,10 @@ interface TemplateCardProps {
         downloads_count: number;
         credits_cost: number;
     };
+    isInitiallyLiked?: boolean;
 }
 
-export default function TemplateCard({ template }: TemplateCardProps) {
+export default function TemplateCard({ template, isInitiallyLiked = false }: TemplateCardProps) {
     const [isHovered, setIsHovered] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -92,7 +93,9 @@ export default function TemplateCard({ template }: TemplateCardProps) {
                     </h3>
 
                     <LikeButton
+                        templateId={template.id}
                         initialLikes={template.likes_count}
+                        isInitiallyLiked={isInitiallyLiked}
                     />
                 </div>
 
