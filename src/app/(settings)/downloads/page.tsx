@@ -51,7 +51,10 @@ export default function DownloadsPage() {
     }
 
     return (
-        <div className="w-full">
+        <div
+            className="w-full rounded-2xl p-6"
+            style={{ background: 'var(--Dark-3, #131316)' }}
+        >
             {/* Table Header */}
             <div className="flex items-center justify-between pb-4 mb-2">
                 <span

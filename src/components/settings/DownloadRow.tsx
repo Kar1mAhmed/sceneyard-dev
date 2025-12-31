@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Calendar, Monitor } from 'lucide-react';
 import { Button } from '@/src/components/ui/Button';
 
@@ -26,12 +25,30 @@ export default function DownloadRow({ template }: DownloadRowProps) {
                 {/* Left: Thumbnail + Details */}
                 <div className="flex items-center gap-4 md:gap-6 flex-1 min-w-0">
                     {/* Thumbnail */}
-                    <div className="relative w-24 h-16 md:w-32 md:h-20 rounded-xl overflow-hidden flex-shrink-0 bg-[#1C1C21] border border-white/5">
-                        <Image
+                    <div
+                        className="relative w-24 h-16 md:w-32 md:h-20 rounded-xl overflow-hidden flex-shrink-0 bg-[#1C1C21] border border-white/5 cursor-pointer"
+                        onMouseEnter={() => {
+                            const video = document.getElementById(`video-${template.id}`) as HTMLVideoElement;
+                            if (video) {
+                                video.currentTime = 0;
+                                video.play().catch(() => { });
+                            }
+                        }}
+                        onMouseLeave={() => {
+                            const video = document.getElementById(`video-${template.id}`) as HTMLVideoElement;
+                            if (video) {
+                                video.pause();
+                                video.currentTime = 0;
+                            }
+                        }}
+                    >
+                        <video
+                            id={`video-${template.id}`}
                             src={template.thumbnailUrl}
-                            alt={template.title}
-                            fill
-                            className="object-cover"
+                            muted
+                            loop
+                            playsInline
+                            className="w-full h-full object-cover"
                         />
                     </div>
 
