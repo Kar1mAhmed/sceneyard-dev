@@ -14,6 +14,9 @@ import { auth } from "@/features/auth/auth";
 import { getLikedTemplateIds } from "@/features/likes/service";
 
 async function TemplatesLoader() {
+    // Debug delay - remove after fixing
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     const [templates, session] = await Promise.all([
         getTemplatesWithThumbnails(100, 0, 'recent'),
         auth()
@@ -37,8 +40,8 @@ export default function LibraryPage() {
                 <LibraryFilters />
 
                 <Suspense fallback={
-                    <div className="w-full flex justify-center py-60 px-4 relative isolate">
-                        <Loading size={120} />
+                    <div className="w-full flex justify-center py-24 px-4 relative z-[100] bg-[#070708]">
+                        <Loading text="Loading scenes" size={90} />
                     </div>
                 }>
                     <TemplatesLoader />

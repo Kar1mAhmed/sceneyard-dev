@@ -41,7 +41,7 @@ export default function DownloadsPage() {
     if (isLoading) {
         return (
             <div className="w-full py-24 flex items-center justify-center">
-                <Loading text="LOADING DOWNLOADS" size={48} />
+                <Loading text="Loading Downloads" size={90} />
             </div>
         );
     }

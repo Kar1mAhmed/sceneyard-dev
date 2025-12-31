@@ -31,7 +31,7 @@ export default function TemplateGrid({
     if (!templates || templates.length === 0) {
         return (
             <div className="w-full flex justify-center py-20 px-4">
-                <div className="w-full max-w-6xl text-center py-20 border border-white/5 rounded-[40px] bg-white/[0.02] backdrop-blur-sm">
+                <div className="w-full max-w-6xl text-center py-20 border border-white/5 rounded-[40px] bg-white/[0.02]">
                     <p className="text-white/40 font-medium text-lg">No templates found in the library yet.</p>
                 </div>
             </div>

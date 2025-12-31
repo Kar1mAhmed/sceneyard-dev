@@ -42,8 +42,8 @@ export default function FavoritesPage() {
 
     if (isLoading) {
         return (
-            <div className="w-full py-32 flex items-center justify-center">
-                <Loading size={100} />
+            <div className="w-full py-24 flex items-center justify-center">
+                <Loading text="Loading Favorites" size={90} />
             </div>
         );
     }
