@@ -5,9 +5,9 @@ import { Search } from "lucide-react";
 
 export default function SearchLibrary() {
     return (
-        <div className="w-full flex justify-center px-4 relative z-20 -mt-8 mb-12 mt-20 ">
+        <div className="w-full px-[calc(var(--grid-margin)+16px)] relative z-20 -mt-8 mb-12 mt-20 ">
             <div
-                className="w-full max-w-6xl flex items-center gap-4 px-6 h-16 rounded-full transition-all duration-300"
+                className="w-full md:max-w-4xl lg:max-w-5xl mx-auto flex items-center gap-4 px-6 h-14 rounded-[24px] transition-all duration-300"
                 style={{
                     backgroundColor: 'rgba(28, 28, 33, 1)', // --Dark-4
                     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RxChevronDown, RxCross2, RxCheck } from "react-icons/rx";
+import FilterModal from "./FilterModal";
 
 interface FilterButtonProps {
     label: string;
@@ -14,6 +15,7 @@ interface FilterButtonProps {
     selectedOptions?: string[];
     onOptionClick?: (option: string) => void;
     isMultiSelect?: boolean;
+    isMobile?: boolean;
 }
 
 function FilterButton({
@@ -25,7 +27,8 @@ function FilterButton({
     options,
     selectedOptions = [],
     onOptionClick,
-    isMultiSelect
+    isMultiSelect,
+    isMobile
 }: FilterButtonProps) {
     return (
         <div className="relative w-full group">
@@ -36,9 +39,9 @@ function FilterButton({
                     : "bg-transparent border-[rgba(148,124,255,0.3)] text-white/70 hover:bg-white/5"
                     }`}
                 style={{
-                    height: "48px",
-                    padding: "0 18px",
-                    fontSize: "13px",
+                    height: isMobile ? "44px" : "48px",
+                    padding: isMobile ? "0 12px" : "0 18px",
+                    fontSize: isMobile ? "12px" : "13px",
                     fontWeight: 400,
                     lineHeight: "100%",
                     borderWidth: "1.5px",
@@ -49,16 +52,18 @@ function FilterButton({
                     {activeValue ? `${label}: ${activeValue}` : label}
                 </span>
 
-                <div className="flex-shrink-0 ml-2">
-                    {/* Icon rotation based on isOpen state */}
-                    <div className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>
-                        <RxChevronDown size={22} color="var()" />
-                    </div>
+                <div className="flex-shrink-0 ml-1">
+                    {/* Icon rotation based on isOpen state - Only on Desktop */}
+                    {!isMobile && (
+                        <div className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>
+                            <RxChevronDown size={22} />
+                        </div>
+                    )}
                 </div>
             </button>
 
-            {/* Dropdown Menu */}
-            {isOpen && options && (
+            {/* Dropdown Menu - Desktop Only */}
+            {!isMobile && isOpen && options && (
                 <div
                     className="absolute top-full left-0 right-0 mt-3 z-50 overflow-hidden"
                     style={{
@@ -125,7 +130,6 @@ interface FilterState {
 
 export default function LibraryFilters() {
     // State to simulate active filters matching the design requirements
-    // In a real app, this would be connected to URL params or global state
     const [filters, setFilters] = useState<FilterState>({
         sort: "Popular",
         categories: [],
@@ -133,14 +137,28 @@ export default function LibraryFilters() {
         aspectRatio: null
     });
 
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     // Track which dropdown is currently open
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+    const [openModal, setOpenModal] = useState<string | null>(null);
 
-    const toggleDropdown = (dropdown: string) => {
-        if (openDropdown === dropdown) {
+    const toggleFilter = (dropdown: string) => {
+        if (isMobile) {
+            setOpenModal(dropdown);
             setOpenDropdown(null);
         } else {
-            setOpenDropdown(dropdown);
+            if (openDropdown === dropdown) {
+                setOpenDropdown(null);
+            } else {
+                setOpenDropdown(dropdown);
+            }
         }
     };
 
@@ -171,18 +189,61 @@ export default function LibraryFilters() {
         });
     };
 
+    const getModalTitle = () => {
+        switch (openModal) {
+            case 'sort': return 'Sort by';
+            case 'categories': return 'Categories';
+            case 'resolution': return 'Resolution';
+            case 'aspectRatio': return 'Aspect ratio';
+            default: return '';
+        }
+    };
+
+    const getModalOptions = () => {
+        switch (openModal) {
+            case 'sort': return sortOptions;
+            case 'categories': return categoryOptions;
+            case 'resolution': return resolutionOptions;
+            case 'aspectRatio': return ratioOptions;
+            default: return [];
+        }
+    };
+
+    const getSelectedOptionsForModal = () => {
+        switch (openModal) {
+            case 'sort': return filters.sort ? [filters.sort] : [];
+            case 'categories': return filters.categories;
+            case 'resolution': return filters.resolution ? [filters.resolution] : [];
+            case 'aspectRatio': return filters.aspectRatio ? [filters.aspectRatio] : [];
+            default: return [];
+        }
+    };
+
+    const handleModalOptionClick = (option: string) => {
+        if (openModal === 'categories') {
+            handleCategoryClick(option);
+        } else if (openModal === 'sort') {
+            setFilters(prev => ({ ...prev, sort: option }));
+        } else if (openModal === 'resolution') {
+            setFilters(prev => ({ ...prev, resolution: option }));
+        } else if (openModal === 'aspectRatio') {
+            setFilters(prev => ({ ...prev, aspectRatio: option }));
+        }
+    };
+
     return (
-        <div className="w-full flex justify-center px-4 mb-12">
-            <div className="w-full max-w-6xl grid grid-cols-4 gap-4">
+        <div className="w-full flex justify-center px-[calc(var(--grid-margin)+16px)] mb-12">
+            <div className="w-full md:max-w-4xl lg:max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
                 <FilterButton
                     label="Sort by"
                     activeValue={filters.sort}
                     isActive={!!filters.sort}
                     isOpen={openDropdown === "sort"}
-                    onToggle={() => toggleDropdown("sort")}
+                    onToggle={() => toggleFilter("sort")}
                     options={sortOptions}
                     selectedOptions={filters.sort ? [filters.sort] : []}
                     onOptionClick={(opt) => setFilters(prev => ({ ...prev, sort: opt }))}
+                    isMobile={isMobile}
                 />
 
                 <FilterButton
@@ -190,11 +251,12 @@ export default function LibraryFilters() {
                     activeValue={filters.categories.length > 0 ? `${filters.categories.length}` : ""}
                     isActive={filters.categories.length > 0}
                     isOpen={openDropdown === "categories"}
-                    onToggle={() => toggleDropdown("categories")}
+                    onToggle={() => toggleFilter("categories")}
                     options={categoryOptions}
                     selectedOptions={filters.categories}
                     onOptionClick={handleCategoryClick}
                     isMultiSelect={true}
+                    isMobile={isMobile}
                 />
 
                 <FilterButton
@@ -202,10 +264,11 @@ export default function LibraryFilters() {
                     activeValue={filters.resolution}
                     isActive={!!filters.resolution}
                     isOpen={openDropdown === "resolution"}
-                    onToggle={() => toggleDropdown("resolution")}
+                    onToggle={() => toggleFilter("resolution")}
                     options={resolutionOptions}
                     selectedOptions={filters.resolution ? [filters.resolution] : []}
                     onOptionClick={(opt) => setFilters(prev => ({ ...prev, resolution: opt }))}
+                    isMobile={isMobile}
                 />
 
                 <FilterButton
@@ -213,12 +276,23 @@ export default function LibraryFilters() {
                     activeValue={filters.aspectRatio || ""}
                     isActive={!!filters.aspectRatio}
                     isOpen={openDropdown === "aspectRatio"}
-                    onToggle={() => toggleDropdown("aspectRatio")}
+                    onToggle={() => toggleFilter("aspectRatio")}
                     options={ratioOptions}
                     selectedOptions={filters.aspectRatio ? [filters.aspectRatio] : []}
                     onOptionClick={(opt) => setFilters(prev => ({ ...prev, aspectRatio: opt }))}
+                    isMobile={isMobile}
                 />
             </div>
+
+            <FilterModal
+                isOpen={!!openModal}
+                onClose={() => setOpenModal(null)}
+                title={getModalTitle()}
+                options={getModalOptions()}
+                selectedOptions={getSelectedOptionsForModal()}
+                onOptionClick={handleModalOptionClick}
+                onApply={() => setOpenModal(null)}
+            />
         </div>
     );
 }

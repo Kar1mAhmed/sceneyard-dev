@@ -18,7 +18,7 @@ export default function LibraryPage() {
     return (
         <GridBackground>
             <Navbar />
-            <main className="min-h-screen pt-48">
+            <main className="min-h-screen pt-32 md:pt-48">
                 <SmallColumnsHeader />
                 <SearchLibrary />
                 <LibraryFilters />

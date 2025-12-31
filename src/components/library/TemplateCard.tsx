@@ -82,12 +82,12 @@ export default function TemplateCard({ template }: TemplateCardProps) {
 
             {/* Hover Overlay */}
             <div
-                className={`absolute inset-0 z-10 flex flex-col justify-between p-4 transition-all duration-500 bg-gradient-to-b from-black/50 via-transparent to-black/70 ${isHovered ? 'opacity-100' : 'opacity-0'
+                className={`absolute inset-0 z-10 flex flex-col justify-between p-3 sm:p-4 transition-all duration-500 bg-gradient-to-b from-black/50 via-transparent to-black/70 ${isHovered ? 'opacity-100' : 'opacity-0'
                     }`}
             >
                 {/* Top Section */}
                 <div className="flex justify-between items-start">
-                    <h3 className="text-white font-medium text-[16px] leading-[1.2] max-w-[65%] drop-shadow-lg line-clamp-2 whitespace-nowrap">
+                    <h3 className="text-white font-medium text-[14px] sm:text-[16px] leading-[1.2] max-w-[65%] drop-shadow-lg line-clamp-2">
                         {template.title}
                     </h3>
 
@@ -98,17 +98,17 @@ export default function TemplateCard({ template }: TemplateCardProps) {
 
                 {/* Bottom Section */}
                 <div className="flex justify-between items-center text-white drop-shadow-lg">
-                    <div className="flex items-center gap-2.5 group/info">
-                        <div className="w-8 h-8 flex items-center justify-center rounded-full bg-white text-dark-08 shadow-xl transition-transform duration-300 group-hover/info:scale-110">
-                            <ArrowDownToLine size={16} strokeWidth={3} />
+                    <div className="flex items-center gap-1.5 sm:gap-2.5 group/info">
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-white text-dark-08 shadow-xl transition-transform duration-300 group-hover/info:scale-110">
+                            <ArrowDownToLine className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} />
                         </div>
-                        <span className="text-[16px] font-medium leading-[1.2] whitespace-nowrap">{template.downloads_count} Downloads</span>
+                        <span className="text-[12px] sm:text-[16px] font-medium leading-[1.2] whitespace-nowrap">{template.downloads_count}</span>
                     </div>
 
-                    <div className="flex items-center gap-2.5 group/info">
-                        <span className="text-[16px] font-medium leading-[1.2]">{template.credits_cost}</span>
-                        <div className="w-8 h-8 flex items-center justify-center rounded-full bg-white text-dark-08 shadow-xl transition-transform duration-300 group-hover/info:scale-110">
-                            <CreditCard size={16} strokeWidth={3} />
+                    <div className="flex items-center gap-1.5 sm:gap-2.5 group/info">
+                        <span className="text-[12px] sm:text-[16px] font-medium leading-[1.2]">{template.credits_cost}</span>
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-white text-dark-08 shadow-xl transition-transform duration-300 group-hover/info:scale-110">
+                            <CreditCard className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} />
                         </div>
                     </div>
                 </div>

@@ -1,8 +1,8 @@
 # SceneYard - Project Legend
 
-**Last Updated**: December 30, 2025  
-**Current Phase**: Architectural Refinement & Marketplace Infrastructure  
-**Tech Stack**: Next.js 16 + Cloudflare Workers + D1 + R2
+**Last Updated**: December 31, 2025  
+**Current Phase**: Administrative Infrastructure & User Outreach  
+**Tech Stack**: Next.js 16 + Cloudflare Workers + D1 + R2 + Resend
 
 ---
 
@@ -85,12 +85,24 @@ SceneYard is a credit-based marketplace for After Effects templates. Users subsc
 - ✅ **Enhanced Features**: Detailed feature lists for each tier including credit-based downloads, premium templates, and priority access.
 - ✅ **Secure Checkout Section**: Branded "Easy and Secure Payment" section with varied icons (Credit Card, Lock, Cancellation) and trusted provider logos.
 
+#### **9. Contact & Outreach System**
+- ✅ **Functional Contact Form**: Direct D1 storage with rigorous backend validation logic.
+- ✅ **Real Email Notifications**: Transactional emails via **Resend** (fully authorized via domain verification).
+- ✅ **Admin Inbox**: Dedicated `/admin/messages` module for reading, managing, and deleting user inquiries.
+- ✅ **Dashboard Integration**: "Support Messages" stat card with quick-access to the messaging portal.
+
+#### **10. Premium UI Polish**
+- ✅ **Global Toast Notifications**: Cinematic glassmorphism-based toast system matching brand colors (Yellow/Purple/Pink).
+- ✅ **Legal Consolidation**: Unified Privacy and Return & Refund Policy into a single `/privacy` destination.
+- ✅ **Mobile Optimization**: Refined contact page hero and header margins for various device breakpoints.
+
 ---
 
 ## 🚧 In Progress
 
 ### **Template Marketplace & Search**
-- [/] Template browse page with vertical/horizontal filters
+- ✅ Template browse page with vertical/horizontal filters
+- ✅ **Library Responsiveness**: Reduced mobile margins, grid-aligned search bar, and mobile-specific solid filter popups.
 - [/] Search bar with FTS5 implementation
 - [ ] Template likes and interaction metrics
 
@@ -386,4 +398,22 @@ Based on the [Full Project Brief](./Docs/sceneyard_full_brief.md), here is the c
 
 ---
 
-**Status**: Backend infrastructure is now highly modular and stable. Landing page and Admin dashboard are fully established. The Public Library browse page is functional with smart grid layout. Next focus is Search UI, Pricing, and Credit System.
+### **December 31, 2025 - Admin Inbox & Global Outreach**
+1. ✅ **Support Inbox module**:
+   - Created `/admin/messages` with a high-performance `MessagesTable` component.
+   - Built server actions for updating message status (Read/Unread) and hard deletions.
+   - Linked the inbox directly to the Admin Dashboard for instant visibility.
+
+2. ✅ **Email Notification Engine**:
+   - Integrated **Resend** as the transactional email provider for Cloudflare compatibility.
+   - Implemented direct-to-Gmail routing for contact submissions with fallback logic for domain verification testing.
+   - Added detailed server-side logging for email dispatch monitoring.
+
+3. ✅ **Brand Identity Polish**:
+   - Replaced basic browser alerts with a custom, high-fidelity Toast system.
+   - Consolidated legal docs into a unified `/privacy` page to streamline user navigation.
+   - Refined the Contact landing page with white spotlight effects and left-pinned 3D illustrations for 2K displays.
+
+---
+
+**Status**: Backend infrastructure is stable. The project now features a complete administrative management loop for users, templates, and support outreach. Next focus is completing the Search UI and starting the Credit Ledger system.
