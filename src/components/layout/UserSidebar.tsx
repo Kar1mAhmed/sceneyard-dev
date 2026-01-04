@@ -12,19 +12,24 @@ interface UserSidebarProps {
     onClose: () => void;
 }
 
-const menuItems = [
+const loggedInMainItems = [
     { label: "LIBRARY", href: "/library", icon: "grid" },
+    { label: "ACCOUNT", href: "/account", icon: "user" },
     { label: "YOUR PLAN", href: "/plan", icon: "crown" },
     { label: "DOWNLOAD HISTORY", href: "/downloads", icon: "download" },
     { label: "FAVORITES PROJECTS", href: "/favorites", icon: "heart" },
+];
+
+const loggedInSupportItems = [
     { label: "CONTACT US", href: "/contact", icon: "mail" },
     { label: "HOW TO USE", href: "/how-to-use", icon: "help" },
     { label: "FAQ", href: "/faq", icon: "file" },
 ];
 
 const guestMenuItems = [
-    { label: "LIBRARY", href: "/library", icon: "grid" },
     { label: "HOME", href: "/", icon: "home" },
+    { label: "ABOUT US", href: "/about", icon: "help" }, // Assuming about path
+    { label: "LIBRARY", href: "/library", icon: "grid" },
     { label: "PRICING", href: "/pricing", icon: "pricing" },
     { label: "CONTACT US", href: "/contact", icon: "mail" },
 ];
@@ -67,19 +72,7 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
     const isHowToUse = pathname === "/how-to-use";
     const isFAQ = pathname === "/faq";
 
-    // Sections for mobile as per requested design
-    const mobileMainItems = [
-        { label: "HOME", href: "/", active: isHome },
-        { label: "ABOUT US", href: "/about", active: isAbout },
-        { label: "LIBRARY", href: "/library", active: isLibrary },
-        { label: "PRICING", href: "/pricing", active: isPricing },
-    ];
-
-    const mobileSupportItems = [
-        { label: "CONTACT US", href: "/contact", active: isContact, icon: "mail" },
-        { label: "HOW TO USE", href: "/how-to-use", active: isHowToUse, icon: "help" },
-        { label: "FAQ", href: "/faq", active: isFAQ, icon: "file" },
-    ];
+    // Menu logic handled in render based on login status
 
     return (
         <div className="fixed inset-0 z-[200]">
@@ -198,71 +191,62 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
 
                 {/* Menu Items Container */}
                 <div className="flex-1 overflow-y-auto pt-4 pb-8 custom-scrollbar">
-                    {/* Desktop Content */}
-                    <div className="hidden lg:block">
-                        {(isLoggedIn ? menuItems : guestMenuItems).map((item) => (
-                            <MenuItem key={item.label} item={item} onClose={onClose} />
-                        ))}
-                    </div>
-
-                    {/* Mobile Content - Two Sections */}
-                    <div className="lg:hidden flex flex-col">
-                        {/* Section 1 */}
-                        <div className="flex flex-col">
-                            {mobileMainItems.map((item) => (
-                                <MenuItem
-                                    key={item.label}
-                                    item={item}
-                                    onClose={onClose}
-                                    isActive={item.active}
-                                />
-                            ))}
-                        </div>
-
-                        {/* Divider */}
-                        <div className="mx-8 my-6 h-[1px] bg-white/10" />
-
-                        {/* Section 2 */}
-                        <div className="flex flex-col">
-                            {mobileSupportItems.map((item) => (
-                                <MenuItem
-                                    key={item.label}
-                                    item={item}
-                                    onClose={onClose}
-                                    isActive={item.active}
-                                />
-                            ))}
-                        </div>
-
-                        {/* Mobile Sign-in (If guest) */}
-                        {!isLoggedIn && (
-                            <div className="px-8 mt-4 mb-8 flex justify-center w-full lg:hidden">
-                                <Button
-                                    onClick={handleGoogleLogin}
-                                    variant="primary"
-                                    className="w-full !max-w-none"
-                                >
-                                    Sign-in
-                                </Button>
+                    {isLoggedIn ? (
+                        <>
+                            {/* Logged In Sections */}
+                            <div className="flex flex-col">
+                                {loggedInMainItems.map((item) => (
+                                    <MenuItem
+                                        key={item.label}
+                                        item={item}
+                                        onClose={onClose}
+                                        isActive={pathname === item.href}
+                                    />
+                                ))}
                             </div>
-                        )}
-                    </div>
+
+                            <div className="mx-8 my-6 h-[1px] bg-white/10" />
+
+                            <div className="flex flex-col">
+                                {loggedInSupportItems.map((item) => (
+                                    <MenuItem
+                                        key={item.label}
+                                        item={item}
+                                        onClose={onClose}
+                                        isActive={pathname === item.href}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    ) : (
+                        /* Guest Section */
+                        <div className="flex flex-col">
+                            {guestMenuItems.map((item) => (
+                                <MenuItem
+                                    key={item.label}
+                                    item={item}
+                                    onClose={onClose}
+                                    isActive={pathname === item.href}
+                                />
+                            ))}
+                            {!isLoggedIn && (
+                                <div className="px-8 mt-4 mb-8 flex justify-center w-full lg:hidden">
+                                    <Button
+                                        onClick={handleGoogleLogin}
+                                        variant="primary"
+                                        className="w-full !max-w-none"
+                                    >
+                                        Sign-in
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 {/* 3. Desktop Footer (GitHub Legacy) */}
                 <div className="hidden lg:block px-[clamp(1.5rem,2.5vw,2.5rem)] py-[max(1.5rem,3vh)] border-t border-white/10">
-                    <Link
-                        href="/support"
-                        onClick={onClose}
-                        className="flex items-center gap-[max(1rem,1.5vw)] py-[max(0.5rem,1vh)] group transition-all hover:bg-white/5 px-4 rounded-lg"
-                    >
-                        <div className="w-[min(1.5rem,4vh)] h-[min(1.5rem,4vh)] flex items-center justify-center" style={{ color: '#62646C' }}>
-                            <MenuIcon type="help-circle" />
-                        </div>
-                        <span className="text-[clamp(0.9rem,1.8vh,1.25rem)] font-normal tracking-wide uppercase leading-[120%] text-[#AFB0B6]" style={{ fontFamily: 'var(--font-sans), sans-serif' }}>
-                            SUPPORT
-                        </span>
-                    </Link>
+
 
                     <button
                         onClick={handleSignOut}
@@ -327,7 +311,7 @@ function MenuItem({ item, onClose, isActive = false }: { item: any, onClose: () 
                         {item.label}
                     </span>
                     {isActive && (
-                        <div className="h-[1.5px] w-full bg-[#00FFF0] mt-1 lg:hidden" />
+                        <div className="h-[1.5px] w-full bg-[#00FFF0] mt-1" />
                     )}
                 </div>
             </div>
@@ -335,7 +319,7 @@ function MenuItem({ item, onClose, isActive = false }: { item: any, onClose: () 
             <div className="relative w-6 h-6 lg:w-[min(1rem,3vh)] lg:h-[min(1rem,3vh)] flex-shrink-0">
                 <div
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-[75%] border-t-[1.5px] border-r-[1.5px] rotate-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                    style={{ borderColor: isActive ? '#00FFF0' : '#FFFFFF' }}
+                    style={{ borderColor: '#00FFF0' }}
                 />
             </div>
         </Link>
@@ -408,6 +392,12 @@ function MenuIcon({ type }: { type: string }) {
             return (
                 <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            );
+        case "user":
+            return (
+                <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
             );
         default:

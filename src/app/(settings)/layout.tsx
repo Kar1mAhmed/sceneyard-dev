@@ -1,7 +1,7 @@
 import GridBackground from '@/src/components/layout/GridBackground';
 import Navbar from '@/src/components/layout/Navbar';
 import BigColumnsHeader from '@/src/components/ui/BigColumnsHeader';
-import ProfileHeader from '@/src/components/settings/ProfileHeader';
+import AccountHeader from '@/src/components/settings/AccountHeader';
 import SettingsNav from '@/src/components/settings/SettingsNav';
 import Footer from '@/src/components/layout/Footer';
 
@@ -23,7 +23,7 @@ export default function SettingsLayout({
 
                 {/* Actual Content - Flows naturally */}
                 <div className="relative z-10 pt-24 md:pt-32">
-                    <ProfileHeader />
+                    <AccountHeader />
                     <SettingsNav />
 
                     {/* Page Content */}

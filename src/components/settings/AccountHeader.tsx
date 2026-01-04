@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 
-export default function ProfileHeader() {
+export default function AccountHeader() {
     const { data: session } = useSession();
 
     const userName = session?.user?.name || 'Guest User';
