@@ -1,6 +1,6 @@
 # SceneYard - Project Legend
 
-**Last Updated**: December 31, 2025  
+**Last Updated**: January 10, 2026  
 **Current Phase**: User Account & Credit Economy  
 **Tech Stack**: Next.js 16 + Cloudflare Workers + D1 + R2 + Resend
 
@@ -459,4 +459,9 @@ Based on the [Full Project Brief](./Docs/sceneyard_full_brief.md), here is the c
 
 ---
 
-**Status**: Backend infrastructure is stable, and the core user experience (Downloads/Settings) is now live. The database migration history has been optimized and consolidated. Next focus is completing the Search UI and finalizing the Credit Ledger deduction logic.
+### **January 10, 2026 - Legal & Policy Updates**
+1. ✅ **Refund Policy Extension**:
+   - Updated the refund eligibility window from 7 days to **14 days** for unused subscription credits.
+   - Synchronized this change across both `/privacy` (Privacy & Refund Policy) and `/terms` (Terms & Conditions) pages to ensure legal consistency.
+
+**Status**: Backend infrastructure is stable, and the core user experience (Downloads/Settings) is now live. The database migration history has been optimized and consolidated. Refund policies have been updated to a user-friendly 14-day window. Next focus is completing the Search UI and finalizing the Credit Ledger deduction logic.

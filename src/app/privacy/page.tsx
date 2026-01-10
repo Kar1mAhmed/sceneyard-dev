@@ -92,7 +92,7 @@ export default function PrivacyPage() {
                                 <div className="mt-4 space-y-4">
                                     <div className="flex flex-col gap-2">
                                         <p className="font-semibold text-white/90">Refund Eligibility</p>
-                                        <p>Refunds are considered only for technical defects that our team cannot resolve within 48 hours, or for unused subscription credits if requested within 7 days of purchase (provided <span className="underline">zero credits</span> have been used).</p>
+                                        <p>Refunds are considered only for technical defects that our team cannot resolve within 48 hours, or for unused subscription credits if requested within 14 days of purchase (provided <span className="underline">zero credits</span> have been used).</p>
                                     </div>
                                     <div className="flex flex-col gap-2">
                                         <p className="font-semibold text-white/90">Cancellations</p>

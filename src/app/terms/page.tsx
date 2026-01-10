@@ -61,7 +61,7 @@ export default function TermsPage() {
                                 <p>Billing is handled via secure third-party providers. By completing a purchase, you acknowledge and agree that:</p>
                                 <ul className="list-disc list-inside space-y-2">
                                     <li>Subscriptions can be cancelled at any time via account settings.</li>
-                                    <li><span className="text-white font-semibold">Refund Policy:</span> Due to the digital nature of our assets, refunds are not possible once credits from the current billing cycle have been used to download a template.</li>
+                                    <li><span className="text-white font-semibold">Refund Policy:</span> Due to the digital nature of our assets, refunds are not possible once credits from the current billing cycle have been used. Unused subscription credits are eligible for refund if requested within 14 days of purchase.</li>
                                 </ul>
                             </>
                         }
