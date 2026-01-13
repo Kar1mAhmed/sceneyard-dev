@@ -87,7 +87,7 @@ export default function DownloadRow({ template }: DownloadRowProps) {
 
                     {/* Download Again Button */}
                     <button
-                        className="px-5 py-2 rounded-full border border-white/20 text-white/80 text-sm transition-all hover:bg-white/5 hover:border-white/30"
+                        className="cursor-pointer px-5 py-2 rounded-full border border-white/20 text-white/80 text-sm transition-all hover:bg-white/5 hover:border-white/30"
                         style={{ fontFamily: 'var(--font-geist-mono), monospace' }}
                     >
                         Download again
