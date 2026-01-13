@@ -192,6 +192,7 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                                 <MenuGridIcon
                                     size={48}
                                     onClick={() => setIsSidebarOpen(true)}
+                                    className="-mr-3"
                                 />
                             )
                         ) : (
@@ -219,6 +220,7 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                                         <MenuGridIcon
                                             size={40}
                                             onClick={() => setIsSidebarOpen(true)}
+                                            className="-mr-2.5"
                                         />
                                     )}
                                 </div>
