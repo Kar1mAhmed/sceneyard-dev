@@ -41,6 +41,8 @@ export default async function ScenePage({ params }: ScenePageProps) {
         ? await isLikedByUser(session.user.id, id)
         : false;
 
+    const isVertical = template.orientation === 'vertical';
+
     return (
         <GridBackground>
             <Navbar />
@@ -57,10 +59,12 @@ export default async function ScenePage({ params }: ScenePageProps) {
                         className="border-t border-b border-white/10"
                     />
 
-                    {/* Video Preview Container */}
                     <div className="mt-8 md:mt-16 w-full max-w-7xl px-4 relative">
-                        <div className="relative rounded-[32px] overflow-hidden bg-black/50 backdrop-blur-sm border border-white/10 shadow-2xl group">
-                            <div className="aspect-video w-full flex items-center justify-center">
+                        <div
+                            className={`relative rounded-[32px] overflow-hidden bg-black/50 backdrop-blur-sm border border-white/10 shadow-2xl group mx-auto ${isVertical ? 'w-auto' : 'w-full max-w-5xl'}`}
+                            style={isVertical ? { height: '85vh', aspectRatio: '9/16' } : {}}
+                        >
+                            <div className={`${isVertical ? 'h-full w-full' : 'aspect-video w-full'} flex items-center justify-center`}>
                                 {previewUrl ? (
                                     <video
                                         src={previewUrl}
