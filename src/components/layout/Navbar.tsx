@@ -76,7 +76,7 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                 }}
             >
                 <div className="flex items-center justify-between w-full">
-                    <div className="relative" style={{ width: '220px', height: '94px' }}>
+                    <div className="relative" style={{ width: '150px', height: '64px' }}>
                         <Image
                             src="/logo.svg"
                             alt="SceneYard"
@@ -97,8 +97,8 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                 className={`fixed top-0 left-0 right-0 transition-[transform,background-color,opacity] duration-500 ease-in-out ${effectivelyHidden ? '-translate-y-full' : 'translate-y-0'}`}
                 style={{
                     height: '100px',
-                    paddingLeft: 'clamp(8px, 4vw, 125px)',
-                    paddingRight: 'clamp(8px, 4vw, 125px)',
+                    paddingLeft: 'var(--grid-margin)',
+                    paddingRight: 'var(--grid-margin)',
                     background: (effectivelyHidden || isSidebarOpen) ? 'transparent' : 'linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%)',
                     zIndex: isSidebarOpen ? 210 : 50, // Higher than sidebar z-200, immediate shift
                     pointerEvents: isSidebarOpen ? 'none' : 'auto', // Don't block sidebar clicks
@@ -120,9 +120,9 @@ export default function Navbar({ isHidden = false }: NavbarProps) {
                     {/* Logo - Left */}
                     <Link
                         href={isLoggedIn ? "/library" : "/"}
-                        className={`flex items-center relative z-[111] pointer-events-auto transition-all duration-300 hover:opacity-80 ${isSidebarOpen ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
+                        className="flex items-center relative z-[111] pointer-events-auto transition-all duration-300 hover:opacity-80"
                     >
-                        <div className="relative w-[150px] md:w-[220px] h-[64px] md:h-[94px]">
+                        <div className="relative w-[110px] md:w-[150px] h-[48px] md:h-[64px]">
                             <Image
                                 src="/logo.svg"
                                 alt="SceneYard"

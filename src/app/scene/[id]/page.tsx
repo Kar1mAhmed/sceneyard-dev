@@ -13,6 +13,8 @@ import TemplateGrid from "@/src/components/library/TemplateGrid";
 import { getTemplatesWithThumbnails } from "@/features/templates/service";
 import SelectionBox from "@/src/components/ui/SelectionBox";
 import DownloadTemplateButton from "@/src/components/scene/DownloadTemplateButton";
+import { auth } from "@/features/auth/auth";
+import { isLikedByUser } from "@/features/likes/service";
 
 interface ScenePageProps {
     params: Promise<{ id: string }>;
@@ -32,6 +34,12 @@ export default async function ScenePage({ params }: ScenePageProps) {
 
     // Fetch "suggestions" (just first 20 recent templates for now)
     const suggestedTemplates = await getTemplatesWithThumbnails(20, 0, 'recent');
+
+    // Check if user has already liked this template
+    const session = await auth();
+    const isLiked = session?.user?.id
+        ? await isLikedByUser(session.user.id, id)
+        : false;
 
     return (
         <GridBackground>
@@ -80,6 +88,7 @@ export default async function ScenePage({ params }: ScenePageProps) {
                                 <LikeButton
                                     templateId={template.id}
                                     initialLikes={template.likes_count}
+                                    isInitiallyLiked={isLiked}
                                     className="scale-110"
                                 />
                             </div>

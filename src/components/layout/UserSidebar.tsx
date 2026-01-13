@@ -288,13 +288,16 @@ function MenuItem({ item, onClose, isActive = false }: { item: any, onClose: () 
             href={item.href}
             onClick={onClose}
             className="flex items-center justify-between px-8 lg:px-[clamp(1.5rem,2.5vw,2.5rem)] py-4 lg:py-[max(0.75rem,1.8vh)] group transition-all hover:bg-white/5"
+            style={{
+                background: isActive ? '#947CFF4D' : 'transparent'
+            }}
         >
             <div className="flex items-center gap-6 lg:gap-[max(1rem,1.5vw)]">
                 {/* Icon: Enlarged on mobile (w-8 h-8) */}
                 {item.icon && (
                     <div
                         className="w-8 h-8 lg:w-[min(1.5rem,4vh)] lg:h-[min(1.5rem,4vh)] flex items-center justify-center transition-colors px-1 lg:px-0"
-                        style={{ color: isActive ? '#00FFF0' : '#62646C' }}
+                        style={{ color: isActive ? '#947CFF' : '#62646C' }}
                     >
                         <MenuIcon type={item.icon} />
                     </div>
@@ -305,21 +308,18 @@ function MenuItem({ item, onClose, isActive = false }: { item: any, onClose: () 
                         style={{
                             fontFamily: 'Poppins, sans-serif',
                             fontWeight: 400,
-                            color: isActive ? '#00FFF0' : (typeof window !== 'undefined' && window.innerWidth >= 1024 ? '#AFB0B6' : '#E4E4E6')
+                            color: isActive ? '#947CFF' : (typeof window !== 'undefined' && window.innerWidth >= 1024 ? '#AFB0B6' : '#E4E4E6')
                         }}
                     >
                         {item.label}
                     </span>
-                    {isActive && (
-                        <div className="h-[1.5px] w-full bg-[#00FFF0] mt-1" />
-                    )}
                 </div>
             </div>
             {/* Arrow indicator */}
             <div className="relative w-6 h-6 lg:w-[min(1rem,3vh)] lg:h-[min(1rem,3vh)] flex-shrink-0">
                 <div
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-[75%] border-t-[1.5px] border-r-[1.5px] rotate-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                    style={{ borderColor: '#00FFF0' }}
+                    style={{ borderColor: '#D77BFF' }}
                 />
             </div>
         </Link>
